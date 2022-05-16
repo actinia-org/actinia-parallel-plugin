@@ -9,8 +9,11 @@ services:
       - ..:/src/actinia-parallel-plugin/.
     ports:
       - "8088:8088"
+    environment:
+      - JOBTABLE_PW=actinia
     depends_on:
       - redis
+      - postgis
     cap_add:
       - SYS_PTRACE
     networks:
@@ -34,6 +37,19 @@ services:
         - "6379:6379"
     networks:
     -   actinia
+
+  postgis:
+    image: mdillon/postgis:9.6-alpine
+    # network_mode: host
+    environment:
+      POSTGRES_USER: actinia
+      POSTGRES_PASSWORD: actinia
+    volumes:
+      - ./postgresql_init_data:/docker-entrypoint-initdb.d
+      - ./postgresql_data:/var/lib/postgresql/data:Z
+    networks:
+    -   actinia
+
 
 networks:
   actinia:

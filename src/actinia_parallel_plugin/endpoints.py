@@ -27,6 +27,7 @@ __maintainer__ = "mundialis GmbH % Co. KG"
 
 from actinia_parallel_plugin.api.parallel_processing import \
     ParallelProcessingResource
+from actinia_parallel_plugin.core.jobtable import initJobDB, applyMigrations
 
 
 # endpoints loaded if run as actinia-core plugin
@@ -35,3 +36,7 @@ def create_endpoints(flask_api):
     apidoc = flask_api
 
     apidoc.add_resource(ParallelProcessingResource, "/processing_parallel")
+
+    # initilalize jobtable
+    initJobDB()
+    applyMigrations()

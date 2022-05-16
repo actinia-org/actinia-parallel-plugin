@@ -40,6 +40,12 @@ docker-compose -f docker/docker-compose.yml run --rm --service-ports --entrypoin
 gunicorn -b 0.0.0.0:8088 -w 1 --access-logfile=- -k gthread actinia_core.main:flask_app
 ```
 
+### Postgis
+Connect to postgis DB from actinia-core docker container:
+```
+psql -U actinia -h postgis -d gis
+```
+
 ### Hints
 
 * If you have no `.git` folder in the plugin folder, you need to set the

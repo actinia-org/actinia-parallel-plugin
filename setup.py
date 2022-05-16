@@ -8,6 +8,7 @@
     Learn more under: https://pyscaffold.org/
 """
 import sys
+from pathlib import Path
 
 from pkg_resources import VersionConflict, require
 from setuptools import setup
@@ -20,4 +21,11 @@ except VersionConflict:
 
 
 if __name__ == "__main__":
-    setup(use_pyscaffold=True)
+
+    parent_dir = Path(__file__).resolve().parent
+
+    setup(
+        use_pyscaffold=True,
+        install_requires=parent_dir.joinpath(
+            "requirements.txt").read_text().splitlines(),
+    )

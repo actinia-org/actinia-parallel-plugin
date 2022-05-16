@@ -46,6 +46,7 @@ class ParallelProcessingResource(Resource):
     @swagger.doc(helloworld.describeHelloWorld_get_docs)
     def get(self):
         """Get 'Hello world!' as answer string."""
+        import pdb; pdb.set_trace()
         return SimpleStatusCodeResponseModel(status=200, message=self.msg)
 
     # TODO start a parallel processing job as batch job
