@@ -1,0 +1,63 @@
+{
+  "jobs": [
+    {
+      "list": [
+        {
+          "module": "r.mapcalc",
+          "id": "r_mapcalc_0_nonparallel",
+          "inputs":[
+            {"param": "expression", "value": "baum = elevation@PERMANENT * 2"}
+          ]
+        }
+      ],
+      "parallel": "false",
+      "version": "1"
+    },
+    {
+      "list": [
+        {
+          "module": "g.region",
+          "id": "g_region_1_parallel",
+          "inputs":[
+            {"param": "n", "value": "228500"},
+            {"param": "s", "value": "215000"},
+            {"param": "e", "value": "645000"},
+            {"param": "w", "value": "637500"}
+          ]
+        },
+        {
+          "module": "r.mapcalc",
+          "id": "r_mapcalc_1_parallel",
+          "inputs":[
+            {"param": "expression", "value": "baum2 = baum@test_parallel * 2"}
+          ]
+        }
+      ],
+      "parallel": "true",
+      "version": "1"
+    },
+    {
+      "list": [
+        {
+          "module": "g.region",
+          "id": "g_region_2_parallel",
+          "inputs":[
+            {"param": "n", "value": "228500"},
+            {"param": "s", "value": "215000"},
+            {"param": "e", "value": "637500"},
+            {"param": "w", "value": "630000"}
+          ]
+        },
+        {
+          "module": "r.mapcalc",
+          "id": "r_mapcalc_2_parallel",
+          "inputs":[
+            {"param": "expression", "value": "baum2 = baum@test_parallel * 2"}
+          ]
+        }
+      ],
+      "parallel": "true",
+      "version": "1"
+    }
+  ]
+}

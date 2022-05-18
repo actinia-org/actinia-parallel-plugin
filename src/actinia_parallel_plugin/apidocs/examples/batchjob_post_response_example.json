@@ -1,0 +1,302 @@
+{
+  "actinia_core_jobid": [
+    "None",
+    "resource_id-ed51442e-4fa2-43a0-af67-041d2f33f5b2",
+    "resource_id-7565f55f-b798-417e-8441-e148df6194d4"
+  ],
+  "actinia_core_platform": "TODO",
+  "actinia_core_platform_name": "example_name",
+  "actinia_core_response": {
+    "resource_id-7565f55f-b798-417e-8441-e148df6194d4": {
+      "accept_datetime": "2021-11-26 09:52:54.961197",
+      "accept_timestamp": 1637920374.9611967,
+      "api_info": {
+        "endpoint": "asyncephemeralexportresource",
+        "method": "POST",
+        "path": "/api/v1/locations/utm32n/processing_async_export",
+        "request_url": "http://actinia-core-docker:8088/api/v1/locations/utm32n/processing_async_export"
+      },
+      "datetime": "2021-11-26 09:52:54.962316",
+      "http_code": 200,
+      "message": "Resource accepted",
+      "process_chain_list": [],
+      "process_results": {},
+      "resource_id": "resource_id-7565f55f-b798-417e-8441-e148df6194d4",
+      "status": "accepted",
+      "time_delta": 0.001125335693359375,
+      "timestamp": 1637920374.9623156,
+      "urls": {
+        "resources": [],
+        "status": "http://actinia-core-docker:8088/api/v1/resources/actinia-gdi/resource_id-7565f55f-b798-417e-8441-e148df6194d4"
+      },
+      "user_id": "actinia-gdi"
+    },
+    "resource_id-ed51442e-4fa2-43a0-af67-041d2f33f5b2": {
+      "accept_datetime": "2021-11-26 09:52:54.610856",
+      "accept_timestamp": 1637920374.6108556,
+      "api_info": {
+        "endpoint": "asyncephemeralexportresource",
+        "method": "POST",
+        "path": "/api/v1/locations/utm32n/processing_async_export",
+        "request_url": "http://actinia-core-docker:8088/api/v1/locations/utm32n/processing_async_export"
+      },
+      "datetime": "2021-11-26 09:52:54.782627",
+      "http_code": 200,
+      "message": "Processing successfully finished",
+      "process_chain_list": [
+        {
+          "list": [
+            {
+              "flags": "p",
+              "id": "g_region_test_0",
+              "inputs": [
+                {
+                  "param": "w",
+                  "value": "366166"
+                },
+                {
+                  "param": "s",
+                  "value": "5628872"
+                },
+                {
+                  "param": "e",
+                  "value": "409135"
+                },
+                {
+                  "param": "n",
+                  "value": "5681310"
+                },
+                {
+                  "param": "res",
+                  "value": "10"
+                }
+              ],
+              "module": "g.region"
+            }
+          ],
+          "version": "1",
+          "webhooks": {
+            "finished": "http://actinia-gdi:5000/resources/processes/operations/update",
+            "update": "http://actinia-gdi:5000/resources/processes/operations/update"
+          }
+        }
+      ],
+      "process_log": [
+        {
+          "executable": "g.region",
+          "id": "g_region_test_0",
+          "mapset_size": 429,
+          "parameter": [
+            "w=366166",
+            "s=5628872",
+            "e=409135",
+            "n=5681310",
+            "res=10",
+            "-p"
+          ],
+          "return_code": 0,
+          "run_time": 0.05014228820800781,
+          "stderr": [
+            ""
+          ],
+          "stdout": "projection: 1 (UTM)\nzone:       32\ndatum:      etrs89\nellipsoid:  grs80\nnorth:      5681310\nsouth:      5628872\nwest:       366166\neast:       409135\nnsres:      9.99961861\newres:      9.99976728\nrows:       5244\ncols:       4297\ncells:      22533468\n"
+        }
+      ],
+      "process_results": {},
+      "progress": {
+        "num_of_steps": 1,
+        "step": 1
+      },
+      "resource_id": "resource_id-ed51442e-4fa2-43a0-af67-041d2f33f5b2",
+      "status": "finished",
+      "time_delta": 0.17178988456726074,
+      "timestamp": 1637920374.7826219,
+      "urls": {
+        "resources": [],
+        "status": "http://actinia-core-docker:8088/api/v1/resources/actinia-gdi/resource_id-ed51442e-4fa2-43a0-af67-041d2f33f5b2"
+      },
+      "user_id": "actinia-gdi"
+    }
+  },
+  "actinia_core_url": "http://actinia-core-docker:8088/",
+  "actinia_gdi_batchid": 1,
+  "batch_description": {
+    "jobs": [
+      {
+        "list": [
+          {
+            "flags": "p",
+            "id": "g_region_test_0",
+            "inputs": [
+              {
+                "param": "w",
+                "value": "366166"
+              },
+              {
+                "param": "s",
+                "value": "5628872"
+              },
+              {
+                "param": "e",
+                "value": "409135"
+              },
+              {
+                "param": "n",
+                "value": "5681310"
+              },
+              {
+                "param": "res",
+                "value": "10"
+              }
+            ],
+            "module": "g.region"
+          }
+        ],
+        "parallel": "true",
+        "version": "1"
+      },
+      {
+        "list": [
+          {
+            "id": "g_list_0",
+            "inputs": [
+              {
+                "param": "mapset",
+                "value": "."
+              },
+              {
+                "param": "type",
+                "value": "raster"
+              }
+            ],
+            "module": "g.list"
+          }
+        ],
+        "parallel": "true",
+        "version": "1"
+      },
+      {
+        "list": [
+          {
+            "flags": "p",
+            "id": "g_region_test_1",
+            "inputs": [
+              {
+                "param": "w",
+                "value": "366166"
+              },
+              {
+                "param": "s",
+                "value": "5628872"
+              },
+              {
+                "param": "e",
+                "value": "409135"
+              },
+              {
+                "param": "n",
+                "value": "5681310"
+              },
+              {
+                "param": "res",
+                "value": "10"
+              }
+            ],
+            "module": "g.region"
+          },
+          {
+            "id": "r_mapcalc_0",
+            "inputs": [
+              {
+                "param": "expression",
+                "value": "test_raster2 = 1"
+              }
+            ],
+            "module": "r.mapcalc"
+          },
+          {
+            "id": "r_info_0",
+            "inputs": [
+              {
+                "param": "map",
+                "value": "test_raster2"
+              }
+            ],
+            "module": "r.info",
+            "stdout": {
+              "delimiter": ",",
+              "format": "table",
+              "id": "TEST"
+            }
+          }
+        ],
+        "parallel": "false",
+        "version": "1"
+      }
+    ],
+    "processing_host": "http://actinia-core-docker:8088/",
+    "processing_platform_name": "example_name"
+  },
+  "status": "RUNNING",
+  "creation_uuids": [
+    "22638e4f-2e2e-4fd7-8221-cc5012993d2a",
+    "10153224-0945-4736-808e-90785f889686",
+    "7b31cb7d-f956-4f7a-8c16-c3eef34c72c9"
+  ],
+  "idpk_jobs": [
+    "652",
+    "650",
+    "651"
+  ],
+  "process": "netdefinition",
+  "jobs_status": [
+    {
+      "actinia_core_jobid": "None",
+      "idpk_jobs": 652,
+      "status": "PREPARING"
+    },
+    {
+      "actinia_core_jobid": "resource_id-ed51442e-4fa2-43a0-af67-041d2f33f5b2",
+      "idpk_jobs": 650,
+      "status": "SUCCESS"
+    },
+    {
+      "actinia_core_jobid": "resource_id-7565f55f-b798-417e-8441-e148df6194d4",
+      "idpk_jobs": 651,
+      "status": "PENDING"
+    }
+  ],
+  "summary": {
+    "blocks": [
+      {
+        "accepted": 1,
+        "block_num": 1,
+        "error": 0,
+        "finished": 1,
+        "parallel": 2,
+        "preparing": 0,
+        "running": 0,
+        "terminated": 0
+      },
+      {
+        "accepted": 0,
+        "block_num": 2,
+        "error": 0,
+        "finished": 0,
+        "parallel": 1,
+        "preparing": 1,
+        "running": 0,
+        "terminated": 0
+      }
+    ],
+    "status": {
+      "accepted": 1,
+      "error": 0,
+      "finished": 1,
+      "preparing": 1,
+      "running": 0,
+      "terminated": 0
+    },
+    "total": 3
+  }
+}

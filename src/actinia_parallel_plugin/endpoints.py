@@ -25,8 +25,9 @@ __copyright__ = "Copyright 2022 mundialis GmbH & Co. KG"
 __maintainer__ = "mundialis GmbH % Co. KG"
 
 
+from actinia_parallel_plugin.api.batch import BatchJobsId
 from actinia_parallel_plugin.api.parallel_processing import \
-    ParallelProcessingResource
+    AsyncParallelPersistentResource
 from actinia_parallel_plugin.core.jobtable import initJobDB, applyMigrations
 
 
@@ -35,7 +36,22 @@ def create_endpoints(flask_api):
 
     apidoc = flask_api
 
-    apidoc.add_resource(ParallelProcessingResource, "/processing_parallel")
+    apidoc.add_resource(
+        AsyncParallelPersistentResource,
+        "/locations/<string:location_name>/mapsets/"
+        "<string:mapset_name>/processing_parallel")
+    # apidoc.add_resource(ParallelProcessingResource, "/processing_parallel")
+
+    # GET batch jobs by ID
+    apidoc.add_resource(
+        BatchJobsId,
+        "/processing_parallel/batchjobs/<batchid>")
+    # "/processing_parallel/jobs/<jobid>"
+
+    # "/processing_parallel/batchjobs"
+    # "/processing_parallel/jobs"
+
+
 
     # initilalize jobtable
     initJobDB()

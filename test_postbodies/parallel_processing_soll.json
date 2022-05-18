@@ -1,0 +1,138 @@
+{
+  "processing_host": "http://actinia-core-docker:8088/",
+  "processing_platform_name": "example_name",
+  "jobs": [
+    {
+      "list": [
+        {
+          "module": "stac_importer",
+          "inputs":[
+            {"param": "param1", "value": "value1"}
+          ]
+        }
+      ],
+      "parallel": "false",
+      "version": "1"
+    },
+    {
+      "list": [
+        {
+          "module": "actinia_tiling",
+          "comment": "All jobs executed in parallel loop for each tile",
+          "inputs":[
+            // With this approach, also area size would be possible
+            // {"param": "size", "value": "10000"},
+            {"param": "num_tiles", "value": "10000"}
+          ],
+          "outputs":[
+            {"param": "raster", "value": "ndvi,ndwi"}
+          ],
+          "jobs": [
+            {
+              "list": [
+                {
+                  "module": "g.region",
+                  "inputs":[
+                    {"param": "x", "value": "{{ tile_id }}"}
+                  ]
+                },
+                {
+                  "module": "r.mask",
+                  "inputs":[
+                    {"param": "x", "value": "y"}
+                  ]
+                }
+              ],
+              "parallel": "false"
+            },
+            {
+              "list": [
+                {
+                  "module": "r.mapcalc",
+                  "inputs":[
+                    {"param": "x", "value": "ndvi"}
+                  ]
+                }
+              ],
+              "parallel": "true"
+            },
+            {
+              "list": [
+                {
+                  "module": "r.mapcalc",
+                  "inputs":[
+                    {"param": "x", "value": "ndwi"}
+                  ]
+                }
+              ],
+              "parallel": "true"
+            }
+          ]
+        }
+      ],
+      "parallel": "false",
+      "version": "1"
+    },
+    {
+        "list": [
+          {
+            "module": "actinia_tiling",
+            "comment": "All jobs executed in parallel loop for each tile",
+            "inputs":[
+              // With this approach, also area size would be possible
+              // {"param": "size", "value": "10000"},
+              {"param": "num_tiles", "value": "10000"},
+              // TODO: parameter or flag?
+              {"param": "reuse_tiles", "value": "true"}
+            ],
+            "outputs":[
+                {"param": "raster", "value": "agg1,agg2"}
+              ],
+            "jobs": [
+              {
+                "list": [
+                  {
+                    "module": "g.region",
+                    "inputs":[
+                      {"param": "x", "value": "{{ tile_id }}"}
+                    ]
+                  },
+                  {
+                    "module": "r.mask",
+                    "inputs":[
+                      {"param": "x", "value": "y"}
+                    ]
+                  }
+                ],
+                "parallel": "false"
+              },
+              {
+                "list": [
+                  {
+                    "module": "t.aggregate",
+                    "inputs":[
+                      {"param": "x", "value": "red_nir,green_red"}
+                    ]
+                  }
+                ],
+                "parallel": "true"
+              },
+              {
+                "list": [
+                  {
+                    "module": "t.aggregate",
+                    "inputs":[
+                      {"param": "x", "value": "blue,blue_nir"}
+                    ]
+                  }
+                ],
+                "parallel": "true"
+              }
+            ]
+          }
+        ],
+        "parallel": "false",
+        "version": "1"
+      }
+  ]
+}
