@@ -49,14 +49,14 @@ from actinia_parallel_plugin.core.jobtable import (
 from actinia_parallel_plugin.model.response_models import (
     SimpleStatusCodeResponseModel,
 )
-from actinia_parallel_plugin.model.batch_process_chain import (
-    # BatchProcessChain,
-    SingleJob,
-)
-from actinia_parallel_plugin.core.jobtable import updateJobByID
-from actinia_parallel_plugin.core.jobs import updateJob
+# from actinia_parallel_plugin.model.batch_process_chain import (
+#     SingleJob,
+# )
+# from actinia_parallel_plugin.core.jobtable import updateJobByID
+# from actinia_parallel_plugin.core.jobs import updateJob
 from actinia_parallel_plugin.resources.logging import log
 from actinia_parallel_plugin.core.persistent_processing import start_job
+from actinia_parallel_plugin.core.parallel_processing_job import AsyncParallelJobResource
 
 
 class AsyncParallelPersistentResource(ResourceBase):
@@ -71,7 +71,7 @@ class AsyncParallelPersistentResource(ResourceBase):
     @swagger.doc(helloworld.describeHelloWorld_get_docs)
     def get(self, location_name, mapset_name):
         """Get 'Hello world!' as answer string."""
-        return SimpleStatusCodeResponseModel(status=200, message=self.msg)
+        return SimpleStatusCodeResponseModel(status=200, message="TEST")
 
     # def prepare_actinia(self):
     # e.g. start a VM and check connection to actinia-core on it
@@ -83,8 +83,9 @@ class AsyncParallelPersistentResource(ResourceBase):
         # TODO prepare_actinia ?
         # TODO execute_actinia ?
         # TODO goodby_actinia ?
-# has_json = False
-# self.request_data = pc
+
+        # has_json = False
+        # self.request_data = pc
 
         rdc = self.preprocess(
             has_json=True,
@@ -134,6 +135,7 @@ class AsyncParallelPersistentResource(ResourceBase):
             process_chain = dict()
             process_chain["list"] = job["rule_configuration"]["list"]
             process_chain["version"] = job["rule_configuration"]["version"]
+            jobid = job["idpk_jobs"]
             start_kwargs = {
                 "process": job["process"],
                 # "pc": SingleJob(**job["job_description"]),
@@ -142,7 +144,16 @@ class AsyncParallelPersistentResource(ResourceBase):
                 # "actinia_core_platform": job["actinia_core_platform"],
                 # "actinia_core_url": job["actinia_core_url"]
             }
-            job_entry = self._start_job(**start_kwargs)
+            parallel_job = AsyncParallelJobResource(
+                post_url=self.post_url,
+                process_chain=process_chain,
+                location_name=self.location_name,
+                mapset_name=self.mapset_name,
+                batch_id=self.batch_id,
+                job_id=jobid
+            )
+            parallel_job.start_job("persistent", 1)
+            job_entry = parallel_job.get_job_entry()
             jobs_responses.append(job_entry)
         return jobs_responses
 
@@ -154,6 +165,7 @@ class AsyncParallelPersistentResource(ResourceBase):
 
         self.location_name = location_name
         self.mapset_name = mapset_name
+        # import pdb; pdb.set_trace()
 
         json_dict = request.get_json(force=True)
         log.info("Received HTTP POST with batchjob: %s" %
@@ -173,7 +185,6 @@ class AsyncParallelPersistentResource(ResourceBase):
 
         # start first processing block
         first_jobs = self._start_processing_block(jobs_in_db, 1)
-        import pdb; pdb.set_trace()
         first_status = [entry["status"] for entry in first_jobs]
         all_jobs = getJobsByBatchId(self.batch_id, "persistent")
         if None in first_jobs:

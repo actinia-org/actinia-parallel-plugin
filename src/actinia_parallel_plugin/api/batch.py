@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-Module to communicate with jobtable
+Endpoint definitions for batch job
 """
 
 __license__ = "GPLv3"
@@ -55,7 +55,7 @@ class BatchJobsId(Resource):
         log.info(("\n Received HTTP GET request for batch"
                   f" with id {str(batchid)}"))
 
-        jobs = getJobsByBatchId(batch)
+        jobs = getJobsByBatchId(batchid)
         if len(jobs) == 0:
             res = (jsonify(SimpleResponseModel(
                         status=404,

@@ -34,7 +34,7 @@ from actinia_core.rest.base.resource_base import ResourceBase
 # from actinia_gdi.core.actiniaCore import parseActiniaIdFromUrl
 # from actinia_gdi.core.gnosWriter import update
 from actinia_parallel_plugin.core.jobtable import (
-    # getJobById,
+    getJobById,
     getJobByResource,
     insertNewJob,
     updateJobByID,
@@ -189,20 +189,20 @@ def insertJob(jsonDict, process, process_chain):
 #                                 actinia_core_url=actinia_core_url)
 #
 #     return job
-#
-#
-# def getJob(jobid):
-#     """ Method to read job from Jobtable by id
-#
-#     This method can be called by HTTP GET
-#     @app.route('/processes/standortsicherung/jobs/<jobid>')
-#     """
-#
-#     job, err = getJobById(jobid)
-#
-#     return job, err
-#
-#
+
+
+def getJob(jobid):
+    """ Method to read job from Jobtable by id
+
+    This method can be called by HTTP GET
+    @app.route('/processes/standortsicherung/jobs/<jobid>')
+    """
+
+    job, err = getJobById(jobid)
+
+    return job, err
+
+
 # def getAllJobIDs():
 #     """ Method to read all job ids from Jobtable
 #
@@ -252,7 +252,8 @@ def updateJob(resource_id, actinia_resp, jobid):
     record = updateJobByID(
         jobid,
         status,
-        shortenActiniaCoreResp(actinia_resp)
+        shortenActiniaCoreResp(actinia_resp),
+        resourceId=resource_id
     )
 
     # # TODO: for now if multiple records need to be updated (eg. for PT), this

@@ -52,7 +52,8 @@ class ParallelPersistentProcessing(PersistentProcessing):
         self.processing_block = processing_block
         self.jobid = jobid
 
-    def _execute(self, process_chain, skip_permission_check=False):
+    # def _execute(self, process_chain, skip_permission_check=False):
+    def _execute(self, skip_permission_check=False):
         """Overwrite this function in subclasses.
 
         This function will be executed by the run() function
@@ -78,11 +79,11 @@ class ParallelPersistentProcessing(PersistentProcessing):
         if self.rdc.iteration is not None:
             process_list = \
                 self._create_temporary_grass_environment_and_process_list_for_iteration(
-                    process_chain=process_chain,
+                    # process_chain=process_chain,
                     skip_permission_check=skip_permission_check)
         else:
             process_list = self._create_temporary_grass_environment_and_process_list(
-                process_chain=process_chain,
+                # process_chain=process_chain,
                 skip_permission_check=skip_permission_check)
 
         # Run all executables
@@ -90,7 +91,8 @@ class ParallelPersistentProcessing(PersistentProcessing):
         # Parse the module sdtout outputs and create the results
         self._parse_module_outputs()
 
-    def run(self, process_chain):
+    # def run(self, process_chain):
+    def run(self):
         """This function will run the processing and will catch and process
         any Exceptions that were raised while processing. Call this function
         to run the processing.
@@ -107,7 +109,8 @@ class ParallelPersistentProcessing(PersistentProcessing):
         """
         try:
             # Run the _execute function that does all the work
-            self._execute(process_chain=process_chain)
+            # self._execute(process_chain=process_chain)
+            self._execute()
         except AsyncProcessTermination as e:
             self.run_state = {"terminated": str(e)}
         except AsyncProcessTimeLimit as e:

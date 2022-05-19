@@ -32,15 +32,16 @@ from actinia_core.models.process_chain import ProcessChainModel
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
-rel_path = ("../apidocs/examples/"
-            + "batchjob_post_response_example.json")
-print(script_dir)
-print(rel_path)
-abs_file_path = os.path.join(script_dir, rel_path)
-print(abs_file_path)
-print(os.path.isdir(abs_file_path))
-with open(abs_file_path) as jsonfile:
-    batchjob_post_docs_response_example = json.load(jsonfile)
+# TODO
+# rel_path = ("../apidocs/examples/"
+#             + "batchjob_post_response_example.json")
+# print(script_dir)
+# print(rel_path)
+# abs_file_path = os.path.join(script_dir, rel_path)
+# print(abs_file_path)
+# print(os.path.isdir(abs_file_path))
+# with open(abs_file_path) as jsonfile:
+#     batchjob_post_docs_response_example = json.load(jsonfile)
 
 
 class BatchJobsSummaryModel(Schema):
@@ -266,4 +267,4 @@ class BatchJobResponseModel(Schema):
 
         'summary': BatchJobsSummaryModel
     }
-    example = batchjob_post_docs_response_example
+    # example = batchjob_post_docs_response_example

@@ -26,6 +26,7 @@ __maintainer__ = "mundialis GmbH % Co. KG"
 
 
 from actinia_parallel_plugin.api.batch import BatchJobsId
+from actinia_parallel_plugin.api.job import JobId
 from actinia_parallel_plugin.api.parallel_processing import \
     AsyncParallelPersistentResource
 from actinia_parallel_plugin.core.jobtable import initJobDB, applyMigrations
@@ -46,6 +47,12 @@ def create_endpoints(flask_api):
     apidoc.add_resource(
         BatchJobsId,
         "/processing_parallel/batchjobs/<batchid>")
+
+    # GET job by ID
+    apidoc.add_resource(
+        JobId,
+        "/processing_parallel/jobs/<jobid>")
+
     # "/processing_parallel/jobs/<jobid>"
 
     # "/processing_parallel/batchjobs"
