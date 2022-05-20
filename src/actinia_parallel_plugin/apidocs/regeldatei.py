@@ -24,8 +24,8 @@ __author__ = "Carmen Tawalika, Anika Weinmann"
 __copyright__ = "Copyright 2018-2022 mundialis GmbH & Co. KG"
 __maintainer__ = "mundialis GmbH % Co. KG"
 
-import os
-import json
+# import os
+# import json
 
 from flask_restful_swagger_2 import Schema
 

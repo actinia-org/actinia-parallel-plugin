@@ -24,21 +24,17 @@ __author__ = "Guido Riembauer, Anika Weinmann"
 __copyright__ = "Copyright 2021-2022 mundialis GmbH & Co. KG"
 __maintainer__ = "mundialis GmbH % Co. KG"
 
+from json import loads
 
-from actinia_parallel_plugin.core.jobtable import getAllIds
+from actinia_parallel_plugin.core.jobs import insertJob
+from actinia_parallel_plugin.core.jobtable import getAllIds, getAllJobs
+from actinia_parallel_plugin.core.parallel_processing_job import \
+    AsyncParallelJobResource
 from actinia_parallel_plugin.model.batch_process_chain import (
     BatchProcessChain,
     SingleJob,
 )
-# from actinia_gdi.core.jobtable import getAllIds, getAllJobs
 from actinia_parallel_plugin.resources.logging import log
-from actinia_parallel_plugin.core.jobs import insertJob
-from actinia_parallel_plugin.core.jobtable import getAllJobs
-# from actinia_gdi.resources.config import JOBTABLE
-# from actinia_parallel_plugin.core.jobs import startJobByActiniaType
-# from actinia_gdi.core.jobs import startJobByActiniaType, cancelJob
-
-from json import loads
 
 
 def assignProcessingBlocks(jsonDict):
@@ -291,23 +287,44 @@ def getJobsByBatchId(batch_id, process=None):
     return jobs
 
 
-# def startProcessingBlock(jobs, block):
-#     """ Function to start a specific processing block for an input list of
-#         jobs (db entries)
-#     """
-#     jobs_to_start = [job for job in jobs if job["processing_block"] == block]
-#     jobs_responses = []
-#     for job in jobs_to_start:
-#         start_kwargs = {
-#             "process": job["process"],
-#             "regeldatei": SingleJob(**job["job_description"]),
-#             "jobid": job["idpk_jobs"],
-#             "actinia_core_platform": job["actinia_core_platform"],
-#             "actinia_core_url": job["actinia_core_url"]
-#         }
-#         job_entry = startJobByActiniaType(**start_kwargs)
-#         jobs_responses.append(job_entry)
-#     return jobs_responses
+def startProcessingBlock(jobs, block, batch_id, location_name, mapset_name,
+                         post_url):
+    """ Function to start a specific processing block for an input list of
+        jobs (db entries)
+    """
+    jobs_to_start = [
+        job for job in jobs if job["processing_block"] == block]
+    jobs_responses = []
+    mapset_suffix = ""
+    if len(jobs_to_start) > 1:
+        mapset_suffix = "_parallel_"
+    for num, job in enumerate(jobs_to_start):
+        process_chain = dict()
+        process_chain["list"] = job["rule_configuration"]["list"]
+        process_chain["version"] = job["rule_configuration"]["version"]
+        jobid = job["idpk_jobs"]
+        start_kwargs = {
+            "process": job["process"],
+            "process_chain": process_chain,
+            "jobid": job["idpk_jobs"],
+            # "actinia_core_platform": job["actinia_core_platform"],
+            # "actinia_core_url": job["actinia_core_url"]
+        }
+        mapset_name_parallel = mapset_name
+        if mapset_suffix != "":
+            mapset_name_parallel += f"{mapset_suffix}{num}"
+        parallel_job = AsyncParallelJobResource(
+            post_url=post_url,
+            process_chain=process_chain,
+            location_name=location_name,
+            mapset_name=mapset_name_parallel,
+            batch_id=batch_id,
+            job_id=jobid
+        )
+        parallel_job.start_parallel_job("persistent", 1)
+        job_entry = parallel_job.get_job_entry()
+        jobs_responses.append(job_entry)
+    return jobs_responses
 
 
 def _count_status_from_list(input_list):

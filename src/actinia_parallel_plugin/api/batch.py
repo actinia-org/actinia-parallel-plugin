@@ -26,7 +26,7 @@ __maintainer__ = "mundialis GmbH % Co. KG"
 
 from flask_restful import Resource
 from flask_restful_swagger_2 import swagger
-from flask import make_response, jsonify, request
+from flask import make_response, jsonify
 
 from actinia_core.models.response_models import \
     SimpleResponseModel

@@ -53,12 +53,8 @@ def create_endpoints(flask_api):
         JobId,
         "/processing_parallel/jobs/<jobid>")
 
-    # "/processing_parallel/jobs/<jobid>"
-
     # "/processing_parallel/batchjobs"
     # "/processing_parallel/jobs"
-
-
 
     # initilalize jobtable
     initJobDB()

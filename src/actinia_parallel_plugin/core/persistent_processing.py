@@ -30,27 +30,31 @@ import traceback
 import pickle
 import json
 
-from actinia_core.processing.actinia_processing.ephemeral.persistent_processing import PersistentProcessing
+from actinia_core.processing.actinia_processing.ephemeral.\
+    persistent_processing import PersistentProcessing
 from actinia_core.core.common.exceptions \
-    import AsyncProcessError, AsyncProcessTermination, RsyncError
+    import AsyncProcessError, AsyncProcessTermination
 from actinia_core.core.common.exceptions import AsyncProcessTimeLimit
 from actinia_core.models.response_models \
-    import ProcessingResponseModel, ExceptionTracebackModel
+    import ExceptionTracebackModel
 
 from actinia_parallel_plugin.core.batches import (
     checkProcessingBlockFinished,
+    # createBatchResponseDict,
     getJobsByBatchId,
+    startProcessingBlock,
 )
 from actinia_parallel_plugin.core.jobs import updateJob
 
 
 class ParallelPersistentProcessing(PersistentProcessing):
 
-    def __init__(self, rdc, batch_id, processing_block, jobid):
+    def __init__(self, rdc, batch_id, processing_block, jobid, post_url=None):
         super(ParallelPersistentProcessing, self).__init__(rdc)
         self.batch_id = batch_id
         self.processing_block = processing_block
         self.jobid = jobid
+        self.post_url = post_url
 
     # def _execute(self, process_chain, skip_permission_check=False):
     def _execute(self, skip_permission_check=False):
@@ -195,8 +199,15 @@ class ParallelPersistentProcessing(PersistentProcessing):
                 jobs_from_batch, block)
             if block_done is True and block < max(all_blocks):
                 next_block = block + 1
-                import pdb; pdb.set_trace()
-                print("TODO start next Block")
+                next_jobs = startProcessingBlock(
+                    jobs_from_batch,
+                    next_block,
+                    self.batch_id,
+                    self.location_name,
+                    self.mapset_name,
+                    self.post_url
+                )
+                # print("TODO start next Block")
         #             next_jobs = startProcessingBlock(jobs_from_batch,
         #                                              next_block)
         #             res = createBatchResponseDict(next_jobs)
@@ -210,6 +221,10 @@ class ParallelPersistentProcessing(PersistentProcessing):
 
 
 def start_job(*args):
-    process_chain = json.loads(args[-1])
-    processing = ParallelPersistentProcessing(*args[:-1])
-    processing.run(process_chain)
+    processing = ParallelPersistentProcessing(*args)
+    processing.run()
+
+# def start_job(*args):
+#     process_chain = json.loads(args[-1])
+#     processing = ParallelPersistentProcessing(*args[:-1])
+#     processing.run(process_chain)

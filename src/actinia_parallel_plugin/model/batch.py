@@ -25,7 +25,7 @@ __copyright__ = "Copyright 2021-2022 mundialis GmbH & Co. KG"
 __maintainer__ = "mundialis GmbH % Co. KG"
 
 import os
-import json
+# import json
 from flask_restful_swagger_2 import Schema
 
 from actinia_core.models.process_chain import ProcessChainModel

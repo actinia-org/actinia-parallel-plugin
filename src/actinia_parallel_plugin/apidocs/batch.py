@@ -28,9 +28,6 @@ __maintainer__ = "mundialis GmbH % Co. KG"
 from actinia_core.models.response_models import \
     SimpleResponseModel
 
-from actinia_parallel_plugin.model.response_models import (
-    SimpleStatusCodeResponseModel,
-)
 from actinia_parallel_plugin.model.batch import (
     BatchJobResponseModel,
 )
