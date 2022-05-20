@@ -49,12 +49,21 @@ from actinia_parallel_plugin.core.jobs import updateJob
 
 class ParallelPersistentProcessing(PersistentProcessing):
 
-    def __init__(self, rdc, batch_id, processing_block, jobid, post_url=None):
+    def __init__(self, rdc, batch_id, processing_block, jobid,
+                 user, request_url, post_url, endpoint, method, path,
+                 base_status_url):
         super(ParallelPersistentProcessing, self).__init__(rdc)
         self.batch_id = batch_id
         self.processing_block = processing_block
         self.jobid = jobid
         self.post_url = post_url
+        self.user = user
+        self.request_url = request_url
+        self.post_url = post_url
+        self.endpoint = endpoint
+        self.method = method
+        self.path = path
+        self.base_status_url = base_status_url
 
     # def _execute(self, process_chain, skip_permission_check=False):
     def _execute(self, skip_permission_check=False):
@@ -199,13 +208,20 @@ class ParallelPersistentProcessing(PersistentProcessing):
                 jobs_from_batch, block)
             if block_done is True and block < max(all_blocks):
                 next_block = block + 1
+                # import pdb; pdb.set_trace()
                 next_jobs = startProcessingBlock(
                     jobs_from_batch,
                     next_block,
                     self.batch_id,
                     self.location_name,
                     self.mapset_name,
-                    self.post_url
+                    self.user,
+                    self.request_url,
+                    self.post_url,
+                    self.endpoint,
+                    self.method,
+                    self.path,
+                    self.base_status_url
                 )
                 # print("TODO start next Block")
         #             next_jobs = startProcessingBlock(jobs_from_batch,

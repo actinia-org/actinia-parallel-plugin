@@ -27,7 +27,7 @@ __maintainer__ = "mundialis GmbH % Co. KG"
 import json
 import pickle
 
-from actinia_core.rest.base.resource_base import ResourceBase
+# from actinia_core.rest.base.resource_base import ResourceBase
 from actinia_core.core.common.redis_interface import enqueue_job
 
 # from actinia_parallel_plugin.core.batches import (
@@ -45,20 +45,34 @@ from actinia_parallel_plugin.core.jobtable import (
 from actinia_parallel_plugin.core.jobs import updateJob
 from actinia_parallel_plugin.resources.logging import log
 # from actinia_parallel_plugin.core.persistent_processing import start_job
+from actinia_parallel_plugin.core.parallel_resource_base import ParallelResourceBase
 
 
-class AsyncParallelJobResource(ResourceBase):
+class AsyncParallelJobResource(ParallelResourceBase):
     """Job for parallel processing"""
 
-    def __init__(self, post_url, process_chain, location_name, mapset_name,
-                 batch_id, job_id):
-        super(AsyncParallelJobResource, self).__init__(post_url=post_url)
+    def __init__(self, user, request_url, post_url, endpoint, method, path,
+                 process_chain, location_name, mapset_name,
+                 batch_id, job_id, base_status_url):
+        super(AsyncParallelJobResource, self).__init__(
+            user=user,
+            request_url=request_url,
+            endpoint=endpoint,
+            method=method,
+            path=path,
+            post_url=post_url,
+            base_status_url=base_status_url
+        )
         self.location_name = location_name
         self.mapset_name = mapset_name
         self.batch_id = batch_id
         self.job_id = job_id
         self.request_data = process_chain
         self.post_url = post_url
+        self.endpoint = endpoint
+        self.method = method
+        self.path = path
+        self.base_status_url = base_status_url
 
     def start_parallel_job(self, process, block):
         """Starting job in running actinia-core instance and update job db."""
@@ -78,8 +92,17 @@ class AsyncParallelJobResource(ResourceBase):
                 from actinia_parallel_plugin.core.persistent_processing import \
                     start_job
                 # # for debugging (works not so gogd with parallel processing)
+                # from actinia_parallel_plugin.core.persistent_processing import \
+                #     ParallelPersistentProcessing
                 # processing = ParallelPersistentProcessing(
-                #     rdc, self.batch_id, block, self.job_id, self.post_url)
+                #     rdc, self.batch_id, block, self.job_id,
+                #     self.user,
+                #     self.request_url,
+                #     self.post_url,
+                #     self.endpoint,
+                #     self.method,
+                #     self.path,
+                #     self.base_status_url)
                 # processing.run()
             else:
                 # TODO change start_job import
@@ -92,7 +115,13 @@ class AsyncParallelJobResource(ResourceBase):
                 self.batch_id,
                 block,
                 self.job_id,
-                self.post_url
+                self.user,
+                self.request_url,
+                self.post_url,
+                self.endpoint,
+                self.method,
+                self.path,
+                self.base_status_url
             )
 
         # update job in jobtable

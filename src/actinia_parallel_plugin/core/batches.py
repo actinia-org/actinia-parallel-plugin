@@ -288,7 +288,8 @@ def getJobsByBatchId(batch_id, process=None):
 
 
 def startProcessingBlock(jobs, block, batch_id, location_name, mapset_name,
-                         post_url):
+                         user, request_url, post_url, endpoint, method, path,
+                         base_status_url):
     """ Function to start a specific processing block for an input list of
         jobs (db entries)
     """
@@ -314,12 +315,18 @@ def startProcessingBlock(jobs, block, batch_id, location_name, mapset_name,
         if mapset_suffix != "":
             mapset_name_parallel += f"{mapset_suffix}{num}"
         parallel_job = AsyncParallelJobResource(
+            user=user,
+            request_url=request_url,
             post_url=post_url,
+            endpoint=endpoint,
+            method=method,
+            path=path,
             process_chain=process_chain,
             location_name=location_name,
             mapset_name=mapset_name_parallel,
             batch_id=batch_id,
-            job_id=jobid
+            job_id=jobid,
+            base_status_url=base_status_url
         )
         parallel_job.start_parallel_job("persistent", 1)
         job_entry = parallel_job.get_job_entry()
