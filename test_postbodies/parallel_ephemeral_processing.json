@@ -1,0 +1,80 @@
+{
+  "jobs": [
+    {
+      "list": [
+        {
+          "module": "g.region",
+          "id": "g_region_nonparallel_block1",
+          "inputs":[
+            {"param": "raster", "value": "elevation@PERMANENT"}
+          ]
+        },
+        {
+          "module": "r.mapcalc",
+          "id": "r_mapcalc_0_nonparallel_block1",
+          "inputs":[
+            {"param": "expression", "value": "baum = elevation@PERMANENT * 2"}
+          ]
+        }
+      ],
+      "parallel": "false",
+      "version": "1"
+    },
+    {
+      "list": [
+        {
+          "module": "g.region",
+          "id": "g_region_1_parallel_block2",
+          "inputs":[
+            {"param": "raster", "value": "elevation@PERMANENT"}
+          ],
+          "flags": "p"
+        },
+        {
+          "module": "r.info",
+          "id": "r_info_1_parallel_block2",
+          "inputs":[
+            {"param": "map", "value": "elevation@PERMANENT"}
+          ]
+        }
+      ],
+      "parallel": "true",
+      "version": "1"
+    },
+    {
+      "list": [
+        {
+          "module": "g.region",
+          "id": "g_region_2_parallel_block2",
+          "inputs":[
+            {"param": "raster", "value": "elevation@PERMANENT"}
+          ],
+          "flags": "p"
+        },
+        {
+          "module": "r.univar",
+          "id": "r_univar_2_parallel_block2",
+          "inputs":[
+            {"param": "map", "value": "elevation@PERMANENT"}
+          ]
+        }
+      ],
+      "parallel": "true",
+      "version": "1"
+    },
+    {
+      "list": [
+        {
+          "module": "g.region",
+          "id": "g_region_nonparallel_block3",
+          "inputs":[
+            {"param": "raster", "value": "elevation@PERMANENT"}
+          ],
+          "flags": "p"
+        }
+      ],
+      "parallel": "false",
+      "version": "1"
+    }
+  ]
+}

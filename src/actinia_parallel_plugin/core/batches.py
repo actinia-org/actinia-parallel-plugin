@@ -289,7 +289,7 @@ def getJobsByBatchId(batch_id, process=None):
 
 def startProcessingBlock(jobs, block, batch_id, location_name, mapset_name,
                          user, request_url, post_url, endpoint, method, path,
-                         base_status_url):
+                         base_status_url, process):
     """ Function to start a specific processing block for an input list of
         jobs (db entries)
     """
@@ -312,7 +312,7 @@ def startProcessingBlock(jobs, block, batch_id, location_name, mapset_name,
             # "actinia_core_url": job["actinia_core_url"]
         }
         mapset_name_parallel = mapset_name
-        if mapset_suffix != "":
+        if mapset_suffix != "" and mapset_name is not None:
             mapset_name_parallel += f"{mapset_suffix}{num}"
         parallel_job = AsyncParallelJobResource(
             user=user,
@@ -328,7 +328,7 @@ def startProcessingBlock(jobs, block, batch_id, location_name, mapset_name,
             job_id=jobid,
             base_status_url=base_status_url
         )
-        parallel_job.start_parallel_job("persistent", 1)
+        parallel_job.start_parallel_job(process, 1)
         job_entry = parallel_job.get_job_entry()
         jobs_responses.append(job_entry)
     return jobs_responses

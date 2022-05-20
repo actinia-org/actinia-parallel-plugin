@@ -104,6 +104,22 @@ class AsyncParallelJobResource(ParallelResourceBase):
                 #     self.path,
                 #     self.base_status_url)
                 # processing.run()
+            elif process == "ephemeral":
+                from actinia_parallel_plugin.core.ephemeral_processing import \
+                    start_job
+                # # for debugging (works not so gogd with parallel processing)
+                # from actinia_parallel_plugin.core.ephemeral_processing import \
+                #     ParallelEphemeralProcessing
+                # processing = ParallelEphemeralProcessing(
+                #     rdc, self.batch_id, block, self.job_id,
+                #     self.user,
+                #     self.request_url,
+                #     self.post_url,
+                #     self.endpoint,
+                #     self.method,
+                #     self.path,
+                #     self.base_status_url)
+                # processing.run()
             else:
                 # TODO change start_job import
                 from actinia_parallel_plugin.core.persistent_processing import \

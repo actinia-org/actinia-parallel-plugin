@@ -24,8 +24,7 @@ __author__ = "Anika Weinmann"
 __copyright__ = "Copyright 2022 mundialis GmbH & Co. KG"
 __maintainer__ = "mundialis GmbH % Co. KG"
 
-import json
-import pickle
+
 from flask import request, make_response, jsonify, g
 from flask_restful_swagger_2 import swagger
 # from flask_restful_swagger_2 import Resource
@@ -193,14 +192,15 @@ class AsyncParallelPersistentResource(ResourceBase):
             1,
             self.batch_id,
             self.location_name,
-            self.mapset_name,
             g.user,
             request.url,
             self.post_url,
             request.endpoint,
             request.method,
             request.path,
-            self.base_status_url
+            self.base_status_url,
+            self.mapset_name,
+            "persistent"
         )
         first_status = [entry["status"] for entry in first_jobs]
         all_jobs = getJobsByBatchId(self.batch_id, "persistent")

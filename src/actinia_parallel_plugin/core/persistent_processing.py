@@ -28,7 +28,6 @@ __maintainer__ = "mundialis GmbH % Co. KG"
 import sys
 import traceback
 import pickle
-import json
 
 from actinia_core.processing.actinia_processing.ephemeral.\
     persistent_processing import PersistentProcessing
@@ -208,7 +207,6 @@ class ParallelPersistentProcessing(PersistentProcessing):
                 jobs_from_batch, block)
             if block_done is True and block < max(all_blocks):
                 next_block = block + 1
-                # import pdb; pdb.set_trace()
                 next_jobs = startProcessingBlock(
                     jobs_from_batch,
                     next_block,
@@ -221,13 +219,9 @@ class ParallelPersistentProcessing(PersistentProcessing):
                     self.endpoint,
                     self.method,
                     self.path,
-                    self.base_status_url
+                    self.base_status_url,
+                    "persistent"
                 )
-                # print("TODO start next Block")
-        #             next_jobs = startProcessingBlock(jobs_from_batch,
-        #                                              next_block)
-        #             res = createBatchResponseDict(next_jobs)
-        #             return make_response(jsonify(res), 200)
 
         elif (response_model["status"] == "error" or
                 response_model["status"] == "terminated"):
