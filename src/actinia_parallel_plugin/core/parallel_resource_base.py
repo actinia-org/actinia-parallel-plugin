@@ -103,14 +103,7 @@ class ParallelResourceBase(ResourceBase):
         self.resource_url_base = None
 
         # Generate the status URL
-        # import pdb; pdb.set_trace()
-        self.status_url = f"{base_status_url}{self.request_id}"
-        # self.status_url = flask_api.url_for(
-        #     ResourceManager,
-        #     user_id=self.user_id,
-        #     resource_id=self.resource_id,
-        #     _external=True
-        # )
+        self.status_url = f"{base_status_url}{self.resource_id}"
 
         if global_config.FORCE_HTTPS_URLS is True and "http://" in self.status_url:
             self.status_url = self.status_url.replace("http://", "https://")

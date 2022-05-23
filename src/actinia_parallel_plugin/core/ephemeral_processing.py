@@ -69,7 +69,7 @@ class ParallelEphemeralProcessing(EphemeralProcessing):
         resource_id = self.resource_id
         response_data = self.resource_logger.get(
             self.user_id, self.resource_id)
-        http_code, response_model = pickle.loads(response_data)
+        _, response_model = pickle.loads(response_data)
         updateJob(resource_id, response_model, self.jobid)
 
         if "finished" == response_model["status"]:

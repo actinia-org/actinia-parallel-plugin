@@ -26,8 +26,7 @@ __maintainer__ = "mundialis GmbH % Co. KG"
 
 
 from flask import request, make_response, jsonify, g
-from flask_restful_swagger_2 import swagger
-# from flask_restful_swagger_2 import Resource
+from flask_restful_swagger_2 import swagger, Resource
 
 from actinia_api import URL_PREFIX
 
@@ -36,7 +35,7 @@ from actinia_api import URL_PREFIX
 
 from actinia_core.models.response_models import \
     SimpleResponseModel
-from actinia_core.rest.base.resource_base import ResourceBase
+# from actinia_core.rest.base.resource_base import ResourceBase
 # from actinia_core.core.common.redis_interface import enqueue_job
 
 from actinia_parallel_plugin.apidocs import helloworld
@@ -63,7 +62,7 @@ from actinia_parallel_plugin.resources.logging import log
 # from actinia_parallel_plugin.core.batches import startProcessingBlock
 
 
-class AsyncParallelPersistentResource(ResourceBase):
+class AsyncParallelPersistentResource(Resource):
     """Resource for parallel processing"""
 
     def __init__(self):
@@ -175,8 +174,7 @@ class AsyncParallelPersistentResource(ResourceBase):
             return make_response(res, 500)
 
         # Generate the base of the status URL
-        # import pdb; pdb.set_trace()
-        self.base_status_url = f"{request.host_url}{URL_PREFIX}/resouces/{g.user.user_id}/"
+        self.base_status_url = f"{request.host_url}{URL_PREFIX}/resources/{g.user.user_id}/"
         # self.base_status_url = flask_api.url_for(
         #     ResourceManager,
         #     user_id=g.user.user_id,
@@ -186,7 +184,6 @@ class AsyncParallelPersistentResource(ResourceBase):
 
         # start first processing block
         # first_jobs = self._start_processing_block(jobs_in_db, 1)
-        # import pdb; pdb.set_trace()
         first_jobs = startProcessingBlock(
             jobs_in_db,
             1,

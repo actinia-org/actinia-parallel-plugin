@@ -107,41 +107,49 @@ class AsyncParallelJobResource(ParallelResourceBase):
             elif process == "ephemeral":
                 from actinia_parallel_plugin.core.ephemeral_processing import \
                     start_job
-                # # for debugging (works not so gogd with parallel processing)
-                # from actinia_parallel_plugin.core.ephemeral_processing import \
-                #     ParallelEphemeralProcessing
-                # processing = ParallelEphemeralProcessing(
-                #     rdc, self.batch_id, block, self.job_id,
-                #     self.user,
-                #     self.request_url,
-                #     self.post_url,
-                #     self.endpoint,
-                #     self.method,
-                #     self.path,
-                #     self.base_status_url)
-                # processing.run()
+                # for debugging
+                for var in [
+                        'GISRC', 'GISBASE', 'LD_LIBRARY_PATH',
+                        'GRASS_ADDON_PATH', 'GIS_LOCK']:
+                    import os
+                    if var in os.environ:
+                        del os.environ[var]
+                from actinia_parallel_plugin.core.ephemeral_processing import \
+                    ParallelEphemeralProcessing
+                processing = ParallelEphemeralProcessing(
+                    rdc, self.batch_id, block, self.job_id,
+                    self.user,
+                    self.request_url,
+                    self.post_url,
+                    self.endpoint,
+                    self.method,
+                    self.path,
+                    self.base_status_url)
+                processing.run()
             else:
                 # TODO change start_job import
                 from actinia_parallel_plugin.core.persistent_processing import \
                     start_job
-            enqueue_job(
-                self.job_timeout,
-                start_job,
-                rdc,
-                self.batch_id,
-                block,
-                self.job_id,
-                self.user,
-                self.request_url,
-                self.post_url,
-                self.endpoint,
-                self.method,
-                self.path,
-                self.base_status_url
-            )
+            # enqueue_job(
+            #     self.job_timeout,
+            #     start_job,
+            #     rdc,
+            #     self.batch_id,
+            #     block,
+            #     self.job_id,
+            #     self.user,
+            #     self.request_url,
+            #     self.post_url,
+            #     self.endpoint,
+            #     self.method,
+            #     self.path,
+            #     self.base_status_url
+            # )
 
         # update job in jobtable
-        html_code, response_model = pickle.loads(self.response_data)
+        self.response_data = self.resource_logger.get(
+            self.user_id, self.resource_id, self.iteration)
+        _, response_model = pickle.loads(self.response_data)
         job = updateJob(self.resource_id, response_model, self.job_id)
         return job
 

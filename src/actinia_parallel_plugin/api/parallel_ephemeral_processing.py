@@ -25,13 +25,18 @@ __copyright__ = "Copyright 2022 mundialis GmbH & Co. KG"
 __maintainer__ = "mundialis GmbH % Co. KG"
 
 from flask import request, make_response, jsonify, g
-from flask_restful_swagger_2 import swagger
+from flask_restful_swagger_2 import swagger, Resource
 
 from actinia_api import URL_PREFIX
 
 from actinia_core.models.response_models import \
     SimpleResponseModel
-from actinia_core.rest.base.resource_base import ResourceBase
+from actinia_core.core.common.config import global_config
+from actinia_core.core.common.api_logger import log_api_call
+from actinia_core.rest.base.user_auth import check_user_permissions
+from actinia_core.rest.base.user_auth import create_dummy_user
+from actinia_core.core.common.app import auth
+# from actinia_core.rest.base.resource_base import ResourceBase
 
 from actinia_parallel_plugin.apidocs import helloworld
 from actinia_parallel_plugin.core.batches import (
@@ -45,14 +50,26 @@ from actinia_parallel_plugin.core.batches import (
 from actinia_parallel_plugin.resources.logging import log
 
 
-class AsyncParallelEphermeralResource(ResourceBase):
+class AsyncParallelEphermeralResource(Resource):
     """Resource for parallel processing"""
+
+    decorators = []
+
+    # if global_config.LOG_API_CALL is True:
+    #     decorators.append(log_api_call)
+    #
+    # if global_config.CHECK_CREDENTIALS is True:
+    #     decorators.append(check_user_permissions)
+
+    if global_config.LOGIN_REQUIRED is True:
+        decorators.append(auth.login_required)
+    else:
+        decorators.append(create_dummy_user)
 
     def __init__(self):
         super(AsyncParallelEphermeralResource, self).__init__()
         self.location_name = None
         self.batch_id = None
-
 
     # TODO change apidocs
     @swagger.doc(helloworld.describeHelloWorld_get_docs)
@@ -61,7 +78,7 @@ class AsyncParallelEphermeralResource(ResourceBase):
         """Persistent parallel processing."""
 
         self.location_name = location_name
-        self.post_url = self.api_info["request_url"]
+        self.post_url = request.base_url
 
         json_dict = request.get_json(force=True)
         log.info("Received HTTP POST with batchjob: %s" %
@@ -80,9 +97,16 @@ class AsyncParallelEphermeralResource(ResourceBase):
             return make_response(res, 500)
 
         # Generate the base of the status URL
-        # import pdb; pdb.set_trace()
-        self.base_status_url = f"{request.host_url}{URL_PREFIX}/resouces/" \
-            f"{g.user.user_id}/"
+        host_url = request.host_url
+        if host_url.endswith("/") and URL_PREFIX.startswith("/"):
+            self.base_status_url = f"{host_url[:-1]}{URL_PREFIX}/" \
+                f"resources/{g.user.user_id}/"
+        elif not host_url.endswith("/") and not URL_PREFIX.startswith("/"):
+            self.base_status_url = f"{host_url}/{URL_PREFIX}/resources/" \
+                f"{g.user.user_id}/"
+        else:
+            self.base_status_url = f"{host_url}{URL_PREFIX}/resources/" \
+                f"{g.user.user_id}/"
 
         # start first processing block
         first_jobs = startProcessingBlock(
