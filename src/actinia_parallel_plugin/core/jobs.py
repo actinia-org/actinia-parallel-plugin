@@ -26,7 +26,6 @@ __maintainer__ = "mundialis GmbH % Co. KG"
 
 from actinia_parallel_plugin.core.jobtable import (
     getJobById,
-    # getJobByResource,
     insertNewJob,
     updateJobByID,
 )
@@ -70,7 +69,8 @@ def insertJob(jsonDict, process, process_chain):
     # if (regeldatei.processing_host):
     #     actinia_core_url = regeldatei.processing_host
     #     if not actinia_core_url.startswith('http'):
-    #         actinia_core_url = ACTINIACORE_VM.scheme + '://' + actinia_core_url
+    #         actinia_core_url = ACTINIACORE_VM.scheme + '://' + \
+    #             actinia_core_url
     #     if len(actinia_core_url.split(':')) == 2:
     #         actinia_core_url += ':' + ACTINIACORE_VM.port
     #
@@ -81,7 +81,6 @@ def insertJob(jsonDict, process, process_chain):
         jsonDict,
         process_chain_struct,
         process,
-        process_chain.feature_type,
         # actinia_core_url,
         # actinia_core_platform,
         # actinia_core_platform_name

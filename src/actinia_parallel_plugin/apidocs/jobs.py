@@ -24,145 +24,26 @@ __author__ = "Carmen Tawalika, Anika Weinmann"
 __copyright__ = "Copyright 2018-2022 mundialis GmbH & Co. KG"
 __maintainer__ = "mundialis GmbH % Co. KG"
 
+import os
+import json
 from flask_restful_swagger_2 import Schema
 
 from actinia_parallel_plugin.apidocs.regeldatei import (
     RegeldateiModel,
-    ProcessesProcOutputModel,
 )
 
+script_dir = os.path.dirname(os.path.abspath(__file__))
 
-class EnrichedProcInputBaseModel(Schema):
-    type = 'object'
-    properties = {
-        'name': {
-            'type': 'string',
-            'description': 'Name of input data'
-        },
-        'type': {
-            'type': 'string',
-            'enum': ["GNOS", "DATABASE", "PARAMETER", "STATUS"],
-            'description': 'Type of input. Can be "GNOS", "DATABASE", ' +
-                           '"PARAMETER" or "STATUS"'
-        },
-        'geodata_meta': "string"  # TODO: GeodataResponseModel
-    }
-
-
-class EnrichedProcInputGnosModel(Schema):
-    """Request schema for creating a job"""
-    allOf = [
-        # keep this line, otherwise BaseModel does not exist in document
-        EnrichedProcInputBaseModel,
-        {
-            '$ref': '#/definitions/ProcessesProcInputBaseModel'
-        # },
-        # ProcessesProcInputGnosModel,
-        # {
-        #     '$ref': '#/definitions/ProcessesProcInputGnosModel'
-        }
-
-    ]
-
-
-class EnrichedProcInputDatabaseModel(Schema):
-    """Request schema for creating a job"""
-    allOf = [
-        # keep this line, otherwise BaseModel does not exist in document
-        EnrichedProcInputBaseModel,
-        {
-            '$ref': '#/definitions/ProcessesProcInputBaseModel'
-        # },
-        # ProcessesProcInputDatabaseModel,
-        # {
-        #     '$ref': '#/definitions/ProcessesProcInputDatabaseModel'
-        }
-    ]
-
-
-class EnrichedProcInputParameterModel(Schema):
-    """Request schema for creating a job"""
-    allOf = [
-        # keep this line, otherwise BaseModel does not exist in document
-        EnrichedProcInputBaseModel,
-        {
-            '$ref': '#/definitions/ProcessesProcInputBaseModel'
-        # },
-        # ProcessesProcInputParameterModel,
-        # {
-        #     '$ref': '#/definitions/ProcessesProcInputParameterModel'
-        }
-    ]
-
-
-class EnrichedProcInputStatusModel(Schema):
-    """Request schema for creating a job"""
-    allOf = [
-        # keep this line, otherwise BaseModel does not exist in document
-        EnrichedProcInputBaseModel,
-        {
-            '$ref': '#/definitions/ProcessesProcInputBaseModel'
-        # },
-        # ProcessesProcInputStatusModel,
-        # {
-        #     '$ref': '#/definitions/ProcessesProcInputStatusModel'
-        }
-    ]
-
-
-class EnrichedProcInputModel(Schema):
-    """Request schema for creating a job"""
-    type = 'object'
-    # TODO: use oneOf (was not parsed in petstore)
-    allOf = [
-        # keep this line, otherwise BaseModel does not exist in document
-        EnrichedProcInputGnosModel,
-        EnrichedProcInputDatabaseModel,
-        EnrichedProcInputParameterModel,
-        EnrichedProcInputStatusModel,
-        {
-            '$ref': '#/definitions/EnrichedProcInputGnosModel'
-        },
-        {
-            '$ref': '#/definitions/EnrichedProcInputDatabaseModel'
-        },
-        {
-            '$ref': '#/definitions/EnrichedProcInputParameterModel'
-        },
-        {
-            '$ref': '#/definitions/EnrichedProcInputStatusModel'
-        }
-    ]
-
-
-class EnrichedProcModel(Schema):
-    """Request schema for creating a job"""
-    type = 'object'
-    properties = {
-        'name': {
-            'type': 'integer',
-            'description': 'Name of process'
-        },
-        'input': {
-            'type': 'array',
-            'description': 'Definitions for process input data',
-            'items': EnrichedProcInputModel
-        },
-        'output': {
-            'type': 'array',
-            'description': 'Definitions for process output data',
-            'items': ProcessesProcOutputModel
-        },
-        'dependsOn': {
-            'type': 'string',
-            'description': 'List of names of processes on which this process' +
-                           ' depends on. See also "status" as input parameter'
-        }
-    }
+rel_path = "../apidocs/examples/jobs_get_docs_response_example.json"
+abs_file_path = os.path.join(script_dir, rel_path)
+print(abs_file_path)
+with open(abs_file_path) as jsonfile:
+    jobs_get_docs_response_example = json.load(jsonfile)
 
 
 class EnrichedRegeldateiModel(Schema):
     """Request schema for creating a job"""
+    # TODO check if this is correct
     type = 'object'
     properties = {
         'rule_area_id': {
@@ -173,37 +54,32 @@ class EnrichedRegeldateiModel(Schema):
             'type': 'string',
             'description': 'Name of area where Regeldatei is valid'
         },
-        'feature_type': {
-            'type': 'string',
-            'description': 'Name of feature type to run job with'
-        },
         'feature_uuid': {
             'type': 'string',
             'description': 'Geonetwork UUID of feature type to run job with'
         },
-        'feature_source': EnrichedProcInputBaseModel,
         'processing_platform': {
             'type': 'string',
-            'description': 'The actinia-core platform, either "openshift" or "vm". If platform is "vm" and no actinia_core_url is given, actinia-gdi will create a new VM.'
+            'description': 'TODO'
         },
         'processing_platform_name': {
             'type': 'string',
-            'description': 'The actinia-core platform name. Only used to match a job to a VM if VM not started by actinia-gdi. Ideally it would contain the job type (actinia-core-pt or actinia-core-oc) and a unique ID.'
+            'description': 'TODO (and a unique ID.)'
         },
         'processing_host': {
             'type': 'string',
-            'description': 'The actinia-core IP or URL in case the platform is not OpenShift and no new VM should be created by actinia-gdi'
-        },
-        'procs': {
-            'type': 'array',
-            'description': 'List of processes to run',
-            'items': EnrichedProcModel
-        },
-        'geodata_meta': "string" # TODO: GeodataResponseModel
+            'description': 'TODO (The actinia-core IP or URL)'
+        }
+        # 'procs': {
+        #     'type': 'array',
+        #     'description': 'List of processes to run',
+        #     'items': EnrichedProcModel
+        # }
+        # 'geodata_meta': "string" # TODO: GeodataResponseModel
     }
     # TODO add example
     # example = jobs_post_docs_request_example
-    required = ["feature_source", "procs"]
+    required = ["feature_source"]
 
 
 class ProcessesJobResponseModel(Schema):
@@ -216,12 +92,8 @@ class ProcessesJobResponseModel(Schema):
         },
         'process': {
             'type': 'string',
-            'description': 'The process of the job, e.g standortsicherung ' +
+            'description': 'The process of the job, e.g standortsicherung '
                            'or potentialtrenches'
-        },
-        'feature_type': {
-            'type': 'string',
-            'description': 'The feature type of the job'
         },
         'rule_configuration': RegeldateiModel,
         'job_description': EnrichedRegeldateiModel,
@@ -240,10 +112,6 @@ class ProcessesJobResponseModel(Schema):
         'time_ended': {
             'type': 'string',
             'description': 'Timestamp when job was created'
-        },
-        'metadata': {
-            'type': 'string',
-            'description': 'Not specified yet'
         },
         'status': {
             'type': 'string',
@@ -266,7 +134,8 @@ class ProcessesJobResponseModel(Schema):
         },
         'actinia_core_platform': {
             'type': 'string',
-            'description': 'The actinia-core platform, either "openshift" or "vm"'
+            'description': 'The actinia-core platform, either "openshift" or '
+                           '"vm"'
         },
         'actinia_core_platform_name': {
             'type': 'string',
@@ -274,11 +143,14 @@ class ProcessesJobResponseModel(Schema):
         },
         'actinia_core_url': {
             'type': 'string',
-            'description': 'The actinia-core IP or URL where actinia-core is processing the job'
+            'description': 'The actinia-core IP or URL where actinia-core is '
+                           'processing the job'
         },
         'creation_uuid': {
             'type': 'string',
-            'description': 'A unique id for the job at creation time before idpk_jobs is known. (More unique than creation timestamp)'
+            'description': 'A unique id for the job at creation time before '
+                           'idpk_jobs is known. (More unique than creation '
+                           'timestamp)'
         },
         'terraformer_id': {
             'type': 'string',
@@ -289,8 +161,7 @@ class ProcessesJobResponseModel(Schema):
             'description': 'The Response/Status of terraformer'
         }
     }
-    # TODO add example
-    # example = jobs_post_docs_response_example
+    example = jobs_get_docs_response_example
 
 
 jobId_get_docs = {

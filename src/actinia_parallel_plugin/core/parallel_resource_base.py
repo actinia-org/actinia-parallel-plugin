@@ -30,14 +30,10 @@ from datetime import datetime
 
 from flask_restful_swagger_2 import Resource
 
-# from actinia_core.core.common.app import flask_api
-# from actinia_core.rest.resource_streamer import RequestStreamerResource
-
 from actinia_core.core.common.config import global_config
 from actinia_core.core.messages_logger import MessageLogger
 from actinia_core.core.resources_logger import ResourceLogger
 from actinia_core.rest.base.resource_base import ResourceBase
-# from actinia_core.rest.resource_management import ResourceManager
 from actinia_core.models.response_models import (
     create_response_from_model,
     ApiInfoModel,
@@ -105,7 +101,8 @@ class ParallelResourceBase(ResourceBase):
         # Generate the status URL
         self.status_url = f"{base_status_url}{self.resource_id}"
 
-        if global_config.FORCE_HTTPS_URLS is True and "http://" in self.status_url:
+        if (global_config.FORCE_HTTPS_URLS is True
+                and "http://" in self.status_url):
             self.status_url = self.status_url.replace("http://", "https://")
 
         self.request_url = request_url
@@ -139,8 +136,10 @@ class ParallelResourceBase(ResourceBase):
             - Send an accept entry to the resource redis database
 
         Args:
-            has_json (bool):Set True if the request has JSON data, False otherwise
-            has_xml (bool):Set True if the request has XML data, False otherwise
+            has_json (bool): Set True if the request has JSON data, False
+                             otherwise
+            has_xml (bool): Set True if the request has XML data, False
+                            otherwise
             location_name (str): The name of the location to work in
             mapset_name (str): The name of the target mapset in which the
                                computation should be performed
@@ -153,26 +152,17 @@ class ParallelResourceBase(ResourceBase):
             the self.response_data variable to send a response.
 
         """
-        # if has_json is True and has_xml is True:
-        #     if request.is_json is True:
-        #         self.request_data = request.get_json()
-        #     else:
-        #         if self.check_for_xml() is False:
-        #             return None
-        # elif has_xml is True:
-        #     if self.check_for_xml() is False:
-        #         return None
-        # elif has_json is True:
-        #     if self.check_for_json() is False:
-        #         return None
 
         # Compute the job timeout of the worker queue from the user credentials
-        process_time_limit = self.user_credentials["permissions"]["process_time_limit"]
-        process_num_limit = self.user_credentials["permissions"]["process_num_limit"]
+        process_time_limit = self.user_credentials["permissions"][
+            "process_time_limit"]
+        process_num_limit = self.user_credentials["permissions"][
+            "process_num_limit"]
         self.job_timeout = int(process_time_limit * process_num_limit * 20)
 
         # Create the resource URL base and use a placeholder for the file name
-        # The placeholder __None__ must be replaced by the resource URL generator
+        # The placeholder __None__ must be replaced by the resource URL
+        # generator
         # TODO check if this works
         self.resource_url_base = f"{self.status_url}/__None__"
 
@@ -203,21 +193,23 @@ class ParallelResourceBase(ResourceBase):
 
         # Return the ResourceDataContainer that includes all
         # required data for the asynchronous processing
-        return ResourceDataContainer(grass_data_base=self.grass_data_base,
-                                     grass_user_data_base=self.grass_user_data_base,
-                                     grass_base_dir=self.grass_base_dir,
-                                     request_data=self.request_data,
-                                     user_id=self.user_id,
-                                     user_group=self.user_group,
-                                     user_credentials=self.user_credentials,
-                                     resource_id=self.resource_id,
-                                     iteration=self.iteration,
-                                     status_url=self.status_url,
-                                     api_info=self.api_info,
-                                     resource_url_base=self.resource_url_base,
-                                     orig_time=self.orig_time,
-                                     orig_datetime=self.orig_datetime,
-                                     config=global_config,
-                                     location_name=location_name,
-                                     mapset_name=mapset_name,
-                                     map_name=map_name)
+        return ResourceDataContainer(
+            grass_data_base=self.grass_data_base,
+            grass_user_data_base=self.grass_user_data_base,
+            grass_base_dir=self.grass_base_dir,
+            request_data=self.request_data,
+            user_id=self.user_id,
+            user_group=self.user_group,
+            user_credentials=self.user_credentials,
+            resource_id=self.resource_id,
+            iteration=self.iteration,
+            status_url=self.status_url,
+            api_info=self.api_info,
+            resource_url_base=self.resource_url_base,
+            orig_time=self.orig_time,
+            orig_datetime=self.orig_datetime,
+            config=global_config,
+            location_name=location_name,
+            mapset_name=mapset_name,
+            map_name=map_name
+        )

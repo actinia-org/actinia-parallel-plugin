@@ -104,7 +104,7 @@ def checkBatchProcessChain(jsonDict):
     """
 
     bpc = BatchProcessChain(**jsonDict)
-    bpc.feature_type = "default"
+    # bpc.feature_type = "default"
     # check consistency
     bpc_dict = bpc.to_struct()
     if len(bpc_dict["jobs"]) == 0:
@@ -140,7 +140,7 @@ def createBatch(jsonDict, process, batchid):
             # assign the model
             process_chain = SingleJob(**job)
             # might be needed (?)
-            process_chain.feature_type = "null"
+            # process_chain.feature_type = "null"
             job_in_db = insertJob(job, process, process_chain)
             jobs_in_db.append(job_in_db)
     return jobs_in_db
@@ -267,7 +267,8 @@ def getAllBatchIds():
 
 
 # def getAllBatches(process):
-#     """ Function to return all jobs that are part of a batch from the database
+#     """ Function to return all jobs that are part of a batch from the
+#     database
 #     """
 #     result_list = []
 #     batchids = getAllBatchIds()
@@ -304,13 +305,13 @@ def startProcessingBlock(jobs, block, batch_id, location_name, mapset_name,
         process_chain["list"] = job["rule_configuration"]["list"]
         process_chain["version"] = job["rule_configuration"]["version"]
         jobid = job["idpk_jobs"]
-        start_kwargs = {
-            "process": job["process"],
-            "process_chain": process_chain,
-            "jobid": job["idpk_jobs"],
-            # "actinia_core_platform": job["actinia_core_platform"],
-            # "actinia_core_url": job["actinia_core_url"]
-        }
+        # start_kwargs = {
+        #     "process": job["process"],
+        #     "process_chain": process_chain,
+        #     "jobid": job["idpk_jobs"],
+        #     # "actinia_core_platform": job["actinia_core_platform"],
+        #     # "actinia_core_url": job["actinia_core_url"]
+        # }
         mapset_name_parallel = mapset_name
         if mapset_suffix != "" and mapset_name is not None:
             mapset_name_parallel += f"{mapset_suffix}{num}"

@@ -25,23 +25,18 @@ __copyright__ = "Copyright 2021-2022 mundialis GmbH & Co. KG"
 __maintainer__ = "mundialis GmbH % Co. KG"
 
 import os
-# import json
+import json
 from flask_restful_swagger_2 import Schema
 
 from actinia_core.models.process_chain import ProcessChainModel
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
-# TODO
-# rel_path = ("../apidocs/examples/"
-#             + "batchjob_post_response_example.json")
-# print(script_dir)
-# print(rel_path)
-# abs_file_path = os.path.join(script_dir, rel_path)
-# print(abs_file_path)
-# print(os.path.isdir(abs_file_path))
-# with open(abs_file_path) as jsonfile:
-#     batchjob_post_docs_response_example = json.load(jsonfile)
+rel_path = "../apidocs/examples/batchjob_post_response_example.json"
+abs_file_path = os.path.join(script_dir, rel_path)
+print(abs_file_path)
+with open(abs_file_path) as jsonfile:
+    batchjob_post_docs_response_example = json.load(jsonfile)
 
 
 class BatchJobsSummaryModel(Schema):
@@ -166,12 +161,15 @@ class BatchProcessChainModel(Schema):
                            'type (actinia-core-pt or actinia-core-oc) and '
                            'a unique ID.'
         },
-        'jobs': {'type': 'array',
-                 'items': ProcessChainModel,
-                 'description': "A list of process chains (jobs) that should "
-                                "be executed in parallel or sequentially "
-                                "in the order provided by the list."}
+        'jobs': {
+            'type': 'array',
+            'items': ProcessChainModel,
+            'description': "A list of process chains (jobs) that should "
+                           "be executed in parallel or sequentially "
+                           "in the order provided by the list."
         }
+    }
+    required = ["jobs"]
 
 
 class BatchJobResponseModel(Schema):
@@ -264,7 +262,6 @@ class BatchJobResponseModel(Schema):
                     }
                 }
         },
-
         'summary': BatchJobsSummaryModel
     }
-    # example = batchjob_post_docs_response_example
+    example = batchjob_post_docs_response_example

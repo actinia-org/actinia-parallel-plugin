@@ -75,7 +75,8 @@ class ParallelPersistentProcessing(PersistentProcessing):
         - Create the temporal database
         - Initialize the GRASS environment and create the temporary mapset
         - Run the modules
-        - Parse the stdout output of the modules and generate the module results
+        - Parse the stdout output of the modules and generate the module
+          results
 
         Args:
             skip_permission_check (bool): If set True, the permission checks of
@@ -91,11 +92,9 @@ class ParallelPersistentProcessing(PersistentProcessing):
         if self.rdc.iteration is not None:
             process_list = \
                 self._create_temporary_grass_environment_and_process_list_for_iteration(
-                    # process_chain=process_chain,
                     skip_permission_check=skip_permission_check)
         else:
             process_list = self._create_temporary_grass_environment_and_process_list(
-                # process_chain=process_chain,
                 skip_permission_check=skip_permission_check)
 
         # Run all executables
@@ -103,7 +102,6 @@ class ParallelPersistentProcessing(PersistentProcessing):
         # Parse the module sdtout outputs and create the results
         self._parse_module_outputs()
 
-    # def run(self, process_chain):
     def run(self):
         """This function will run the processing and will catch and process
         any Exceptions that were raised while processing. Call this function
@@ -121,7 +119,6 @@ class ParallelPersistentProcessing(PersistentProcessing):
         """
         try:
             # Run the _execute function that does all the work
-            # self._execute(process_chain=process_chain)
             self._execute()
         except AsyncProcessTermination as e:
             self.run_state = {"terminated": str(e)}
@@ -192,7 +189,7 @@ class ParallelPersistentProcessing(PersistentProcessing):
         resource_id = self.resource_id
         response_data = self.resource_logger.get(
             self.user_id, self.resource_id)
-        http_code, response_model = pickle.loads(response_data)
+        _, response_model = pickle.loads(response_data)
         updateJob(resource_id, response_model, self.jobid)
 
         if "finished" == response_model["status"]:
@@ -207,7 +204,7 @@ class ParallelPersistentProcessing(PersistentProcessing):
                 jobs_from_batch, block)
             if block_done is True and block < max(all_blocks):
                 next_block = block + 1
-                next_jobs = startProcessingBlock(
+                startProcessingBlock(
                     jobs_from_batch,
                     next_block,
                     self.batch_id,
@@ -233,8 +230,3 @@ class ParallelPersistentProcessing(PersistentProcessing):
 def start_job(*args):
     processing = ParallelPersistentProcessing(*args)
     processing.run()
-
-# def start_job(*args):
-#     process_chain = json.loads(args[-1])
-#     processing = ParallelPersistentProcessing(*args[:-1])
-#     processing.run(process_chain)

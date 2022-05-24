@@ -84,7 +84,7 @@ class ParallelEphemeralProcessing(EphemeralProcessing):
                 jobs_from_batch, block)
             if block_done is True and block < max(all_blocks):
                 next_block = block + 1
-                next_jobs = startProcessingBlock(
+                startProcessingBlock(
                     jobs_from_batch,
                     next_block,
                     self.batch_id,

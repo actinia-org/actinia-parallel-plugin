@@ -30,6 +30,7 @@ from actinia_core.models.response_models import \
 
 from actinia_parallel_plugin.model.batch import (
     BatchJobResponseModel,
+    BatchProcessChainModel,
 )
 
 
@@ -62,6 +63,45 @@ batchjobId_get_docs = {
         "404": {
             "description": ("An error message in case the batchid was "
                             "not found"),
+            "schema": SimpleResponseModel
+        }
+    }
+}
+
+batchjobs_post_docs = {
+    "summary": "Creates a new Batchjob from a Batch Processing Chain.",
+    "description": ("This request will read the json object,"
+                    " break it up into parallel processing blocks,"
+                    " create individual jobs in the jobtable, "
+                    " and start the jobs in actinia-core depending on"
+                    " their processing block."),
+    "tags": [
+        "processing"
+    ],
+    "parameters": [
+      {
+        "in": "body",
+        "name": "body",
+        "description": "Batch Processing Chain as json object",
+        "required": True,
+        "schema": BatchProcessChainModel
+      }
+    ],
+    "responses": {
+        "201": {
+            "description": ("The batchjob summary of the created batchjob and "
+                            "all corresponding jobs"),
+            "schema": BatchJobResponseModel
+        },
+        "412": {
+            "description": ("The batchjob summary of the created batchjob and "
+                            "all corresponding jobs in case a job responded "
+                            "with an error"),
+            "schema": BatchJobResponseModel
+        },
+        "500": {
+            "description": ("The error message and a detailed log why "
+                            "creating a batchjob failed"),
             "schema": SimpleResponseModel
         }
     }

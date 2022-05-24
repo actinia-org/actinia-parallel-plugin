@@ -29,6 +29,7 @@ from datetime import datetime
 
 from playhouse.shortcuts import model_to_dict
 from peewee import Expression, AutoField, OperationalError
+from time import sleep
 from uuid import uuid4
 from yoyo import read_migrations
 from yoyo import get_backend
@@ -54,7 +55,8 @@ def applyMigrations():
         'postgres://%s:%s@%s/%s?schema=%s' %
         (JOBTABLE.user, JOBTABLE.pw, JOBTABLE.host, JOBTABLE.database,
          JOBTABLE.schema))
-    migrations = read_migrations('actinia_parallel_plugin/resources/migrations')
+    migrations = read_migrations(
+        'actinia_parallel_plugin/resources/migrations')
 
     with backend.lock():
         backend.apply_migrations(backend.to_apply(migrations))
@@ -233,7 +235,7 @@ def insertNewJob(
         rule_configuration,
         job_description,
         process,
-        feature_type,
+        # feature_type,
         actinia_core_url=None,
         actinia_core_platform=None,
         actinia_core_platform_name=None
@@ -243,7 +245,6 @@ def insertNewJob(
     Args:
       rule_configuration (dict): original regeldatei
       job_description (TODO): enriched regeldatei with geometadata
-      feature_type (string): feature_type name
       actinia_core_url (string): url where processing will run
       actinia_core_platform (string): platform where processing will run
 
@@ -261,7 +262,6 @@ def insertNewJob(
         'process': process,
         'status': 'PREPARING',
         'time_created': utcnow,
-        'feature_type': feature_type,
         'actinia_core_url': actinia_core_url,
         'actinia_core_platform': actinia_core_platform,
         'actinia_core_platform_name': actinia_core_platform_name,
@@ -326,7 +326,10 @@ def updateJobByID(
         status = 'TERMINATED'
 
     utcnow = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
-    record, err = getJobById(jobid)
+    record = None
+    while record is None:
+        record, err = getJobById(jobid)
+        sleep(1)
     dbStatus = record['status']
 
     try:

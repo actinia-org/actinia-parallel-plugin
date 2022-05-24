@@ -45,9 +45,11 @@ gunicornLog = logging.getLogger('gunicorn')
 def setLogFormat(veto=None):
     logformat = ""
     if LOGCONFIG.type == 'json' and not veto:
-        logformat = CustomJsonFormatter('%(time) %(level) %(component) %(module)'
-                                        '%(message) %(pathname) %(lineno)'
-                                        '%(processName) %(threadName)')
+        logformat = CustomJsonFormatter(
+            '%(time) %(level) %(component) %(module)'
+            '%(message) %(pathname) %(lineno)'
+            '%(processName) %(threadName)'
+        )
     else:
         logformat = ColoredFormatter(
             '%(log_color)s[%(asctime)s] %(levelname)-10s: %(name)s.%(module)-'

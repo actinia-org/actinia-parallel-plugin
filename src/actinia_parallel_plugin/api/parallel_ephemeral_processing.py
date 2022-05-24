@@ -29,16 +29,15 @@ from flask_restful_swagger_2 import swagger, Resource
 
 from actinia_api import URL_PREFIX
 
+from actinia_core.core.common.app import auth
+from actinia_core.core.common.config import global_config
+# from actinia_core.core.common.api_logger import log_api_call
 from actinia_core.models.response_models import \
     SimpleResponseModel
-from actinia_core.core.common.config import global_config
-from actinia_core.core.common.api_logger import log_api_call
-from actinia_core.rest.base.user_auth import check_user_permissions
+# from actinia_core.rest.base.user_auth import check_user_permissions
 from actinia_core.rest.base.user_auth import create_dummy_user
-from actinia_core.core.common.app import auth
-# from actinia_core.rest.base.resource_base import ResourceBase
 
-from actinia_parallel_plugin.apidocs import helloworld
+from actinia_parallel_plugin.apidocs import batch
 from actinia_parallel_plugin.core.batches import (
     createBatch,
     createBatchId,
@@ -46,7 +45,6 @@ from actinia_parallel_plugin.core.batches import (
     getJobsByBatchId,
     startProcessingBlock,
 )
-
 from actinia_parallel_plugin.resources.logging import log
 
 
@@ -71,8 +69,7 @@ class AsyncParallelEphermeralResource(Resource):
         self.location_name = None
         self.batch_id = None
 
-    # TODO change apidocs
-    @swagger.doc(helloworld.describeHelloWorld_get_docs)
+    @swagger.doc(batch.batchjobs_post_docs)
     # def get(self):
     def post(self, location_name):
         """Persistent parallel processing."""

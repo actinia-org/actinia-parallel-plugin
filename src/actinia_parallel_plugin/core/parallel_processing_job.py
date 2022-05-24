@@ -24,28 +24,17 @@ __author__ = "Anika Weinmann"
 __copyright__ = "Copyright 2022 mundialis GmbH & Co. KG"
 __maintainer__ = "mundialis GmbH % Co. KG"
 
-import json
 import pickle
 
-# from actinia_core.rest.base.resource_base import ResourceBase
 from actinia_core.core.common.redis_interface import enqueue_job
 
-# from actinia_parallel_plugin.core.batches import (
-#     # createBatch,
-#     # createBatchId,
-#     # createBatchResponseDict,
-#     # getJobsByBatchId,
-# )
 from actinia_parallel_plugin.core.jobtable import (
     getJobById,
 )
-# from actinia_parallel_plugin.model.response_models import (
-#     SimpleStatusCodeResponseModel,
-# )
 from actinia_parallel_plugin.core.jobs import updateJob
 from actinia_parallel_plugin.resources.logging import log
-# from actinia_parallel_plugin.core.persistent_processing import start_job
-from actinia_parallel_plugin.core.parallel_resource_base import ParallelResourceBase
+from actinia_parallel_plugin.core.parallel_resource_base import \
+    ParallelResourceBase
 
 
 class AsyncParallelJobResource(ParallelResourceBase):
@@ -87,14 +76,20 @@ class AsyncParallelJobResource(ParallelResourceBase):
             mapset_name=self.mapset_name
         )
         if rdc:
-
-            if process == "persistent":
-                from actinia_parallel_plugin.core.persistent_processing import \
+            if process == "ephemeral":
+                from actinia_parallel_plugin.core.ephemeral_processing import \
                     start_job
-                # # for debugging (works not so gogd with parallel processing)
-                # from actinia_parallel_plugin.core.persistent_processing import \
-                #     ParallelPersistentProcessing
-                # processing = ParallelPersistentProcessing(
+                # # for debugging comment enqueue_job(...) and use the
+                # # following commented lines
+                # for var in [
+                #         'GISRC', 'GISBASE', 'LD_LIBRARY_PATH',
+                #         'GRASS_ADDON_PATH', 'GIS_LOCK']:
+                #     import os
+                #     if var in os.environ:
+                #         del os.environ[var]
+                # from actinia_parallel_plugin.core.ephemeral_processing \
+                #     import ParallelEphemeralProcessing
+                # processing = ParallelEphemeralProcessing(
                 #     rdc, self.batch_id, block, self.job_id,
                 #     self.user,
                 #     self.request_url,
@@ -104,47 +99,46 @@ class AsyncParallelJobResource(ParallelResourceBase):
                 #     self.path,
                 #     self.base_status_url)
                 # processing.run()
-            elif process == "ephemeral":
-                from actinia_parallel_plugin.core.ephemeral_processing import \
-                    start_job
-                # for debugging
-                for var in [
-                        'GISRC', 'GISBASE', 'LD_LIBRARY_PATH',
-                        'GRASS_ADDON_PATH', 'GIS_LOCK']:
-                    import os
-                    if var in os.environ:
-                        del os.environ[var]
-                from actinia_parallel_plugin.core.ephemeral_processing import \
-                    ParallelEphemeralProcessing
-                processing = ParallelEphemeralProcessing(
-                    rdc, self.batch_id, block, self.job_id,
-                    self.user,
-                    self.request_url,
-                    self.post_url,
-                    self.endpoint,
-                    self.method,
-                    self.path,
-                    self.base_status_url)
-                processing.run()
+            # elif process == "persistent":
+            #     from actinia_parallel_plugin.core.persistent_processing \
+            #         import start_job
+            #     # TODO
+            #     # # for debugging
+            #     # from actinia_parallel_plugin.core.persistent_processing \
+            #     #     import ParallelPersistentProcessing
+            #     # processing = ParallelPersistentProcessing(
+            #     #     rdc, self.batch_id, block, self.job_id,
+            #     #     self.user,
+            #     #     self.request_url,
+            #     #     self.post_url,
+            #     #     self.endpoint,
+            #     #     self.method,
+            #     #     self.path,
+            #     #     self.base_status_url)
+            #     # processing.run()
             else:
-                # TODO change start_job import
-                from actinia_parallel_plugin.core.persistent_processing import \
-                    start_job
-            # enqueue_job(
-            #     self.job_timeout,
-            #     start_job,
-            #     rdc,
-            #     self.batch_id,
-            #     block,
-            #     self.job_id,
-            #     self.user,
-            #     self.request_url,
-            #     self.post_url,
-            #     self.endpoint,
-            #     self.method,
-            #     self.path,
-            #     self.base_status_url
-            # )
+                msg = f"Process '{process}' not yet supported!"
+                log.error(msg)
+                _, response_model = pickle.loads(self.response_data)
+                response_model["status"] = "error"
+                response_model["message"] = msg
+                job = updateJob(self.resource_id, response_model, self.job_id)
+                return job
+            enqueue_job(
+                self.job_timeout,
+                start_job,
+                rdc,
+                self.batch_id,
+                block,
+                self.job_id,
+                self.user,
+                self.request_url,
+                self.post_url,
+                self.endpoint,
+                self.method,
+                self.path,
+                self.base_status_url
+            )
 
         # update job in jobtable
         self.response_data = self.resource_logger.get(
@@ -156,25 +150,3 @@ class AsyncParallelJobResource(ParallelResourceBase):
     def get_job_entry(self):
         """Return job entry by requesting jobtable from db."""
         return getJobById(self.job_id)[0]
-
-    # # first_jobs = self._start_processing_block(jobs_in_db, 1)
-    # def _start_processing_block(self, jobs, block):
-    #     """Starts first processing block of jobs from batch process.
-    #     """
-    #     jobs_to_start = [
-    #         job for job in jobs if job["processing_block"] == block]
-    #     jobs_responses = []
-    #     for job in jobs_to_start:
-    #         process_chain = dict()
-    #         process_chain["list"] = job["rule_configuration"]["list"]
-    #         process_chain["version"] = job["rule_configuration"]["version"]
-    #         start_kwargs = {
-    #             "process": job["process"],
-    #             "process_chain": process_chain,
-    #             "jobid": job["idpk_jobs"],
-    #             # "actinia_core_platform": job["actinia_core_platform"],
-    #             # "actinia_core_url": job["actinia_core_url"]
-    #         }
-    #         job_entry = self._start_job(**start_kwargs)
-    #         jobs_responses.append(job_entry)
-    #     return jobs_responses

@@ -1,6 +1,6 @@
 # actinia-parallel-plugin
 
-This is an example plugin for [actinia-core](https://github.com/mundialis/actinia_core) which adds a "Hello World" endpoint to actinia-core.
+This is the actinia-parallel-plugin for [actinia-core](https://github.com/mundialis/actinia_core) which adds parallel processing endpoints to actinia.
 
 You can run actinia-parallel-plugin as an actinia-core plugin.
 
@@ -20,14 +20,6 @@ docker network prune
 docker-compose -f docker/docker-compose.yml up -d
 ```
 
-### Requesting helloworld endpoint
-You can test the plugin and request the `/helloworld` endpoint, e.g. with:
-```
-curl -u actinia-gdi:actinia-gdi -X GET http://localhost:8088/api/v3/processing_parallel | jq
-
-curl -u actinia-gdi:actinia-gdi -H 'accept: application/json' -H 'Content-Type: application/json' -X POST http://localhost:8088/api/v3/processing_parallel -d '{"name": "test"}' | jq
-```
-
 ## DEV setup
 For a DEV setup you can use the docker/docker-compose.yml:
 ```
@@ -38,6 +30,9 @@ docker-compose -f docker/docker-compose.yml run --rm --service-ports --entrypoin
 (cd /src/actinia-parallel-plugin && python3 setup.py install)
 # start actinia-core with your plugin
 gunicorn -b 0.0.0.0:8088 -w 1 --access-logfile=- -k gthread actinia_core.main:flask_app
+
+# or for debugging in one line with reset
+reset && (cd /src/actinia-parallel-plugin && python3 setup.py install) && gunicorn -b 0.0.0.0:8088 -w 3 --access-logfile=- -k gthread actinia_core.main:flask_app
 ```
 
 ### Postgis
@@ -83,4 +78,43 @@ make integrationtest
 make devtest
 ```
 
-##
+## Examples
+
+### Requesting batch job and job endpoints
+```
+# request batch job
+curl -u actinia-gdi:actinia-gdi -X GET http://localhost:8088/api/v3/processing_parallel/batchjobs/1 | jq
+# request job
+curl -u actinia-gdi:actinia-gdi -X GET http://localhost:8088/api/v3/processing_parallel/jobs/1 | jq
+```
+
+### Start parallel batch job
+#### Ephemeral processing
+You can start a parallel **ephemeral** batch job via:
+```
+# parallel ephemeral processing
+curl -u actinia-gdi:actinia-gdi -X POST -H 'Content-Type: application/json' -d @test_postbodies/parallel_ephemeral_processing.json http://localhost:8088/api/v3/locations/nc_spm_08_grass7_root/processing_parallel | jq
+```
+Attention:
+* The individual process chains must be "independent" of each other, since
+  createBatch is designed as an ephemeral process.
+
+TODOs:
+* Test of exporters in PC
+* APIDOCS
+* Tests
+* using stdout/export in PC of next block
+
+#### Persistent processing
+You can also start a **persistent** batch job via:
+```
+# parallel persistent processing (TODO!!!)
+curl -u actinia-gdi:actinia-gdi -X POST -H 'Content-Type: application/json' -d @test_postbodies/parallel_processing.json http://localhost:8088/api/v3/locations/nc_spm_08_grass7_root/mapsets/test_mapset/processing_parallel | jq
+```
+Hereby, the parallel started process chains will be computed in mapsets with
+the suffix `_parallel_{NUMBER}` (see teh example process chains in
+`test_postbodies/parallel_persistent_processing.json`).
+So if you want to use a mapset in a later step, you have to pay attention to
+the naming of the mapset.
+
+TODOs: alles
