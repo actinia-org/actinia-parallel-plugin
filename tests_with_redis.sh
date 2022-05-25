@@ -5,6 +5,8 @@ redis-server &
 sleep 1
 redis-cli ping
 
+# TODO start postgresql
+
 # start webhook server
 webhook-server --host "0.0.0.0" --port "5005" &
 sleep 10
