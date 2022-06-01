@@ -35,8 +35,8 @@ gunicorn -b 0.0.0.0:8088 -w 1 --access-logfile=- -k gthread actinia_core.main:fl
 reset && (cd /src/actinia-parallel-plugin && python3 setup.py install) && gunicorn -b 0.0.0.0:8088 -w 3 --access-logfile=- -k gthread actinia_core.main:flask_app
 ```
 
-### Postgis
-Connect to postgis DB from actinia-core docker container:
+### PostGIS
+Connect to PostGIS DB from actinia-core docker container:
 ```
 psql -U actinia -h postgis -d gis
 ```
@@ -112,7 +112,7 @@ You can also start a **persistent** batch job via:
 curl -u actinia-gdi:actinia-gdi -X POST -H 'Content-Type: application/json' -d @test_postbodies/parallel_processing.json http://localhost:8088/api/v3/locations/nc_spm_08_grass7_root/mapsets/test_mapset/processing_parallel | jq
 ```
 Hereby, the parallel started process chains will be computed in mapsets with
-the suffix `_parallel_{NUMBER}` (see teh example process chains in
+the suffix `_parallel_{NUMBER}` (see the example process chains in
 `test_postbodies/parallel_persistent_processing.json`).
 So if you want to use a mapset in a later step, you have to pay attention to
 the naming of the mapset.
