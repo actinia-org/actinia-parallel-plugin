@@ -20,7 +20,7 @@ jobs:
     - name: List running docker
       run: docker ps
 
-    - name: Run Unittests
+    - name: Run integration test
       run: docker exec -it docker_actinia-test_1 sh /usr/bin/run_integration_tests.sh
 
     - name: Stop containers
