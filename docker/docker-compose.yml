@@ -39,7 +39,7 @@ services:
     -   actinia
 
   postgis:
-    image: mdillon/postgis:9.6-alpine
+    image: postgis/postgis:14-3.2-alpine
     # network_mode: host
     environment:
       POSTGRES_USER: actinia

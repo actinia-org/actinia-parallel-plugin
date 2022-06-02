@@ -17,8 +17,6 @@ services:
       - postgis-test
     cap_add:
       - SYS_PTRACE
-    networks:
-    -   actinia-test
 
   redis-test:
     image: redis:5.0.4-alpine
@@ -36,11 +34,9 @@ services:
     ]
     ports:
         - "6379:6379"
-    networks:
-    -   actinia-test
 
   postgis-test:
-    image: mdillon/postgis:9.6-alpine
+    image: postgis/postgis:14-3.2-alpine
     # network_mode: host
     environment:
       POSTGRES_USER: actinia
@@ -48,12 +44,3 @@ services:
     volumes:
       - ./postgresql_init_data:/docker-entrypoint-initdb.d
       # - ./postgresql_data:/var/lib/postgresql/data:Z
-    networks:
-    -   actinia-test
-
-
-networks:
-  actinia-test:
-    ipam:
-      config:
-        - subnet: 172.18.0.0/26
