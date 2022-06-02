@@ -117,9 +117,7 @@ Attention:
   createBatch is designed as an ephemeral process.
 
 TODOs:
-* Test of exporters in PC
-* APIDOCS
-* Tests
+* exporter in PC
 * using stdout/export in PC of next block
 
 #### Persistent processing
