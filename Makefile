@@ -19,13 +19,13 @@ dist:
 	python3 setup.py dist
 
 test:
-	./tests_with_redis.sh
+	python3 setup.py test
 
 unittest:
 	python3 setup.py test --addopts "-m unittest"
 
 devtest:
-	./tests_with_redis.sh dev
+	python3 setup.py test --addopts "-m 'dev'"
 
 integrationtest:
-	./tests_with_redis.sh integrationtest
+	python3 setup.py test --addopts "-m 'integrationtest'"

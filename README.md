@@ -95,7 +95,6 @@ act -j unittests -P ubuntu-latest=lucasalt/act_base:latest
 ```
 
 
-
 ## Examples
 
 ### Requesting batch job and job endpoints
