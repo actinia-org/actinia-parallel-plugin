@@ -20,8 +20,11 @@ jobs:
     - name: List running docker
       run: docker ps
 
-    - name: Docker logs
+    - name: Docker logs actinia
       run: docker logs docker_actinia-test_1
+
+    - name: Docker logs postgis
+      run: docker logs docker_postgis-test_1
 
     - name: Run integration test
       run: docker exec -t docker_actinia-test_1 sh /usr/bin/run_integration_tests.sh
