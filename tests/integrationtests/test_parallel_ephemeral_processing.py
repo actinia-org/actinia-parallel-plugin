@@ -25,9 +25,7 @@ __copyright__ = "Copyright 2022 mundialis GmbH & Co. KG"
 __maintainer__ = "mundialis GmbH % Co. KG"
 
 
-import json
 import pytest
-from flask import Response
 
 from ..test_resource_base import ActiniaResourceTestCaseBase, URL_PREFIX
 
@@ -78,17 +76,9 @@ PC = """{
       "list": [
         {
           "module": "g.region",
-          "id": "g_region_2_parallel_block2",
+          "id": "g_region_1_parallel_block2",
           "inputs":[
-            {
-              "import_descr":
-                {
-                  "source": "https://apps.mundialis.de/actinia_test_datasets/elev_ned_30m.tif",
-                  "type": "raster"
-                },
-                "param": "raster",
-                "value": "elev_ned_30m"
-            }
+            {"param": "raster", "value": "elevation@PERMANENT"}
           ],
           "flags": "p"
         },
@@ -96,7 +86,7 @@ PC = """{
           "module": "r.univar",
           "id": "r_univar_2_parallel_block2",
           "inputs":[
-            {"param": "map", "value": "elev_ned_30m"}
+            {"param": "map", "value": "elevation@PERMANENT"}
           ],
           "stdout": {"id": "stats", "format": "kv", "delimiter": "="},
           "flags": "g"
@@ -142,12 +132,18 @@ class ActiniaParallelProcessingTest(ActiniaResourceTestCaseBase):
             content_type=self.content_type,
             data=PC,
         )
-        import pdb; pdb.set_trace()
-        resp = self.waitAsyncStatusAssertHTTP(
+        resp = self.waitAsyncBatchJob(
             rv,
             headers=self.user_auth_header,
             http_status=200,
-            status="finished",
+            status="SUCCESS",
         )
-        assert "process_results" in resp, "No 'process_results' in response"
-        assert resp["process_results"] == ["grid1", "grid2", "grid3", "grid4"]
+        assert "actinia_core_response" in resp, \
+            "No 'actinia_core_response' in response"
+        assert len(resp["actinia_core_response"]) == 4, \
+            "There are not 4 actinia core responses"
+        process_results = [
+            ac_resp["process_results"] for key, ac_resp in
+            resp["actinia_core_response"].items() if
+            ac_resp["process_results"] != {}]
+        assert "stats" in process_results[0]

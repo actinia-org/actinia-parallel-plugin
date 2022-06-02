@@ -61,10 +61,11 @@ rm -rf /usr/lib/python3.8/site-packages/actinia_parallel_plugin.wsgi-*.egg
 You can run the tests in the actinia test docker:
 
 ```
-docker build -f docker/actinia-parallel-plugin-test/Dockerfile -t actinia-parallel-plugin-test .
-docker run -it actinia-parallel-plugin-test -i
+docker-compose -f docker/docker-compose-test.yml build
+docker-compose -f docker/docker-compose-test.yml up -d
 
-cd /src/actinia-parallel-plugin/
+# exec docker and run tests manually
+docker exec -it docker_actinia-test_1 sh
 
 # run all tests
 make test
@@ -74,8 +75,11 @@ make unittest
 # run only integrationtests
 make integrationtest
 
-# run only tests which are marked for development with the decorator '@pytest.mark.dev'
-make devtest
+# or run tests outside of docker container
+docker exec -it docker_actinia-test_1 sh /usr/bin/run_integration_tests.sh
+docker exec -it docker_actinia-test_1 sh /usr/bin/run_unittests.sh
+
+docker-compose -f docker/docker-compose-test.yml down
 ```
 
 ## Examples

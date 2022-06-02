@@ -40,7 +40,7 @@ from actinia_parallel_plugin.apidocs import jobs
 
 class JobId(Resource):
     """ Definition for endpoint standortsicherung
-    @app.route('/processes/standortsicherung/jobs/<jobid>')
+    @app.route('/processing_parallel/jobs/<jobid>')
 
     Contains HTTP GET endpoint reading a job
     Contains swagger documentation
@@ -51,7 +51,7 @@ class JobId(Resource):
         """ Wrapper method to receive HTTP call and pass it to function
 
         This method is called by HTTP GET
-        @app.route('/processes/standortsicherung/jobs/<jobid>')
+        @app.route('/processing_parallel/jobs/<jobid>')
         This method is calling core method readJob
         """
         if jobid is None:

@@ -92,7 +92,7 @@ def getJob(jobid):
     """ Method to read job from Jobtable by id
 
     This method can be called by HTTP GET
-    @app.route('/processes/standortsicherung/jobs/<jobid>')
+    @app.route('/processing_parallel/jobs/<jobid>')
     """
 
     job, err = getJobById(jobid)
