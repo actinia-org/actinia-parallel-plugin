@@ -82,6 +82,20 @@ docker exec -it docker_actinia-test_1 sh /usr/bin/run_unittests.sh
 docker-compose -f docker/docker-compose-test.yml down
 ```
 
+You can also run the tests in the GHA workflows locally via [act](https://github.com/nektos/act).
+To run docker-compose inside a workflow [act_base](https://github.com/lucasctrl/act_base) can be used.
+With these you can run the following to run the tests:
+```
+# list all workflows
+act -l
+
+# run workflow
+act -j integration-tests -P ubuntu-latest=lucasalt/act_base:latest
+act -j unittests -P ubuntu-latest=lucasalt/act_base:latest
+```
+
+
+
 ## Examples
 
 ### Requesting batch job and job endpoints

@@ -9,13 +9,10 @@ on:
 
 jobs:
 
-  docker-compose:
+  integration-tests:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-
-    # - name: HELPEr
-    #   run: ls -lah docker
 
     - name: Start containers
       run: docker-compose -f "docker/docker-compose-test.yml" up -d --build
@@ -23,67 +20,31 @@ jobs:
     - name: List running docker
       run: docker ps
 
-    - name: Run Tests
-      run: docker exec -it docker_actinia-test_1 sh
+    - name: Run Unittests
+      run: docker exec -it docker_actinia-test_1 sh /usr/bin/run_integration_tests.sh
+
     - name: Stop containers
       run: docker-compose -f "docker/docker-compose-test.yml" down
 
-    # - name: Install node
-    #   uses: actions/setup-node@v1
-    #   with:
-    #     node-version: 14.x
-    #
-    # - name: Install dependencies
-    #   run: npm install
-    #
-    # - name: Run tests
-    #   run: npm run test
-    #
-    # - name: Stop containers
-    #   if: always()
-    #   run: docker-compose -f "docker-compose.yml" down
-  # unittests:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - name: Checkout
-  #     uses: actions/checkout@v2
-  #     # with:
-  #     #   path: "."
-  #   - name: Set up Docker Buildx
-  #     uses: docker/setup-buildx-action@v1
-  #   - name: Replace run only unittest command
-  #     run: |
-  #       sed -i "s+# RUN make test+RUN make unittest+g" docker/actinia-parallel-plugin-test/Dockerfile
-  #   - name: Unittests of actinia-parallel-plugin
-  #     id: docker_build
-  #     uses: docker/build-push-action@v2
-  #     with:
-  #       push: false
-  #       tags: actinia-parallel-plugin-tests:alpine
-  #       context: .
-  #       file: docker/actinia-parallel-plugin-test/Dockerfile
-  #       no-cache: true
-  #       # pull: true
-  #
-  # integration-tests:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - name: Checkout
-  #     uses: actions/checkout@v2
-  #     # with:
-  #     #   path: "."
-  #   - name: Set up Docker Buildx
-  #     uses: docker/setup-buildx-action@v1
-  #   - name: Replace run integration test command
-  #     run: |
-  #       sed -i "s+# RUN make test+RUN make integrationtest+g" docker/actinia-parallel-plugin-test/Dockerfile
-  #   - name: Integration tests of actinia-parallel-plugin
-  #     id: docker_build
-  #     uses: docker/build-push-action@v2
-  #     with:
-  #       push: false
-  #       tags: actinia-parallel-plugin-test:alpine
-  #       context: .
-  #       file: docker/actinia-parallel-plugin-test/Dockerfile
-  #       no-cache: true
-  #       # pull: true
+  unittests:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      # with:
+      #   path: "."
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    - name: Replace run only unittest command
+      run: |
+        sed -i "s+# RUN make test+RUN make unittest+g" docker/actinia-parallel-plugin-test/Dockerfile
+    - name: Unittests of actinia-parallel-plugin
+      id: docker_build
+      uses: docker/build-push-action@v2
+      with:
+        push: false
+        tags: actinia-parallel-plugin-tests:alpine
+        context: .
+        file: docker/actinia-parallel-plugin-test/Dockerfile
+        no-cache: true
+        # pull: true
