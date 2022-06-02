@@ -29,7 +29,6 @@ import pytest
 import redis
 import psycopg2
 
-# from actinia_core.core.common.redis_base import RedisBaseInterface
 from actinia_core.core.common.config import global_config as config
 
 from actinia_parallel_plugin.resources.config import JOBTABLE
