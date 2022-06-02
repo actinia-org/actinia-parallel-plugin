@@ -34,7 +34,7 @@ from actinia_core.core.common.config import global_config as config
 
 from actinia_parallel_plugin.resources.config import JOBTABLE
 
-from ..test_resource_base import ActiniaResourceTestCaseBase#, URL_PREFIX
+from ..test_resource_base import ActiniaResourceTestCaseBase
 
 
 class ConnectionTest(ActiniaResourceTestCaseBase):
