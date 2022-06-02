@@ -154,7 +154,8 @@ class ActiniaResourceTestCaseBase(ActiniaTestCaseBase):
                 break
 
             time.sleep(0.2)
-        self.assertEqual(resp_data["status"], status)
+        self.assertEqual(resp_data["status"], status, \
+            f"Process has not status '{status}': {resp_data}")
         self.assertEqual(rv.status_code, http_status,
                          "HTML status code is wrong %i" % rv.status_code)
 
