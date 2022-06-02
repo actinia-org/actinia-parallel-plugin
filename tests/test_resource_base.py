@@ -154,7 +154,6 @@ class ActiniaResourceTestCaseBase(ActiniaTestCaseBase):
                 break
 
             time.sleep(0.2)
-        print(resp_data)
         self.assertEqual(
             resp_data["status"], status,
             f"Process has not status '{status}': {resp_data}")

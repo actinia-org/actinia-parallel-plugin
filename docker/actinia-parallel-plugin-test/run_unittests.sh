@@ -1,3 +1,3 @@
 #!/bin/bash
 
-make unittest
+python3 setup.py test --addopts "-m 'unittest'"
