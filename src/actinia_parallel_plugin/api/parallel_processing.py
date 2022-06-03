@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-Parallel ephemeral processing
+Parallel processing base
 """
 
 __license__ = "GPLv3"
@@ -62,15 +62,15 @@ class AsyncParallelEphermeralResource(Resource):
     else:
         decorators.append(create_dummy_user)
 
-    def __init__(self):
+    def __init__(self, type):
         super(AsyncParallelEphermeralResource, self).__init__()
         self.location_name = None
         self.batch_id = None
+        self.type
 
     @swagger.doc(batch.batchjobs_post_docs)
-    # def get(self):
-    def post(self, location_name):
-        """Persistent parallel processing."""
+    def post(self, location_name, mapset_name=None):
+        """Parallel processing."""
 
         self.location_name = location_name
         self.post_url = request.base_url
