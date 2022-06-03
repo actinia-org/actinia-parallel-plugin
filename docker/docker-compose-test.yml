@@ -7,7 +7,6 @@ services:
       dockerfile: docker/actinia-parallel-plugin-test/Dockerfile
     volumes:
       - ..:/src/actinia-parallel-plugin/.
-      - /home/aweinmann/grassdata/:/actinia_core/grassdb/
     ports:
       - "8088:8088"
     environment:
