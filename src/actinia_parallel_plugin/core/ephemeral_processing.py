@@ -31,11 +31,8 @@ from actinia_core.processing.actinia_processing.ephemeral_processing import \
     EphemeralProcessing
 
 from actinia_parallel_plugin.core.batches import (
-    checkProcessingBlockFinished,
-    getJobsByBatchId,
-    startProcessingBlock,
+    update_and_check_batch_jobs,
 )
-from actinia_parallel_plugin.core.jobs import updateJob
 
 
 class ParallelEphemeralProcessing(EphemeralProcessing):
@@ -65,46 +62,27 @@ class ParallelEphemeralProcessing(EphemeralProcessing):
         is successfully finished.
         """
 
-        # update job to finished
-        resource_id = self.resource_id
         response_data = self.resource_logger.get(
             self.user_id, self.resource_id)
         _, response_model = pickle.loads(response_data)
-        updateJob(resource_id, response_model, self.jobid)
 
-        if "finished" == response_model["status"]:
-            jobs_from_batch = getJobsByBatchId(
-                self.batch_id,
-                "ephemeral"
-            )
-            all_blocks = [
-                job["processing_block"] for job in jobs_from_batch]
-            block = int(self.processing_block)
-            block_done = checkProcessingBlockFinished(
-                jobs_from_batch, block)
-            if block_done is True and block < max(all_blocks):
-                next_block = block + 1
-                startProcessingBlock(
-                    jobs_from_batch,
-                    next_block,
-                    self.batch_id,
-                    self.location_name,
-                    None,  # mapset_name
-                    self.user,
-                    self.request_url,
-                    self.post_url,
-                    self.endpoint,
-                    self.method,
-                    self.path,
-                    self.base_status_url,
-                    "ephemeral"
-                )
-
-        elif (response_model["status"] == "error" or
-                response_model["status"] == "terminated"):
-            # In this case, nothing happens and the next block is not
-            # started.
-            pass
+        update_and_check_batch_jobs(
+            self.resource_id,
+            response_model,
+            self.jobid,
+            self.batch_id,
+            "ephemeral",
+            self.processing_block,
+            self.location_name,
+            None,
+            self.user,
+            self.request_url,
+            self.post_url,
+            self.endpoint,
+            self.method,
+            self.path,
+            self.base_status_url
+        )
 
 
 def start_job(*args):

@@ -47,7 +47,7 @@ from actinia_parallel_plugin.resources.logging import log
 
 
 class AsyncParallelEphermeralResource(Resource):
-    """Resource for parallel processing"""
+    """Resource for parallel ephemeral processing"""
 
     decorators = []
 
@@ -65,15 +65,18 @@ class AsyncParallelEphermeralResource(Resource):
     def __init__(self):
         super(AsyncParallelEphermeralResource, self).__init__()
         self.location_name = None
+        self.mapset_name = None
         self.batch_id = None
+        self.type = None
 
     @swagger.doc(batch.batchjobs_post_docs)
-    # def get(self):
     def post(self, location_name):
-        """Persistent parallel processing."""
+        """Parallel ephemeral processing."""
 
         self.location_name = location_name
         self.post_url = request.base_url
+        if self.type is None:
+            self.type = "ephemeral"
 
         json_dict = request.get_json(force=True)
         log.info("Received HTTP POST with batchjob: %s" %
@@ -82,7 +85,7 @@ class AsyncParallelEphermeralResource(Resource):
         # assign new batchid
         self.batch_id = createBatchId()
         # create processing blocks and insert jobs into jobtable
-        jobs_in_db = createBatch(json_dict, "ephemeral", self.batch_id)
+        jobs_in_db = createBatch(json_dict, self.type, self.batch_id)
         if jobs_in_db is None:
             res = (jsonify(SimpleResponseModel(
                         status=500,
@@ -109,7 +112,7 @@ class AsyncParallelEphermeralResource(Resource):
             1,
             self.batch_id,
             self.location_name,
-            None,  # mapset_name
+            self.mapset_name,
             g.user,
             request.url,
             self.post_url,
@@ -117,10 +120,10 @@ class AsyncParallelEphermeralResource(Resource):
             request.method,
             request.path,
             self.base_status_url,
-            "ephemeral"
+            self.type,
         )
         first_status = [entry["status"] for entry in first_jobs]
-        all_jobs = getJobsByBatchId(self.batch_id, "ephemeral")
+        all_jobs = getJobsByBatchId(self.batch_id, self.type)
         if None in first_jobs:
             res = (jsonify(SimpleResponseModel(
                         status=500,

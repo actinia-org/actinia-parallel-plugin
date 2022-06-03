@@ -69,6 +69,7 @@ class AsyncParallelJobResource(ParallelResourceBase):
         # TODO prepare_actinia ?
         # TODO execute_actinia ?
         # TODO goodby_actinia ?
+        # import pdb; pdb.set_trace()
 
         rdc = self.preprocess(
             has_json=False,

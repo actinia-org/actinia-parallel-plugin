@@ -26,7 +26,7 @@ __maintainer__ = "mundialis GmbH % Co. KG"
 
 from json import loads
 
-from actinia_parallel_plugin.core.jobs import insertJob
+from actinia_parallel_plugin.core.jobs import insertJob, updateJob
 from actinia_parallel_plugin.core.jobtable import getAllIds, getAllJobs
 from actinia_parallel_plugin.core.parallel_processing_job import \
     AsyncParallelJobResource
@@ -333,6 +333,48 @@ def startProcessingBlock(jobs, block, batch_id, location_name, mapset_name,
         job_entry = parallel_job.get_job_entry()
         jobs_responses.append(job_entry)
     return jobs_responses
+
+
+def update_and_check_batch_jobs(
+        resource_id, response_model, jobid, batch_id, processing_type,
+        processing_block, location_name, mapset_name, user, request_url,
+        post_url, endpoint, method, path, base_status_url):
+    """Checks batch jobs and starts new batch block if the current block
+    is successfully finished.
+    """
+    # update job to finished
+    updateJob(resource_id, response_model, jobid)
+
+    if "finished" == response_model["status"]:
+        jobs_from_batch = getJobsByBatchId(batch_id, processing_type)
+        all_blocks = [
+            job["processing_block"] for job in jobs_from_batch]
+        block = int(processing_block)
+        block_done = checkProcessingBlockFinished(
+            jobs_from_batch, block)
+        if block_done is True and block < max(all_blocks):
+            next_block = block + 1
+            startProcessingBlock(
+                jobs_from_batch,
+                next_block,
+                batch_id,
+                location_name,
+                mapset_name,
+                user,
+                request_url,
+                post_url,
+                endpoint,
+                method,
+                path,
+                base_status_url,
+                processing_type,
+            )
+
+    elif (response_model["status"] == "error" or
+            response_model["status"] == "terminated"):
+        # In this case, nothing happens and the next block is not
+        # started.
+        pass
 
 
 def _count_status_from_list(input_list):
