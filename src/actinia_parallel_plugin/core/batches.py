@@ -327,9 +327,11 @@ def startProcessingBlock(jobs, block, batch_id, location_name, mapset_name,
             mapset_name=mapset_name_parallel,
             batch_id=batch_id,
             job_id=jobid,
-            base_status_url=base_status_url
+            base_status_url=base_status_url,
+            block=block,
+            processing_number=num,
         )
-        parallel_job.start_parallel_job(process, block)
+        parallel_job.start_parallel_job(process)
         job_entry = parallel_job.get_job_entry()
         jobs_responses.append(job_entry)
     return jobs_responses

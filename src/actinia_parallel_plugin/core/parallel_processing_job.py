@@ -42,7 +42,7 @@ class AsyncParallelJobResource(ParallelResourceBase):
 
     def __init__(self, user, request_url, post_url, endpoint, method, path,
                  process_chain, location_name, mapset_name,
-                 batch_id, job_id, base_status_url):
+                 batch_id, job_id, base_status_url, block, processing_number):
         super(AsyncParallelJobResource, self).__init__(
             user=user,
             request_url=request_url,
@@ -62,14 +62,20 @@ class AsyncParallelJobResource(ParallelResourceBase):
         self.method = method
         self.path = path
         self.base_status_url = base_status_url
+        self.block = block
+        self.processing_number = processing_number
 
-    def start_parallel_job(self, process, block):
+    def start_parallel_job(self, process):
         """Starting job in running actinia-core instance and update job db."""
         job, err = getJobById(self.job_id)
         # TODO prepare_actinia ?
         # TODO execute_actinia ?
         # TODO goodby_actinia ?
-        # import pdb; pdb.set_trace()
+
+        if process == "persistent":
+            # import pdb; pdb.set_trace()
+            self.mapset_name += \
+                f"_block{self.block}_process{self.processing_number}"
 
         rdc = self.preprocess(
             has_json=False,
@@ -91,7 +97,7 @@ class AsyncParallelJobResource(ParallelResourceBase):
                 # from actinia_parallel_plugin.core.ephemeral_processing \
                 #     import ParallelEphemeralProcessing
                 # processing = ParallelEphemeralProcessing(
-                #     rdc, self.batch_id, block, self.job_id,
+                #     rdc, self.batch_id, self.block, self.job_id,
                 #     self.user,
                 #     self.request_url,
                 #     self.post_url,
@@ -100,23 +106,29 @@ class AsyncParallelJobResource(ParallelResourceBase):
                 #     self.path,
                 #     self.base_status_url)
                 # processing.run()
-            # elif process == "persistent":
-            #     from actinia_parallel_plugin.core.persistent_processing \
-            #         import start_job
-            #     # TODO
-            #     # # for debugging
-            #     # from actinia_parallel_plugin.core.persistent_processing \
-            #     #     import ParallelPersistentProcessing
-            #     # processing = ParallelPersistentProcessing(
-            #     #     rdc, self.batch_id, block, self.job_id,
-            #     #     self.user,
-            #     #     self.request_url,
-            #     #     self.post_url,
-            #     #     self.endpoint,
-            #     #     self.method,
-            #     #     self.path,
-            #     #     self.base_status_url)
-            #     # processing.run()
+            elif process == "persistent":
+                from actinia_parallel_plugin.core.persistent_processing \
+                    import start_job
+                # for debugging comment enqueue_job(...) and use the
+                # following commented lines
+                for var in [
+                        'GISRC', 'GISBASE', 'LD_LIBRARY_PATH',
+                        'GRASS_ADDON_PATH', 'GIS_LOCK']:
+                    import os
+                    if var in os.environ:
+                        del os.environ[var]
+                from actinia_parallel_plugin.core.persistent_processing \
+                    import ParallelPersistentProcessing
+                processing = ParallelPersistentProcessing(
+                    rdc, self.batch_id, self.block, self.job_id,
+                    self.user,
+                    self.request_url,
+                    self.post_url,
+                    self.endpoint,
+                    self.method,
+                    self.path,
+                    self.base_status_url)
+                processing.run()
             else:
                 msg = f"Process '{process}' not yet supported!"
                 log.error(msg)
@@ -125,21 +137,21 @@ class AsyncParallelJobResource(ParallelResourceBase):
                 response_model["message"] = msg
                 job = updateJob(self.resource_id, response_model, self.job_id)
                 return job
-            enqueue_job(
-                self.job_timeout,
-                start_job,
-                rdc,
-                self.batch_id,
-                block,
-                self.job_id,
-                self.user,
-                self.request_url,
-                self.post_url,
-                self.endpoint,
-                self.method,
-                self.path,
-                self.base_status_url
-            )
+            # enqueue_job(
+            #     self.job_timeout,
+            #     start_job,
+            #     rdc,
+            #     self.batch_id,
+            #     self.block,
+            #     self.job_id,
+            #     self.user,
+            #     self.request_url,
+            #     self.post_url,
+            #     self.endpoint,
+            #     self.method,
+            #     self.path,
+            #     self.base_status_url
+            # )
 
         # update job in jobtable
         self.response_data = self.resource_logger.get(

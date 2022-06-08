@@ -124,6 +124,7 @@ class AsyncParallelEphermeralResource(Resource):
         )
         first_status = [entry["status"] for entry in first_jobs]
         all_jobs = getJobsByBatchId(self.batch_id, self.type)
+        import pdb; pdb.set_trace()
         if None in first_jobs:
             res = (jsonify(SimpleResponseModel(
                         status=500,

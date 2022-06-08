@@ -124,11 +124,11 @@ TODOs:
 You can also start a **persistent** batch job via:
 ```
 # parallel persistent processing (TODO!!!)
-curl -u actinia-gdi:actinia-gdi -X POST -H 'Content-Type: application/json' -d @test_postbodies/parallel_processing.json http://localhost:8088/api/v3/locations/nc_spm_08_grass7_root/mapsets/test_mapset/processing_parallel | jq
+curl -u actinia-gdi:actinia-gdi -X POST -H 'Content-Type: application/json' -d @test_postbodies/parallel_ephemeral_processing.json http://localhost:8088/api/v3/locations/nc_spm_08_grass7_root/mapsets/test_mapset/processing_parallel | jq
 ```
 Hereby, the parallel started process chains will be computed in mapsets with
 the suffix `_parallel_{NUMBER}` (see the example process chains in
-`test_postbodies/parallel_persistent_processing.json`).
+`test_postbodies/parallel_ephemeral_processing_simple.json`).
 So if you want to use a mapset in a later step, you have to pay attention to
 the naming of the mapset.
 
