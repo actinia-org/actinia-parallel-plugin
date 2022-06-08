@@ -75,7 +75,6 @@ class EnrichedRegeldateiModel(Schema):
         #     'description': 'List of processes to run',
         #     'items': EnrichedProcModel
         # }
-        # 'geodata_meta': "string" # TODO: GeodataResponseModel
     }
     # TODO add example
     # example = jobs_post_docs_request_example

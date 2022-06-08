@@ -49,36 +49,3 @@ simpleResponseExample = SimpleStatusCodeResponseModel(
     status=200, message="success"
 )
 SimpleStatusCodeResponseModel.example = simpleResponseExample
-
-
-class GeodataResponseModel(Schema):
-    """Model for object in enriched Regeldatei
-
-    This object contains the metadata for input geodata from GNOS
-    """
-    type = 'object'
-    properties = {
-        'uuid': {
-            'type': 'string',
-            'description': 'The Geonetwork uuid.'
-        },
-        'bbox': {
-            'type': 'array',
-            'items': {
-                'type': 'number'
-            },
-            'minItems': 4,
-            'maxItems': 4,
-            'description': 'The bounding box of the result.'
-        },
-        'crs': {
-            'type': 'string',
-            'description': 'The coordinate reference system of the result.'
-        },
-        'table': {
-            'type': 'string',
-            'description': ('The database connection string of the source ' +
-                            'of the result.')
-        }
-    }
-    required = ["uuid", "bbox"]
