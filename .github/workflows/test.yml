@@ -27,8 +27,7 @@ jobs:
       run: docker logs docker_postgis-test_1
 
     - name: Run integration test
-      run: docker exec -t docker_actinia-test_1 sh /usr/bin/run_unittests.sh
-      # run: docker exec -t docker_actinia-test_1 sh /usr/bin/run_integration_tests.sh
+      run: docker exec -t docker_actinia-test_1 sh /usr/bin/run_integration_tests.sh
 
     - name: Stop containers
       run: docker-compose -f "docker/docker-compose-test.yml" down
