@@ -34,9 +34,6 @@ from actinia_parallel_plugin.resources.logging import log
 
 def insertJob(jsonDict, process, process_chain):
     """ function to prepare and call InsertNewJob from regeldatei"""
-    # actinia_core_url = None
-    # actinia_core_platform = None
-    # actinia_core_platform_name = None
 
     try:
         process_chain_struct = process_chain.to_struct()
@@ -45,45 +42,10 @@ def insertJob(jsonDict, process, process_chain):
         log.error(e)
         return None
 
-    # vm_procs = PROCESSING.actinia_vm_processes.replace(
-    #     ' ', '').split(',')
-    #
-    # # set default actinia connection parameter
-    # if (process in vm_procs):
-    #     actinia_core_url = None
-    #     actinia_core_platform = 'vm'
-    # else:
-    #     actinia_core_url = ACTINIACORE.url
-    #     actinia_core_platform = 'openshift'
-    #
-    # # overwrite actinia connection parameter if set in rulefile
-    # if (regeldatei.processing_platform):
-    #     if (regeldatei.processing_platform.lower() == 'vm'):
-    #         actinia_core_url = None
-    #         actinia_core_platform = 'vm'
-    #     elif (regeldatei.processing_platform.lower() == 'openshift'):
-    #         actinia_core_url = ACTINIACORE.url
-    #         actinia_core_platform = 'openshift'
-    #
-    # # overwrite actinia connection parameter if set in rulefile
-    # if (regeldatei.processing_host):
-    #     actinia_core_url = regeldatei.processing_host
-    #     if not actinia_core_url.startswith('http'):
-    #         actinia_core_url = ACTINIACORE_VM.scheme + '://' + \
-    #             actinia_core_url
-    #     if len(actinia_core_url.split(':')) == 2:
-    #         actinia_core_url += ':' + ACTINIACORE_VM.port
-    #
-    # if (regeldatei.processing_platform_name):
-    #     actinia_core_platform_name = regeldatei.processing_platform_name
-
     job = insertNewJob(
         jsonDict,
         process_chain_struct,
         process,
-        # actinia_core_url,
-        # actinia_core_platform,
-        # actinia_core_platform_name
     )
     return job
 
@@ -127,35 +89,5 @@ def updateJob(resource_id, actinia_resp, jobid):
         shortenActiniaCoreResp(actinia_resp),
         resourceId=resource_id
     )
-
-    # # TODO: for now if multiple records need to be updated (eg. for PT), this
-    # # can be told by specifying multiple uuids comma-separated in the
-    # # "feature_uuid" field of the rulefile. This might change later...
-    # if status == 'finished':
-    #     try:
-    #         gnosUuid = record['job_description']['feature_uuid']
-    #         utcnow = record['time_ended']
-    #     except Exception:
-    #         log.warning('Feature has no uuid or time_ended')
-    #         gnosUuid = None
-    #         utcnow = None
-    #     try:
-    #         uuids = gnosUuid.split(',')
-    #         for uuid in uuids:
-    #             update(uuid, utcnow)
-    #     except Exception:
-    #         log.warning('Could not update geonetwork record')
-
-    # # shutdown VM if process was calculated on VM
-    # terminate_status = ['finished', 'error', 'terminated']
-    # processing_platform = record['actinia_core_platform']
-    # process = record['process']
-    #
-    # if (status in terminate_status
-    #         and processing_platform is not None
-    #         and processing_platform.lower() == 'vm'
-    #         and 'processing_host' not in record['rule_configuration']):
-    #
-    #     record = destroyVM(process, jobid)
 
     return record

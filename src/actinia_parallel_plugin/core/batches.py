@@ -242,10 +242,6 @@ def createBatchResponseDict(jobs_list):
     responseDict = {
         "actinia_gdi_batchid": batch_id,
         "actinia_core_jobid": resource_ids,
-        # some parameters will be the same in all jobs:
-        "actinia_core_platform": jobs[0]["actinia_core_platform"],
-        "actinia_core_platform_name": jobs[0]["actinia_core_platform_name"],
-        "actinia_core_url": jobs[0]["actinia_core_url"],
         "summary": summary_dict,
         "actinia_core_response": responses,
         "creation_uuids": uuids,
@@ -309,8 +305,6 @@ def startProcessingBlock(jobs, block, batch_id, location_name, mapset_name,
         #     "process": job["process"],
         #     "process_chain": process_chain,
         #     "jobid": job["idpk_jobs"],
-        #     # "actinia_core_platform": job["actinia_core_platform"],
-        #     # "actinia_core_url": job["actinia_core_url"]
         # }
         mapset_name_parallel = mapset_name
         if mapset_suffix != "" and mapset_name is not None:

@@ -131,20 +131,6 @@ class ProcessesJobResponseModel(Schema):
             'type': 'string',
             'description': 'The actinia-core resource ID for the job'
         },
-        'actinia_core_platform': {
-            'type': 'string',
-            'description': 'The actinia-core platform, either "openshift" or '
-                           '"vm"'
-        },
-        'actinia_core_platform_name': {
-            'type': 'string',
-            'description': 'The actinia-core platform name'
-        },
-        'actinia_core_url': {
-            'type': 'string',
-            'description': 'The actinia-core IP or URL where actinia-core is '
-                           'processing the job'
-        },
         'creation_uuid': {
             'type': 'string',
             'description': 'A unique id for the job at creation time before '

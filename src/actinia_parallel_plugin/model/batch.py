@@ -141,26 +141,12 @@ class BatchProcessChainModel(Schema):
     """
     type = 'object'
     properties = {
-        'processing_host': {
-            'type': 'string',
-            'description': 'The actinia-core IP or URL in case the platform '
-                           'is not OpenShift and no new VM should be created '
-                           'by actinia-gdi'
-        },
-        'processing_platform': {
-            'type': 'string',
-            'description': 'The actinia-core platform, either "openshift" or '
-                           '"vm". If platform is "vm" and no actinia_core_url '
-                           'is given, actinia-gdi will create a new VM.'
-        },
-        'processing_platform_name': {
-            'type': 'string',
-            'description': 'The actinia-core platform name. Only used to '
-                           'match a job to a VM if VM not started by '
-                           'actinia-gdi. Ideally it would contain the job '
-                           'type (actinia-core-pt or actinia-core-oc) and '
-                           'a unique ID.'
-        },
+        # 'processing_host': {
+        #     'type': 'string',
+        #     'description': 'The actinia-core IP or URL in case the platform '
+        #                    'is not OpenShift and no new VM should be created '
+        #                    'by actinia-gdi'
+        # },
         'jobs': {
             'type': 'array',
             'items': ProcessChainModel,
@@ -183,24 +169,10 @@ class BatchJobResponseModel(Schema):
                             'jobs'),
             'items': {'type': 'string'}
         },
-        'actinia_core_platform': {
-            'type': 'string',
-            'description': ('The actinia-core platform, either "openshift"'
-                            ' or "vm"')
-        },
-        'actinia_core_platform_name': {
-            'type': 'string',
-            'description': 'The actinia-core platform name'
-        },
         'actinia_core_response': {
             'type': 'array',
             'description': 'The responses of actinia-core for individual jobs',
             'items': {'type': 'object'}
-        },
-        'actinia_core_url': {
-            'type': 'string',
-            'description': ('The actinia-core IP or URL where actinia-core '
-                            'is processing the batchjob')
         },
         'actinia_gdi_batchid': {
             'type': 'integer',

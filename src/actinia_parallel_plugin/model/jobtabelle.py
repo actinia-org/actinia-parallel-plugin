@@ -61,29 +61,29 @@ class BaseModel(Model):
 class Job(BaseModel):
     """Model for jobtable in database
     """
-    idpk_jobs = AutoField()
-    process = CharField(null=True)
-    # feature_type = CharField(null=True)
-    rule_configuration = BinaryJSONField(null=True)
-    job_description = BinaryJSONField(null=True)
+    # behalten
     time_created = DateTimeField(null=True)
     time_started = DateTimeField(null=True)
     time_estimated = DateTimeField(null=True)
     time_ended = DateTimeField(null=True)
-    # metadata = CharField(null=True)
     status = CharField(null=True)
-    actinia_core_response = BinaryJSONField(null=True)
-    actinia_core_jobid = CharField(null=True)
-    actinia_core_url = CharField(null=True)
-    actinia_core_platform = CharField(null=True)
-    actinia_core_platform_name = CharField(null=True)
-    terraformer_id = IntegerField(null=True)
-    terraformer_response = BinaryJSONField(null=True)
+
+    actinia_core_response = BinaryJSONField(null=True)  # resource_response
+    idpk_jobs = AutoField()  # id
+    actinia_core_jobid = CharField(null=True)  # resource_id
+
+    # benötigt?
     creation_uuid = CharField(null=True)
+    process = CharField(null=True)
     message = CharField(null=True)
+
+    # weg
+    rule_configuration = BinaryJSONField(null=True)
+    job_description = BinaryJSONField(null=True)
+
     # add a potential parent_job
     batch_id = IntegerField(null=True)
-    processing_block = IntegerField(null=True)
+    processing_block = IntegerField(null=True)  # batch_processing_block
     batch_description = BinaryJSONField(null=True)
 
     class Meta:

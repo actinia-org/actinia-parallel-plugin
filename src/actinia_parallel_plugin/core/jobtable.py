@@ -235,18 +235,12 @@ def insertNewJob(
         rule_configuration,
         job_description,
         process,
-        # feature_type,
-        actinia_core_url=None,
-        actinia_core_platform=None,
-        actinia_core_platform_name=None
         ):
     """Insert new job into jobtabelle.
 
     Args:
       rule_configuration (dict): original regeldatei
       job_description (TODO): enriched regeldatei with geometadata
-      actinia_core_url (string): url where processing will run
-      actinia_core_platform (string): platform where processing will run
 
     Returns:
       record (dict): the new record
@@ -262,9 +256,6 @@ def insertNewJob(
         'process': process,
         'status': 'PREPARING',
         'time_created': utcnow,
-        'actinia_core_url': actinia_core_url,
-        'actinia_core_platform': actinia_core_platform,
-        'actinia_core_platform_name': actinia_core_platform_name,
         'creation_uuid': creation_uuid
     }
     if "batch_id" in rule_configuration.keys():
