@@ -51,20 +51,6 @@ jobs = [
                 ]
             },
         },
-        "job_description": {
-            "list": [{"..."}],
-            "version": "1",
-            "batch_id": 2,
-            "processing_block": 2,
-            "batch_description": {
-                "jobs": [
-                    {"list": [{"..."}], "version": "1", "parallel": "false"},
-                    {"list": [{"..."}], "version": "1", "parallel": "true"},
-                    {"list": [{"..."}], "version": "1", "parallel": "true"},
-                    {"list": [{"..."}], "version": "1", "parallel": "false"},
-                ]
-            },
-        },
         "time_created": datetime.datetime(2022, 6, 2, 7, 20, 14, 930771),
         "time_started": None,
         "time_estimated": None,
@@ -105,30 +91,6 @@ jobs = [
                 ]
             },
         },
-        "job_description": {
-            "list": [
-                {
-                    "id": "g_region_nonparallel_block3",
-                    "flags": "p",
-                    "inputs": [
-                        {"param": "raster", "value": "elevation@PERMANENT"}
-                    ],
-                    "module": "g.region",
-                    "outputs": [],
-                }
-            ],
-            "version": "1",
-            "batch_id": 2,
-            "processing_block": 3,
-            "batch_description": {
-                "jobs": [
-                    {"list": [{"..."}], "version": "1", "parallel": "false"},
-                    {"list": [{"..."}], "version": "1", "parallel": "true"},
-                    {"list": [{"..."}], "version": "1", "parallel": "true"},
-                    {"list": [{"..."}], "version": "1", "parallel": "false"},
-                ]
-            },
-        },
         "time_created": datetime.datetime(2022, 6, 2, 7, 20, 14, 940472),
         "time_started": None,
         "time_estimated": None,
@@ -159,20 +121,6 @@ jobs = [
             "version": "1",
             "batch_id": 2,
             "parallel": "false",
-            "processing_block": 1,
-            "batch_description": {
-                "jobs": [
-                    {"list": [{"..."}], "version": "1", "parallel": "false"},
-                    {"list": [{"..."}], "version": "1", "parallel": "true"},
-                    {"list": [{"..."}], "version": "1", "parallel": "true"},
-                    {"list": [{"..."}], "version": "1", "parallel": "false"},
-                ]
-            },
-        },
-        "job_description": {
-            "list": [{"..."}],
-            "version": "1",
-            "batch_id": 2,
             "processing_block": 1,
             "batch_description": {
                 "jobs": [
@@ -247,20 +195,6 @@ jobs = [
             "version": "1",
             "batch_id": 2,
             "parallel": "true",
-            "processing_block": 2,
-            "batch_description": {
-                "jobs": [
-                    {"list": [{"..."}], "version": "1", "parallel": "false"},
-                    {"list": [{"..."}], "version": "1", "parallel": "true"},
-                    {"list": [{"..."}], "version": "1", "parallel": "true"},
-                    {"list": [{"..."}], "version": "1", "parallel": "false"},
-                ]
-            },
-        },
-        "job_description": {
-            "list": [{"..."}],
-            "version": "1",
-            "batch_id": 2,
             "processing_block": 2,
             "batch_description": {
                 "jobs": [

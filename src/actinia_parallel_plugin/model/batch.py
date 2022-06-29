@@ -144,8 +144,8 @@ class BatchProcessChainModel(Schema):
         # 'processing_host': {
         #     'type': 'string',
         #     'description': 'The actinia-core IP or URL in case the platform '
-        #                    'is not OpenShift and no new VM should be created '
-        #                    'by actinia-gdi'
+        #                    'is not OpenShift and no new VM should be created'
+        #                    ' by actinia-gdi'
         # },
         'jobs': {
             'type': 'array',

@@ -41,46 +41,6 @@ with open(abs_file_path) as jsonfile:
     jobs_get_docs_response_example = json.load(jsonfile)
 
 
-class EnrichedRegeldateiModel(Schema):
-    """Request schema for creating a job"""
-    # TODO check if this is correct
-    type = 'object'
-    properties = {
-        'rule_area_id': {
-            'type': 'integer',
-            'description': 'Identifier of area where Regeldatei is valid'
-        },
-        'rule_area': {
-            'type': 'string',
-            'description': 'Name of area where Regeldatei is valid'
-        },
-        'feature_uuid': {
-            'type': 'string',
-            'description': 'Geonetwork UUID of feature type to run job with'
-        },
-        'processing_platform': {
-            'type': 'string',
-            'description': 'TODO'
-        },
-        'processing_platform_name': {
-            'type': 'string',
-            'description': 'TODO (and a unique ID.)'
-        },
-        'processing_host': {
-            'type': 'string',
-            'description': 'TODO (The actinia-core IP or URL)'
-        }
-        # 'procs': {
-        #     'type': 'array',
-        #     'description': 'List of processes to run',
-        #     'items': EnrichedProcModel
-        # }
-    }
-    # TODO add example
-    # example = jobs_post_docs_request_example
-    required = ["feature_source"]
-
-
 class ProcessesJobResponseModel(Schema):
     """Response schema for creating a job"""
     type = 'object'
@@ -95,7 +55,6 @@ class ProcessesJobResponseModel(Schema):
                            'or potentialtrenches'
         },
         'rule_configuration': RegeldateiModel,
-        'job_description': EnrichedRegeldateiModel,
         'time_created': {
             'type': 'string',
             'description': 'Timestamp when job was created'

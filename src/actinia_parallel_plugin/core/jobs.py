@@ -44,7 +44,6 @@ def insertJob(jsonDict, process, process_chain):
 
     job = insertNewJob(
         jsonDict,
-        process_chain_struct,
         process,
     )
     return job

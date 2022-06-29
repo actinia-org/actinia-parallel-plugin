@@ -67,24 +67,24 @@ class Job(BaseModel):
     time_estimated = DateTimeField(null=True)
     time_ended = DateTimeField(null=True)
     status = CharField(null=True)
+    creation_uuid = CharField(null=True)
 
     actinia_core_response = BinaryJSONField(null=True)  # resource_response
     idpk_jobs = AutoField()  # id
     actinia_core_jobid = CharField(null=True)  # resource_id
 
     # benötigt?
-    creation_uuid = CharField(null=True)
     process = CharField(null=True)
     message = CharField(null=True)
 
     # weg
-    rule_configuration = BinaryJSONField(null=True)
-    job_description = BinaryJSONField(null=True)
+    rule_configuration = BinaryJSONField(null=True)  # WIRD VERWENDET!!! vielleicht eher batch_description löschen?
+    # job_description = BinaryJSONField(null=True)
+    batch_description = BinaryJSONField(null=True) # weg als eintrag
 
     # add a potential parent_job
     batch_id = IntegerField(null=True)
     processing_block = IntegerField(null=True)  # batch_processing_block
-    batch_description = BinaryJSONField(null=True)
 
     class Meta:
         table_name = JOBTABLE.table

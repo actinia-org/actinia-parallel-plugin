@@ -233,14 +233,12 @@ def getJobByResource(key, val):
 
 def insertNewJob(
         rule_configuration,
-        job_description,
         process,
         ):
     """Insert new job into jobtabelle.
 
     Args:
       rule_configuration (dict): original regeldatei
-      job_description (TODO): enriched regeldatei with geometadata
 
     Returns:
       record (dict): the new record
@@ -252,7 +250,6 @@ def insertNewJob(
 
     job_kwargs = {
         'rule_configuration': rule_configuration,
-        'job_description': job_description,
         'process': process,
         'status': 'PREPARING',
         'time_created': utcnow,
