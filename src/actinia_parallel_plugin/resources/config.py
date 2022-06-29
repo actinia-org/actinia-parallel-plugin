@@ -56,7 +56,7 @@ class JOBTABLE:
     table = 'tab_jobs'
     id_field = 'idpk_jobs'
     batch_id_field = "batch_id"
-    resource_id_field = "actinia_core_jobid"
+    resource_id_field = "resource_id"
 
 
 class LOGCONFIG:

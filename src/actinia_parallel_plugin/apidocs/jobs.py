@@ -86,9 +86,9 @@ class ProcessesJobResponseModel(Schema):
             'type': 'object',
             'description': 'The Response of actinia-core at creation time'
         },
-        'actinia_core_jobid': {
+        'resource_id': {
             'type': 'string',
-            'description': 'The actinia-core resource ID for the job'
+            'description': 'The resource ID for the job'
         },
         'creation_uuid': {
             'type': 'string',

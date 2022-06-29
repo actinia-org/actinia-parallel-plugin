@@ -163,9 +163,9 @@ class BatchJobResponseModel(Schema):
     """
     type = 'object'
     properties = {
-        'actinia_core_jobid': {
+        'resource_id': {
             'type': 'array',
-            'description': ('The actinia-core resource IDs for all individual '
+            'description': ('The resource IDs for all individual '
                             'jobs'),
             'items': {'type': 'string'}
         },

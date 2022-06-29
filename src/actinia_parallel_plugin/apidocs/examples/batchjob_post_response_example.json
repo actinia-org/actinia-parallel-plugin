@@ -1,5 +1,5 @@
 {
-  "actinia_core_jobid": [
+  "resource_id": [
     "resource_id-f5c2ec5d-30f0-4f51-be9a-5b423fa1eb18",
     "None",
     "None",
@@ -158,22 +158,22 @@
   ],
   "jobs_status": [
     {
-      "actinia_core_jobid": "resource_id-f5c2ec5d-30f0-4f51-be9a-5b423fa1eb18",
+      "resource_id": "resource_id-f5c2ec5d-30f0-4f51-be9a-5b423fa1eb18",
       "idpk_jobs": 17,
       "status": "PENDING"
     },
     {
-      "actinia_core_jobid": "None",
+      "resource_id": "None",
       "idpk_jobs": 18,
       "status": "PREPARING"
     },
     {
-      "actinia_core_jobid": "None",
+      "resource_id": "None",
       "idpk_jobs": 19,
       "status": "PREPARING"
     },
     {
-      "actinia_core_jobid": "None",
+      "resource_id": "None",
       "idpk_jobs": 20,
       "status": "PREPARING"
     }

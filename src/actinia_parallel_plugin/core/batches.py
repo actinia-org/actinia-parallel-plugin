@@ -177,14 +177,14 @@ def createBatchResponseDict(jobs_list):
     job_ids = []
     blocks = []
     for job in jobs:
-        resource_id = job["actinia_core_jobid"]
+        resource_id = job["resource_id"]
         # this way we also have "None" if no resource_id is given yet:
         resource_ids.append(str(resource_id))
         if resource_id is not None:
             responses[resource_id] = job["actinia_core_response"]
         job_status = {
             "idpk_jobs": job["idpk_jobs"],
-            "actinia_core_jobid": str(resource_id),
+            "resource_id": str(resource_id),
             "status": str(job["status"])
             }
         jobs_status.append(job_status)
@@ -241,7 +241,7 @@ def createBatchResponseDict(jobs_list):
     # create overall response dict
     responseDict = {
         "actinia_gdi_batchid": batch_id,
-        "actinia_core_jobid": resource_ids,
+        "resource_id": resource_ids,
         "summary": summary_dict,
         "actinia_core_response": responses,
         "creation_uuids": uuids,

@@ -336,7 +336,7 @@ def updateJobByID(
             updatekwargs = {
                 'status': status,
                 'actinia_core_response': resp,
-                'actinia_core_jobid': resourceId
+                'resource_id': resourceId
             }
             if message is not None:
                 updatekwargs['message'] = message
@@ -362,7 +362,7 @@ def updateJobByID(
                 if message is not None:
                     updatekwargs['message'] = message
                 if resourceId is not None:
-                    updatekwargs['actinia_core_jobid'] = resourceId
+                    updatekwargs['resource_id'] = resourceId
                 # TODO: check if time_estimated can be set
                 # time_estimated=
 
@@ -381,7 +381,7 @@ def updateJobByID(
             if message is not None:
                 updatekwargs['message'] = message
             if resourceId is not None:
-                updatekwargs['actinia_core_jobid'] = resourceId
+                updatekwargs['resource_id'] = resourceId
 
             query = Job.update(**updatekwargs).where(
                 getattr(Job, JOBTABLE.id_field) == jobid

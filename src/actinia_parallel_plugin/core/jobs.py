@@ -79,7 +79,7 @@ def updateJob(resource_id, actinia_resp, jobid):
     """
 
     status = actinia_resp["status"]
-    # record = getJobByResource("actinia_core_jobid", resource_id)
+    # record = getJobByResource("resource_id", resource_id)
 
     # follow-up actinia update, therefore without resourceId
     record = updateJobByID(

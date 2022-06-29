@@ -69,9 +69,9 @@ class Job(BaseModel):
     status = CharField(null=True)
     creation_uuid = CharField(null=True)
 
-    actinia_core_response = BinaryJSONField(null=True)  # resource_response
+    actinia_core_response = BinaryJSONField(null=True)  # resource_response !!!
     idpk_jobs = AutoField()  # id
-    actinia_core_jobid = CharField(null=True)  # resource_id
+    resource_id = CharField(null=True)
 
     # benötigt?
     process = CharField(null=True)
@@ -79,7 +79,6 @@ class Job(BaseModel):
 
     # weg
     rule_configuration = BinaryJSONField(null=True)  # WIRD VERWENDET!!! vielleicht eher batch_description löschen?
-    # job_description = BinaryJSONField(null=True)
     batch_description = BinaryJSONField(null=True) # weg als eintrag
 
     # add a potential parent_job
