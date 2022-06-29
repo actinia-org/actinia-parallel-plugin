@@ -74,7 +74,7 @@ def assignProcessingBlocks(jsonDict):
             prev_parallel = parallel_jobs_corrected[idx-1]
             if idx > 0 and (parallel is False or prev_parallel is False):
                 block_num += 1
-            job["processing_block"] = block_num
+            job["batch_processing_block"] = block_num
             result_jobs.append(job)
         return result_jobs
 
@@ -118,7 +118,7 @@ def checkProcessingBlockFinished(jobs, block):
         an input list of jobs (db entries)
     """
     status_list = [job["status"] for job
-                   in jobs if job["processing_block"] == block]
+                   in jobs if job["batch_processing_block"] == block]
     finished = all(status == "SUCCESS" for status in status_list)
     return finished
 
@@ -191,7 +191,7 @@ def createBatchResponseDict(jobs_list):
         # status.append(str(job["status"]))
         uuids.append(job["creation_uuid"])
         job_ids.append(str(job["idpk_jobs"]))
-        blocks.append(job["processing_block"])
+        blocks.append(job["batch_processing_block"])
 
     # determine an overall batch status
     overall_status_list = [job["status"] for job in jobs_status]
@@ -214,10 +214,10 @@ def createBatchResponseDict(jobs_list):
         batch_status = "RUNNING"
 
     # create block-wise statistics
-    processing_blocks = []
+    batch_processing_blocks = []
     for block in sorted(set(blocks)):
         status_list = [job["status"] for job in jobs if
-                       job["processing_block"] == block]
+                       job["batch_processing_block"] == block]
         status_dict = _count_status_from_list(status_list)
         if len(status_list) > 1:
             parallel = len(status_list)
@@ -229,13 +229,13 @@ def createBatchResponseDict(jobs_list):
             "parallel": parallel
         }
         block_stats = {**block_info, **status_dict}
-        processing_blocks.append(block_stats)
+        batch_processing_blocks.append(block_stats)
 
     # create summary statistics
     summary_dict = {
         "total": len(job_ids),
         "status": _count_status_from_list(overall_status_list),
-        "blocks": processing_blocks
+        "blocks": batch_processing_blocks
     }
 
     # create overall response dict
@@ -291,7 +291,7 @@ def startProcessingBlock(jobs, block, batch_id, location_name, mapset_name,
         jobs (db entries)
     """
     jobs_to_start = [
-        job for job in jobs if job["processing_block"] == block]
+        job for job in jobs if job["batch_processing_block"] == block]
     jobs_responses = []
     mapset_suffix = ""
     if len(jobs_to_start) > 1:

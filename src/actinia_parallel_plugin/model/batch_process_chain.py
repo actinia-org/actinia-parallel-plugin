@@ -88,7 +88,7 @@ class Job(models.Base):
     parallel = fields.StringField(required=True)  # bool
     list = fields.ListField([Module], required=True)  # array of objects
     # the block and batch id is not in the json but is filled later
-    processing_block = fields.IntField()
+    batch_processing_block = fields.IntField()
     batch_id = fields.IntField()
 
 
@@ -121,9 +121,9 @@ class SingleJob(models.Base):
     processing_platform = fields.StringField()  # string
     processing_platform_name = fields.StringField()  # string
     processing_host = fields.StringField()  # string
-    # processing_block, batch_description and
+    # batch_processing_block, batch_description and
     # batch id are not in the json but is filled later
-    processing_block = fields.IntField()
+    batch_processing_block = fields.IntField()
     batch_id = fields.IntField()
     # batch_description holds the entire batch processing chain
     batch_description = fields.EmbeddedField(BatchProcessChain)

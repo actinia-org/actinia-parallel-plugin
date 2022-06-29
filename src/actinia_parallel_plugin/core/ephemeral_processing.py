@@ -40,12 +40,12 @@ from actinia_parallel_plugin.core.jobs import updateJob
 
 class ParallelEphemeralProcessing(EphemeralProcessing):
 
-    def __init__(self, rdc, batch_id, processing_block, jobid,
+    def __init__(self, rdc, batch_id, batch_processing_block, jobid,
                  user, request_url, post_url, endpoint, method, path,
                  base_status_url):
         super(ParallelEphemeralProcessing, self).__init__(rdc)
         self.batch_id = batch_id
-        self.processing_block = processing_block
+        self.batch_processing_block = batch_processing_block
         self.jobid = jobid
         self.post_url = post_url
         self.user = user
@@ -78,8 +78,8 @@ class ParallelEphemeralProcessing(EphemeralProcessing):
                 "ephemeral"
             )
             all_blocks = [
-                job["processing_block"] for job in jobs_from_batch]
-            block = int(self.processing_block)
+                job["batch_processing_block"] for job in jobs_from_batch]
+            block = int(self.batch_processing_block)
             block_done = checkProcessingBlockFinished(
                 jobs_from_batch, block)
             if block_done is True and block < max(all_blocks):

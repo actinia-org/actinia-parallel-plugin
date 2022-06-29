@@ -84,7 +84,7 @@ class Job(BaseModel):
 
     # add a potential parent_job
     batch_id = IntegerField(null=True)
-    processing_block = IntegerField(null=True)  # batch_processing_block
+    batch_processing_block = IntegerField(null=True)  # batch_batch_processing_block
 
     class Meta:
         table_name = JOBTABLE.table

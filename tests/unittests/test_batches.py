@@ -41,7 +41,7 @@ jobs = [
             "version": "1",
             "batch_id": 2,
             "parallel": "true",
-            "processing_block": 2,
+            "batch_processing_block": 2,
             "batch_description": {
                 "jobs": [
                     {"list": [{"..."}], "version": "1", "parallel": "false"},
@@ -63,7 +63,7 @@ jobs = [
         "creation_uuid": "81eae975-62c1-46f1-97d3-e027834a11b8",
         "message": None,
         "batch_id": 2,
-        "processing_block": 2,
+        "batch_processing_block": 2,
         "batch_description": {
             "jobs": [
                 {"list": [{"..."}], "version": "1", "parallel": "false"},
@@ -81,7 +81,7 @@ jobs = [
             "version": "1",
             "batch_id": 2,
             "parallel": "false",
-            "processing_block": 3,
+            "batch_processing_block": 3,
             "batch_description": {
                 "jobs": [
                     {"list": [{"..."}], "version": "1", "parallel": "false"},
@@ -103,7 +103,7 @@ jobs = [
         "creation_uuid": "a4be1541-70cc-42ac-b134-c17f0ea8d311",
         "message": None,
         "batch_id": 2,
-        "processing_block": 3,
+        "batch_processing_block": 3,
         "batch_description": {
             "jobs": [
                 {"list": [{"..."}], "version": "1", "parallel": "false"},
@@ -121,7 +121,7 @@ jobs = [
             "version": "1",
             "batch_id": 2,
             "parallel": "false",
-            "processing_block": 1,
+            "batch_processing_block": 1,
             "batch_description": {
                 "jobs": [
                     {"list": [{"..."}], "version": "1", "parallel": "false"},
@@ -177,7 +177,7 @@ jobs = [
         "creation_uuid": "767596e2-a9e4-4e96-b05b-4d77ae304a54",
         "message": None,
         "batch_id": 2,
-        "processing_block": 1,
+        "batch_processing_block": 1,
         "batch_description": {
             "jobs": [
                 {"list": [{"..."}], "version": "1", "parallel": "false"},
@@ -195,7 +195,7 @@ jobs = [
             "version": "1",
             "batch_id": 2,
             "parallel": "true",
-            "processing_block": 2,
+            "batch_processing_block": 2,
             "batch_description": {
                 "jobs": [
                     {"list": [{"..."}], "version": "1", "parallel": "false"},
@@ -251,7 +251,7 @@ jobs = [
         "creation_uuid": "d08c1bbb-72f4-482f-bc78-672756937efa",
         "message": None,
         "batch_id": 2,
-        "processing_block": 2,
+        "batch_processing_block": 2,
         "batch_description": {
             "jobs": [
                 {"list": [{"..."}], "version": "1", "parallel": "false"},

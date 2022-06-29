@@ -257,7 +257,7 @@ def insertNewJob(
     }
     if "batch_id" in rule_configuration.keys():
         # then it's a batch job
-        job_kwargs["processing_block"] = rule_configuration["processing_block"]
+        job_kwargs["batch_processing_block"] = rule_configuration["batch_processing_block"]
         job_kwargs["batch_id"] = rule_configuration["batch_id"]
         job_kwargs["batch_description"] = rule_configuration[
             "batch_description"]
