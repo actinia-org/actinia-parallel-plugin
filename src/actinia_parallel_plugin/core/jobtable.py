@@ -281,7 +281,7 @@ def insertNewJob(
 
 
 def updateJobByID(
-        jobid, status, resp, resourceId=None, message=None):
+        jobid, status, resp, resourceId=None):
     """ Method to update job in jobtabelle when processing status changed
 
     Args:
@@ -289,19 +289,12 @@ def updateJobByID(
     status (string): actinia-core processing status
     resp (dict): actinia-core response
     resourceId (str): actinia-core resourceId
-    message (str): general message for the job
 
     Returns:
     updatedRecord (TODO): the updated record
     """
 
-    # terraformer ["PENDING", "STARTING", "STARTED", "INSTALLING", "RUNNING",
-    #              "ERROR", "TERMINATING", "TERMINATED"]
-    # terraformer ERROR leads to ERROR, else PREPARING or SUCCESS
-    # actinia-gdi ["PREPARING"]
-    # actinia-gdi ["PENDING", "RUNNING", "SUCCESS", "ERROR", "TERMINATED"]
-    # actinia-core [accepted, running, finished, error, terminated]
-
+    # TODO do not rename the status (kleineschreiben!!!)
     if status == 'accepted':
         status = 'PENDING'
     elif status == 'running':
@@ -321,13 +314,6 @@ def updateJobByID(
     dbStatus = record['status']
 
     try:
-        # outcommented to see if more feasable if whole logs are passed
-        # if current_app.debug is False:
-        #     smallRes = dict()
-        #     smallRes['message'] = resp.get('message', None)
-        #     smallRes['process_results'] = resp.get('process_results', None)
-        #     resp = smallRes
-
         if status == 'PENDING':
             if dbStatus == status:
                 return record
@@ -338,8 +324,6 @@ def updateJobByID(
                 'actinia_core_response': resp,
                 'resource_id': resourceId
             }
-            if message is not None:
-                updatekwargs['message'] = message
 
             query = Job.update(**updatekwargs).where(
                 getattr(Job, JOBTABLE.id_field) == jobid
@@ -350,8 +334,6 @@ def updateJobByID(
 
             if dbStatus == status:
                 updatekwargs['actinia_core_response'] = resp
-                if message is not None:
-                    updatekwargs['message'] = message
 
             else:
                 log.debug("Update status to " + status + " for job with id "
@@ -359,8 +341,6 @@ def updateJobByID(
                 updatekwargs['status'] = status
                 updatekwargs['actinia_core_response'] = resp
                 updatekwargs['time_started'] = utcnow
-                if message is not None:
-                    updatekwargs['message'] = message
                 if resourceId is not None:
                     updatekwargs['resource_id'] = resourceId
                 # TODO: check if time_estimated can be set
@@ -378,8 +358,6 @@ def updateJobByID(
                 'actinia_core_response': resp,
                 'time_ended': utcnow
             }
-            if message is not None:
-                updatekwargs['message'] = message
             if resourceId is not None:
                 updatekwargs['resource_id'] = resourceId
 

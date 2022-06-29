@@ -95,14 +95,6 @@ class ProcessesJobResponseModel(Schema):
             'description': 'A unique id for the job at creation time before '
                            'idpk_jobs is known. (More unique than creation '
                            'timestamp)'
-        },
-        'terraformer_id': {
-            'type': 'string',
-            'description': 'The terraformer instances ID for the job'
-        },
-        'terraformer_response': {
-            'type': 'string',
-            'description': 'The Response/Status of terraformer'
         }
     }
     example = jobs_get_docs_response_example
