@@ -67,7 +67,6 @@
       "status": "PREPARING"
     }
   ],
-  "process": "ephemeral",
   "status": "PENDING",
   "summary": {
     "blocks": [

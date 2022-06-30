@@ -79,11 +79,11 @@ def assignProcessingBlocks(jsonDict):
         return result_jobs
 
 
-# def cancelBatch(batchid, process):
+# def cancelBatch(batchid):
 #     """ Function to cancel all jobs that are RUNNING or PENDING
-#         by batchid and process
+#         by batchid
 #     """
-#     jobs = getJobsByBatchId(batchid, process)
+#     jobs = getJobsByBatchId(batchid)
 #     cancel_jobs = []
 #     id_field = JOBTABLE.id_field
 #     for job in jobs:
@@ -95,7 +95,7 @@ def assignProcessingBlocks(jsonDict):
 #     else:
 #         # then there are jobs that have not been posted to actinia yet,
 #         # where cancelJob returns None only
-#         return getJobsByBatchId(batchid, process)
+#         return getJobsByBatchId(batchid)
 
 
 def checkBatchProcessChain(jsonDict):
@@ -123,7 +123,7 @@ def checkProcessingBlockFinished(jobs, block):
     return finished
 
 
-def createBatch(jsonDict, process, batchid):
+def createBatch(jsonDict, batchid):
     """ Function to insert all jobs from a batch into the joblist
     """
     jobs = assignProcessingBlocks(jsonDict)
@@ -135,7 +135,7 @@ def createBatch(jsonDict, process, batchid):
             job["batch_id"] = batchid
             # assign the model
             process_chain = SingleJob(**job)
-            job_in_db = insertJob(job, process, process_chain)
+            job_in_db = insertJob(job, process_chain)
             jobs_in_db.append(job_in_db)
     return jobs_in_db
 
@@ -162,7 +162,6 @@ def createBatchResponseDict(jobs_list):
 
     # sort the jobs according to their id
     jobs = sorted(jobs_list, key=lambda d: d["id"])
-    process = jobs[0]["process"]
     batch_id = jobs[0]["batch_id"]
     resource_ids = []
     uuids = []
@@ -240,7 +239,7 @@ def createBatchResponseDict(jobs_list):
         "resource_response": responses,
         "creation_uuids": uuids,
         "id": job_ids,
-        "process": process,
+        # "process": process,
         "jobs_status": jobs_status,
         "status": batch_status
     }
@@ -255,25 +254,25 @@ def getAllBatchIds():
     return batch_ids
 
 
-# def getAllBatches(process):
+# def getAllBatches():
 #     """ Function to return all jobs that are part of a batch from the
 #     database
 #     """
 #     result_list = []
 #     batchids = getAllBatchIds()
 #     for batchid in batchids:
-#         jobs = getJobsByBatchId(batchid, process)
+#         jobs = getJobsByBatchId(batchid)
 #         jobs_response = createBatchResponseDict(jobs)
 #         result_list.append(jobs_response)
 #     result_dict = {"batch_jobs": result_list}
 #     return result_dict
 
 
-def getJobsByBatchId(batch_id, process=None):
-    """ Function to return all jobs (db entries) via a batch_id and process
+def getJobsByBatchId(batch_id):
+    """ Function to return all jobs (db entries) via a batch_id
     """
     filter_dict = {"batch_id": batch_id}
-    jobs = getAllJobs(filter_dict, process)
+    jobs = getAllJobs(filter_dict)
     return jobs
 
 

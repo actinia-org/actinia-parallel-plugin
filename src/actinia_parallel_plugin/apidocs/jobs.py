@@ -45,11 +45,6 @@ class ProcessesJobResponseModel(Schema):
             'type': 'integer',
             'description': 'The job ID'
         },
-        'process': {
-            'type': 'string',
-            'description': 'The process of the job, e.g standortsicherung '
-                           'or potentialtrenches'
-        },
         'time_created': {
             'type': 'string',
             'description': 'Timestamp when job was created'
@@ -79,7 +74,7 @@ class ProcessesJobResponseModel(Schema):
         },
         'resource_response': {
             'type': 'object',
-            'description': 'The Response of actinia-core at creation time'
+            'description': 'The Response at creation time'
         },
         'resource_id': {
             'type': 'string',

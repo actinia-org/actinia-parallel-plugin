@@ -92,7 +92,7 @@ def getAllIds(batch=False):
     return jobIds
 
 
-def getAllJobs(filters, process=None):
+def getAllJobs(filters):
     """ Method to read all jobs from jobtabelle with filter
 
     Args: filters (ImmutableMultiDict): the args from the HTTP call
@@ -102,12 +102,7 @@ def getAllJobs(filters, process=None):
     """
     log.debug('Received query for jobs')
 
-    if process == 'test':
-        query = Expression('a', '=', 'a')
-    elif process is None:
-        query = None
-    else:
-        query = Expression(getattr(Job, 'process'), '=', process)
+    query = None
 
     if filters:
         log.debug("Found filters: " + str(filters))
@@ -229,7 +224,6 @@ def getJobByResource(key, val):
 
 def insertNewJob(
         rule_configuration,
-        process,
         ):
     """Insert new job into jobtabelle.
 
@@ -246,7 +240,6 @@ def insertNewJob(
 
     job_kwargs = {
         'rule_configuration': rule_configuration,
-        'process': process,
         'status': 'PREPARING',
         'time_created': utcnow,
         'creation_uuid': creation_uuid

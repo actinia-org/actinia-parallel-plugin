@@ -35,7 +35,6 @@ resource_id2 = "resource_id-291e8428-ec86-40a6-9ed2-ef1e14357aff"
 jobs = [
     {
         "id": 7,
-        "process": "ephemeral",
         "time_created": datetime.datetime(2022, 6, 2, 7, 20, 14, 930771),
         "time_started": None,
         "time_estimated": None,
@@ -50,7 +49,6 @@ jobs = [
     },
     {
         "id": 8,
-        "process": "ephemeral",
         "time_created": datetime.datetime(2022, 6, 2, 7, 20, 14, 940472),
         "time_started": None,
         "time_estimated": None,
@@ -65,7 +63,6 @@ jobs = [
     },
     {
         "id": 5,
-        "process": "ephemeral",
         "time_created": datetime.datetime(2022, 6, 2, 7, 20, 14, 906827),
         "time_started": None,
         "time_estimated": None,
@@ -114,7 +111,6 @@ jobs = [
     },
     {
         "id": 6,
-        "process": "ephemeral",
         "time_created": datetime.datetime(2022, 6, 2, 7, 20, 14, 920875),
         "time_started": None,
         "time_estimated": None,

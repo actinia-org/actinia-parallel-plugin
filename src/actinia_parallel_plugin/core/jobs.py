@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-Module to start the process Standortsicherung
+Functions to communicate with the job db
 """
 
 __license__ = "GPLv3"
@@ -32,7 +32,7 @@ from actinia_parallel_plugin.core.jobtable import (
 from actinia_parallel_plugin.resources.logging import log
 
 
-def insertJob(jsonDict, process, process_chain):
+def insertJob(jsonDict, process_chain):
     """ function to prepare and call InsertNewJob from regeldatei"""
 
     try:
@@ -44,7 +44,6 @@ def insertJob(jsonDict, process, process_chain):
 
     job = insertNewJob(
         jsonDict,
-        process,
     )
     return job
 
@@ -79,7 +78,6 @@ def updateJob(resource_id, actinia_resp, jobid):
     """
 
     status = actinia_resp["status"]
-    # record = getJobByResource("resource_id", resource_id)
 
     # follow-up actinia update, therefore without resourceId
     record = updateJobByID(

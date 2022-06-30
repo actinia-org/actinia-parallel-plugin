@@ -68,14 +68,9 @@ class Job(BaseModel):
     time_ended = DateTimeField(null=True)
     status = CharField(null=True)
     creation_uuid = CharField(null=True)
-
-    resource_response = BinaryJSONField(null=True)  # resource_response !!!
+    resource_response = BinaryJSONField(null=True)
     id = AutoField()
     resource_id = CharField(null=True)
-
-    # benötigt?
-    process = CharField(null=True)
-
     rule_configuration = BinaryJSONField(null=True)
 
     # add a potential parent_job

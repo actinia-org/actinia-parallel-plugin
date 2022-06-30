@@ -73,10 +73,7 @@ class ParallelEphemeralProcessing(EphemeralProcessing):
         updateJob(resource_id, response_model, self.jobid)
 
         if "finished" == response_model["status"]:
-            jobs_from_batch = getJobsByBatchId(
-                self.batch_id,
-                "ephemeral"
-            )
+            jobs_from_batch = getJobsByBatchId(self.batch_id)
             all_blocks = [
                 job["batch_processing_block"] for job in jobs_from_batch]
             block = int(self.batch_processing_block)

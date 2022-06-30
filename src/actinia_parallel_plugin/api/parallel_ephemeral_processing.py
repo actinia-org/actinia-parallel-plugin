@@ -83,7 +83,7 @@ class AsyncParallelEphermeralResource(Resource):
         # assign new batchid
         self.batch_id = createBatchId()
         # create processing blocks and insert jobs into jobtable
-        jobs_in_db = createBatch(json_dict, "ephemeral", self.batch_id)
+        jobs_in_db = createBatch(json_dict, self.batch_id)
         if jobs_in_db is None:
             res = (jsonify(SimpleResponseModel(
                         status=500,
@@ -121,7 +121,7 @@ class AsyncParallelEphermeralResource(Resource):
             "ephemeral"
         )
         first_status = [entry["status"] for entry in first_jobs]
-        all_jobs = getJobsByBatchId(self.batch_id, "ephemeral")
+        all_jobs = getJobsByBatchId(self.batch_id)
         if None in first_jobs:
             res = (jsonify(SimpleResponseModel(
                         status=500,

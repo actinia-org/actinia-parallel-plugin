@@ -190,10 +190,6 @@ class BatchJobResponseModel(Schema):
             'description': 'The individual job IDs',
             'items': {'type': 'integer'}
         },
-        'process': {
-            'type': 'string',
-            'description': 'The process of the job, e.g. netdefinition'
-        },
         'status': {
             'type': 'string',
             'description': 'The overall status of the batchjob',
