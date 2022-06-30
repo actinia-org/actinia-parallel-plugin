@@ -178,7 +178,6 @@ class BatchJobResponseModel(Schema):
             'type': 'integer',
             'description': 'The batch ID'
         },
-        'batch_description': BatchProcessChainModel,
         'creation_uuid': {
             'type': 'array',
             'description': ('Unique ids for the individual jobs at creation '

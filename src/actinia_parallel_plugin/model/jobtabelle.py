@@ -75,15 +75,12 @@ class Job(BaseModel):
 
     # benötigt?
     process = CharField(null=True)
-    # message = CharField(null=True)
 
-    # weg
-    rule_configuration = BinaryJSONField(null=True)  # WIRD VERWENDET!!! vielleicht eher batch_description löschen?
-    batch_description = BinaryJSONField(null=True) # weg als eintrag
+    rule_configuration = BinaryJSONField(null=True)
 
     # add a potential parent_job
     batch_id = IntegerField(null=True)
-    batch_processing_block = IntegerField(null=True)  # batch_batch_processing_block
+    batch_processing_block = IntegerField(null=True)
 
     class Meta:
         table_name = JOBTABLE.table

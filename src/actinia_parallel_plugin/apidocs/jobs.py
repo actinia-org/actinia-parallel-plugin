@@ -28,9 +28,6 @@ import os
 import json
 from flask_restful_swagger_2 import Schema
 
-from actinia_parallel_plugin.apidocs.regeldatei import (
-    RegeldateiModel,
-)
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -53,7 +50,6 @@ class ProcessesJobResponseModel(Schema):
             'description': 'The process of the job, e.g standortsicherung '
                            'or potentialtrenches'
         },
-        'rule_configuration': RegeldateiModel,
         'time_created': {
             'type': 'string',
             'description': 'Timestamp when job was created'

@@ -255,8 +255,6 @@ def insertNewJob(
         # then it's a batch job
         job_kwargs["batch_processing_block"] = rule_configuration["batch_processing_block"]
         job_kwargs["batch_id"] = rule_configuration["batch_id"]
-        job_kwargs["batch_description"] = rule_configuration[
-            "batch_description"]
     job = Job(**job_kwargs)
 
     with jobdb:

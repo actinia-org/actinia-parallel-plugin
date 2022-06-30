@@ -36,21 +36,6 @@ jobs = [
     {
         "id": 7,
         "process": "ephemeral",
-        "rule_configuration": {
-            "list": [{"..."}],
-            "version": "1",
-            "batch_id": 2,
-            "parallel": "true",
-            "batch_processing_block": 2,
-            "batch_description": {
-                "jobs": [
-                    {"list": [{"..."}], "version": "1", "parallel": "false"},
-                    {"list": [{"..."}], "version": "1", "parallel": "true"},
-                    {"list": [{"..."}], "version": "1", "parallel": "true"},
-                    {"list": [{"..."}], "version": "1", "parallel": "false"},
-                ]
-            },
-        },
         "time_created": datetime.datetime(2022, 6, 2, 7, 20, 14, 930771),
         "time_started": None,
         "time_estimated": None,
@@ -61,34 +46,11 @@ jobs = [
         "creation_uuid": "81eae975-62c1-46f1-97d3-e027834a11b8",
         "message": None,
         "batch_id": 2,
-        "batch_processing_block": 2,
-        "batch_description": {
-            "jobs": [
-                {"list": [{"..."}], "version": "1", "parallel": "false"},
-                {"list": [{"..."}], "version": "1", "parallel": "true"},
-                {"list": [{"..."}], "version": "1", "parallel": "true"},
-                {"list": [{"..."}], "version": "1", "parallel": "false"},
-            ]
-        },
+        "batch_processing_block": 2
     },
     {
         "id": 8,
         "process": "ephemeral",
-        "rule_configuration": {
-            "list": [{"..."}],
-            "version": "1",
-            "batch_id": 2,
-            "parallel": "false",
-            "batch_processing_block": 3,
-            "batch_description": {
-                "jobs": [
-                    {"list": [{"..."}], "version": "1", "parallel": "false"},
-                    {"list": [{"..."}], "version": "1", "parallel": "true"},
-                    {"list": [{"..."}], "version": "1", "parallel": "true"},
-                    {"list": [{"..."}], "version": "1", "parallel": "false"},
-                ]
-            },
-        },
         "time_created": datetime.datetime(2022, 6, 2, 7, 20, 14, 940472),
         "time_started": None,
         "time_estimated": None,
@@ -99,34 +61,11 @@ jobs = [
         "creation_uuid": "a4be1541-70cc-42ac-b134-c17f0ea8d311",
         "message": None,
         "batch_id": 2,
-        "batch_processing_block": 3,
-        "batch_description": {
-            "jobs": [
-                {"list": [{"..."}], "version": "1", "parallel": "false"},
-                {"list": [{"..."}], "version": "1", "parallel": "true"},
-                {"list": [{"..."}], "version": "1", "parallel": "true"},
-                {"list": [{"..."}], "version": "1", "parallel": "false"},
-            ]
-        },
+        "batch_processing_block": 3
     },
     {
         "id": 5,
         "process": "ephemeral",
-        "rule_configuration": {
-            "list": [{"..."}],
-            "version": "1",
-            "batch_id": 2,
-            "parallel": "false",
-            "batch_processing_block": 1,
-            "batch_description": {
-                "jobs": [
-                    {"list": [{"..."}], "version": "1", "parallel": "false"},
-                    {"list": [{"..."}], "version": "1", "parallel": "true"},
-                    {"list": [{"..."}], "version": "1", "parallel": "true"},
-                    {"list": [{"..."}], "version": "1", "parallel": "false"},
-                ]
-            },
-        },
         "time_created": datetime.datetime(2022, 6, 2, 7, 20, 14, 906827),
         "time_started": None,
         "time_estimated": None,
@@ -171,34 +110,11 @@ jobs = [
         "creation_uuid": "767596e2-a9e4-4e96-b05b-4d77ae304a54",
         "message": None,
         "batch_id": 2,
-        "batch_processing_block": 1,
-        "batch_description": {
-            "jobs": [
-                {"list": [{"..."}], "version": "1", "parallel": "false"},
-                {"list": [{"..."}], "version": "1", "parallel": "true"},
-                {"list": [{"..."}], "version": "1", "parallel": "true"},
-                {"list": [{"..."}], "version": "1", "parallel": "false"},
-            ]
-        },
+        "batch_processing_block": 1
     },
     {
         "id": 6,
         "process": "ephemeral",
-        "rule_configuration": {
-            "list": [{"..."}],
-            "version": "1",
-            "batch_id": 2,
-            "parallel": "true",
-            "batch_processing_block": 2,
-            "batch_description": {
-                "jobs": [
-                    {"list": [{"..."}], "version": "1", "parallel": "false"},
-                    {"list": [{"..."}], "version": "1", "parallel": "true"},
-                    {"list": [{"..."}], "version": "1", "parallel": "true"},
-                    {"list": [{"..."}], "version": "1", "parallel": "false"},
-                ]
-            },
-        },
         "time_created": datetime.datetime(2022, 6, 2, 7, 20, 14, 920875),
         "time_started": None,
         "time_estimated": None,
@@ -243,15 +159,7 @@ jobs = [
         "creation_uuid": "d08c1bbb-72f4-482f-bc78-672756937efa",
         "message": None,
         "batch_id": 2,
-        "batch_processing_block": 2,
-        "batch_description": {
-            "jobs": [
-                {"list": [{"..."}], "version": "1", "parallel": "false"},
-                {"list": [{"..."}], "version": "1", "parallel": "true"},
-                {"list": [{"..."}], "version": "1", "parallel": "true"},
-                {"list": [{"..."}], "version": "1", "parallel": "false"},
-            ]
-        },
+        "batch_processing_block": 2
     },
 ]
 block = [1, 2, 3]

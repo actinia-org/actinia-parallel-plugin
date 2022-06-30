@@ -121,9 +121,7 @@ class SingleJob(models.Base):
     processing_platform = fields.StringField()  # string
     processing_platform_name = fields.StringField()  # string
     processing_host = fields.StringField()  # string
-    # batch_processing_block, batch_description and
-    # batch id are not in the json but is filled later
+    # batch_processing_block and batch_id are not in the json but is
+    # filled later
     batch_processing_block = fields.IntField()
     batch_id = fields.IntField()
-    # batch_description holds the entire batch processing chain
-    batch_description = fields.EmbeddedField(BatchProcessChain)

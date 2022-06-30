@@ -132,15 +132,9 @@ def createBatch(jsonDict, process, batchid):
     else:
         jobs_in_db = []
         for job in jobs:
-            job["batch_description"] = jsonDict
-            # job["processing_host"] = jsonDict["processing_host"]
-            # job["processing_platform_name"] = jsonDict[
-            #     "processing_platform_name"]
             job["batch_id"] = batchid
             # assign the model
             process_chain = SingleJob(**job)
-            # might be needed (?)
-            # process_chain.feature_type = "null"
             job_in_db = insertJob(job, process, process_chain)
             jobs_in_db.append(job_in_db)
     return jobs_in_db
@@ -246,7 +240,6 @@ def createBatchResponseDict(jobs_list):
         "actinia_core_response": responses,
         "creation_uuids": uuids,
         "id": job_ids,
-        "batch_description": jobs[0]["batch_description"],
         "process": process,
         "jobs_status": jobs_status,
         "status": batch_status
