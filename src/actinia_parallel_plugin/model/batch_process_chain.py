@@ -103,25 +103,3 @@ class BatchProcessChain(models.Base):
     processing_platform_name = fields.StringField()  # string
     processing_host = fields.StringField()  # string
     jobs = fields.ListField([Job], required=True)  # array of objects
-
-
-class SingleJob(models.Base):
-    """Model for SingleJob
-    Including all information for all modules and general information on
-    processing platform and host
-    This is used by the parallel processing netdefinition/batchjobs endpoint
-    and is only created internally for individual jobs of a BatchProcessChain
-    in order to have the processing_platform etc. attributes attached to each
-    job as well.
-    """
-    version = fields.StringField()  # string
-    list = fields.ListField([Module], required=True)  # array of objects
-    # the following are given by the user to the BatchProcessChain and are
-    # then internally applied to each SingleJob
-    processing_platform = fields.StringField()  # string
-    processing_platform_name = fields.StringField()  # string
-    processing_host = fields.StringField()  # string
-    # batch_processing_block and batch_id are not in the json but is
-    # filled later
-    batch_processing_block = fields.IntField()
-    batch_id = fields.IntField()

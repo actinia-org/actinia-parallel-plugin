@@ -32,7 +32,6 @@ from actinia_parallel_plugin.core.parallel_processing_job import \
     AsyncParallelJobResource
 from actinia_parallel_plugin.model.batch_process_chain import (
     BatchProcessChain,
-    SingleJob,
 )
 from actinia_parallel_plugin.resources.logging import log
 
@@ -42,6 +41,7 @@ def assignProcessingBlocks(jsonDict):
         to the parallel parameter into processing blocks
     """
     bpc_dict = checkBatchProcessChain(jsonDict)
+
     if bpc_dict is None:
         return None
     else:
@@ -134,8 +134,7 @@ def createBatch(jsonDict, batchid):
         for job in jobs:
             job["batch_id"] = batchid
             # assign the model
-            process_chain = SingleJob(**job)
-            job_in_db = insertJob(job, process_chain)
+            job_in_db = insertJob(job)
             jobs_in_db.append(job_in_db)
     return jobs_in_db
 

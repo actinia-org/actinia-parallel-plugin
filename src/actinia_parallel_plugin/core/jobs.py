@@ -29,22 +29,12 @@ from actinia_parallel_plugin.core.jobtable import (
     insertNewJob,
     updateJobByID,
 )
-from actinia_parallel_plugin.resources.logging import log
 
 
-def insertJob(jsonDict, process_chain):
-    """ function to prepare and call InsertNewJob from regeldatei"""
+def insertJob(jsonDict):
+    """ function to prepare and call InsertNewJob"""
 
-    try:
-        process_chain_struct = process_chain.to_struct()
-    except Exception as e:
-        log.error('Regeldatei is invalid!')
-        log.error(e)
-        return None
-
-    job = insertNewJob(
-        jsonDict,
-    )
+    job = insertNewJob(jsonDict)
     return job
 
 

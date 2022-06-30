@@ -163,7 +163,6 @@ class ParallelResourceBase(ResourceBase):
         # Create the resource URL base and use a placeholder for the file name
         # The placeholder __None__ must be replaced by the resource URL
         # generator
-        # TODO check if this works
         self.resource_url_base = f"{self.status_url}/__None__"
 
         if (global_config.FORCE_HTTPS_URLS is True

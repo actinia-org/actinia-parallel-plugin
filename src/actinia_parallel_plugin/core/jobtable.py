@@ -85,8 +85,6 @@ def getAllIds(batch=False):
     for i in queryResult:
         jobIds.append(i[field])
 
-    # log.debug("Information read from jobtable.")
-
     jobdb.close()
 
     return jobIds
@@ -246,7 +244,8 @@ def insertNewJob(
     }
     if "batch_id" in rule_configuration.keys():
         # then it's a batch job
-        job_kwargs["batch_processing_block"] = rule_configuration["batch_processing_block"]
+        job_kwargs["batch_processing_block"] = rule_configuration[
+            "batch_processing_block"]
         job_kwargs["batch_id"] = rule_configuration["batch_id"]
     job = Job(**job_kwargs)
 
@@ -267,8 +266,7 @@ def insertNewJob(
     return record
 
 
-def updateJobByID(
-        jobid, status, resp, resourceId=None):
+def updateJobByID(jobid, status, resp, resourceId=None):
     """ Method to update job in jobtable when processing status changed
 
     Args:
@@ -281,7 +279,6 @@ def updateJobByID(
     updatedRecord (TODO): the updated record
     """
 
-    # TODO do not rename the status (kleineschreiben!!!)
     if status == 'accepted':
         status = 'PENDING'
     elif status == 'running':
