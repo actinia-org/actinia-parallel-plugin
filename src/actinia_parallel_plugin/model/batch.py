@@ -168,7 +168,7 @@ class BatchJobResponseModel(Schema):
             'description': 'The responses of actinia-core for individual jobs',
             'items': {'type': 'object'}
         },
-        'actinia_gdi_batchid': {
+        'batch_id': {
             'type': 'integer',
             'description': 'The batch ID'
         },

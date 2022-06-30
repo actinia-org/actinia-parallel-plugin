@@ -232,7 +232,7 @@ def createBatchResponseDict(jobs_list):
 
     # create overall response dict
     responseDict = {
-        "actinia_gdi_batchid": batch_id,
+        "batch_id": batch_id,
         "resource_id": resource_ids,
         "summary": summary_dict,
         "resource_response": responses,

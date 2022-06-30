@@ -94,12 +94,11 @@ class Job(models.Base):
 
 class BatchProcessChain(models.Base):
     """Model for BatchProcessChain
-    Including all information for all jobs and general information on
-    processing platform and host
-    This is used by the sequential processing netdefinition/jobs endpoint
+    Including all information for all jobs
+    This is used by the parallel processing endpoints
     """
 
-    processing_platform = fields.StringField()  # string
-    processing_platform_name = fields.StringField()  # string
-    processing_host = fields.StringField()  # string
+    # processing_platform = fields.StringField()  # string
+    # processing_platform_name = fields.StringField()  # string
+    # processing_host = fields.StringField()  # string
     jobs = fields.ListField([Job], required=True)  # array of objects

@@ -140,7 +140,7 @@ class ActiniaResourceTestCaseBase(ActiniaTestCaseBase):
     def waitAsyncBatchJob(self, rv, headers, http_status=200,
                           status="SUCCESS", message_check=None):
         resp_data = json_loads(rv.data)
-        batchid = resp_data["actinia_gdi_batchid"]
+        batchid = resp_data["batch_id"]
 
         while True:
             rv = self.server.get(
