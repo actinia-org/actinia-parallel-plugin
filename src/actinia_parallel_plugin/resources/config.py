@@ -45,7 +45,7 @@ CONFIG_FILES = [DEFAULT_CONFIG_PATH]
 
 
 class JOBTABLE:
-    """Default config for database connection for jobtabelle
+    """Default config for database connection for jobtable
     """
     host = 'localhost'
     port = '5432'

@@ -34,7 +34,7 @@ from uuid import uuid4
 from yoyo import read_migrations
 from yoyo import get_backend
 
-from actinia_parallel_plugin.model.jobtabelle import Job, jobdb
+from actinia_parallel_plugin.model.jobtable import Job, jobdb
 from actinia_parallel_plugin.resources.config import JOBTABLE
 from actinia_parallel_plugin.resources.logging import log
 
@@ -64,7 +64,7 @@ def applyMigrations():
 
 
 def getAllIds(batch=False):
-    """ Method to read all jobs from jobtabelle
+    """ Method to read all jobs from jobtable
 
     Args:
     batch (bool): indicate whether only batch jobs should be read
@@ -93,7 +93,7 @@ def getAllIds(batch=False):
 
 
 def getAllJobs(filters):
-    """ Method to read all jobs from jobtabelle with filter
+    """ Method to read all jobs from jobtable with filter
 
     Args: filters (ImmutableMultiDict): the args from the HTTP call
 
@@ -154,7 +154,7 @@ def getAllJobs(filters):
 
 
 def getJobById(jobid):
-    """ Method to read job from jobtabelle by id
+    """ Method to read job from jobtable by id
 
     Args:
     jobid (int): id of job
@@ -199,7 +199,7 @@ def getJobById(jobid):
 
 
 def getJobByResource(key, val):
-    """ Method to read job from jobtabelle by resource
+    """ Method to read job from jobtable by resource
 
     Args:
     key (string): key of attribute
@@ -225,7 +225,7 @@ def getJobByResource(key, val):
 def insertNewJob(
         rule_configuration,
         ):
-    """Insert new job into jobtabelle.
+    """Insert new job into jobtable.
 
     Args:
       rule_configuration (dict): original regeldatei
@@ -269,7 +269,7 @@ def insertNewJob(
 
 def updateJobByID(
         jobid, status, resp, resourceId=None):
-    """ Method to update job in jobtabelle when processing status changed
+    """ Method to update job in jobtable when processing status changed
 
     Args:
     jobid (int): the id of the job
