@@ -77,7 +77,7 @@ class ProcessesJobResponseModel(Schema):
                 "TERMINATED"
             ]
         },
-        'actinia_core_response': {
+        'resource_response': {
             'type': 'object',
             'description': 'The Response of actinia-core at creation time'
         },

@@ -69,7 +69,7 @@ class Job(BaseModel):
     status = CharField(null=True)
     creation_uuid = CharField(null=True)
 
-    actinia_core_response = BinaryJSONField(null=True)  # resource_response !!!
+    resource_response = BinaryJSONField(null=True)  # resource_response !!!
     id = AutoField()
     resource_id = CharField(null=True)
 

@@ -169,7 +169,7 @@ class BatchJobResponseModel(Schema):
                             'jobs'),
             'items': {'type': 'string'}
         },
-        'actinia_core_response': {
+        'resource_response': {
             'type': 'array',
             'description': 'The responses of actinia-core for individual jobs',
             'items': {'type': 'object'}

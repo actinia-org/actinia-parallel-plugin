@@ -315,7 +315,7 @@ def updateJobByID(
                       + str(record['id']) + ".")
             updatekwargs = {
                 'status': status,
-                'actinia_core_response': resp,
+                'resource_response': resp,
                 'resource_id': resourceId
             }
 
@@ -327,13 +327,13 @@ def updateJobByID(
             updatekwargs = dict()
 
             if dbStatus == status:
-                updatekwargs['actinia_core_response'] = resp
+                updatekwargs['resource_response'] = resp
 
             else:
                 log.debug("Update status to " + status + " for job with id "
                           + str(record['id']) + ".")
                 updatekwargs['status'] = status
-                updatekwargs['actinia_core_response'] = resp
+                updatekwargs['resource_response'] = resp
                 updatekwargs['time_started'] = utcnow
                 if resourceId is not None:
                     updatekwargs['resource_id'] = resourceId
@@ -349,7 +349,7 @@ def updateJobByID(
                       + str(record['id']) + ".")
             updatekwargs = {
                 'status': status,
-                'actinia_core_response': resp,
+                'resource_response': resp,
                 'time_ended': utcnow
             }
             if resourceId is not None:

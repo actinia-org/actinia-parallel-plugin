@@ -41,7 +41,7 @@ jobs = [
         "time_estimated": None,
         "time_ended": None,
         "status": "PREPARING",
-        "actinia_core_response": None,
+        "resource_response": None,
         "resource_id": None,
         "creation_uuid": "81eae975-62c1-46f1-97d3-e027834a11b8",
         "message": None,
@@ -56,7 +56,7 @@ jobs = [
         "time_estimated": None,
         "time_ended": None,
         "status": "PREPARING",
-        "actinia_core_response": None,
+        "resource_response": None,
         "resource_id": None,
         "creation_uuid": "a4be1541-70cc-42ac-b134-c17f0ea8d311",
         "message": None,
@@ -71,7 +71,7 @@ jobs = [
         "time_estimated": None,
         "time_ended": datetime.datetime(2022, 6, 2, 7, 20, 15),
         "status": "SUCCESS",
-        "actinia_core_response": {
+        "resource_response": {
             "urls": {
                 "status": f"{baseurl}/resources/actinia-gdi/{resource_id2}",
                 "resources": [],
@@ -120,7 +120,7 @@ jobs = [
         "time_estimated": None,
         "time_ended": datetime.datetime(2022, 6, 2, 7, 20, 49),
         "status": "SUCCESS",
-        "actinia_core_response": {
+        "resource_response": {
             "urls": {
                 "status": f"{baseurl}/resources/actinia-gdi/{resource_id1}",
                 "resources": [],

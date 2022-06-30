@@ -138,12 +138,12 @@ class ActiniaParallelProcessingTest(ActiniaResourceTestCaseBase):
             http_status=200,
             status="SUCCESS",
         )
-        assert "actinia_core_response" in resp, \
-            "No 'actinia_core_response' in response"
-        assert len(resp["actinia_core_response"]) == 4, \
+        assert "resource_response" in resp, \
+            "No 'resource_response' in response"
+        assert len(resp["resource_response"]) == 4, \
             "There are not 4 actinia core responses"
         process_results = [
             ac_resp["process_results"] for key, ac_resp in
-            resp["actinia_core_response"].items() if
+            resp["resource_response"].items() if
             ac_resp["process_results"] != {}]
         assert "stats" in process_results[0]
