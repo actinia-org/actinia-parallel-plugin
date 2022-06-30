@@ -36,7 +36,6 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 
 rel_path = "../apidocs/examples/jobs_get_docs_response_example.json"
 abs_file_path = os.path.join(script_dir, rel_path)
-print(abs_file_path)
 with open(abs_file_path) as jsonfile:
     jobs_get_docs_response_example = json.load(jsonfile)
 
@@ -45,7 +44,7 @@ class ProcessesJobResponseModel(Schema):
     """Response schema for creating a job"""
     type = 'object'
     properties = {
-        'idpk_jobs': {
+        'id': {
             'type': 'integer',
             'description': 'The job ID'
         },
@@ -93,7 +92,7 @@ class ProcessesJobResponseModel(Schema):
         'creation_uuid': {
             'type': 'string',
             'description': 'A unique id for the job at creation time before '
-                           'idpk_jobs is known. (More unique than creation '
+                           'id is known. (More unique than creation '
                            'timestamp)'
         }
     }

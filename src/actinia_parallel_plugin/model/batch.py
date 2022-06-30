@@ -182,11 +182,11 @@ class BatchJobResponseModel(Schema):
         'creation_uuid': {
             'type': 'array',
             'description': ('Unique ids for the individual jobs at creation '
-                            'time before idpk_jobs is known. '
+                            'time before id is known. '
                             '(More unique than creation timestamp)'),
             'items': {'type': 'string'}
         },
-        'idpk_jobs': {
+        'id': {
             'type': 'array',
             'description': 'The individual job IDs',
             'items': {'type': 'integer'}
@@ -216,7 +216,7 @@ class BatchJobResponseModel(Schema):
                     'type': 'string',
                     'description': 'The actinia-core resource ID for the job'
                         },
-                'idpk_jobs': {
+                'id': {
                     'type': 'integer',
                     'description': 'The job ID'
                         },

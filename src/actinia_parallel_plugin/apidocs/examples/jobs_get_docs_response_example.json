@@ -224,7 +224,7 @@
   },
   "batch_id": 3,
   "creation_uuid": "49cdd55a-332b-4f66-ad40-c0b3e576f824",
-  "idpk_jobs": 11,
+  "id": 11,
   "status": "SUCCESS",
   "time_created": "Tue, 24 May 2022 18:22:09 GMT",
   "time_ended": "Tue, 24 May 2022 18:22:12 GMT",

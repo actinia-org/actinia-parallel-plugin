@@ -34,7 +34,7 @@ resource_id1 = "resource_id-a6da5e00-d2a3-4804-b82f-e03f92ab1cd4"
 resource_id2 = "resource_id-291e8428-ec86-40a6-9ed2-ef1e14357aff"
 jobs = [
     {
-        "idpk_jobs": 7,
+        "id": 7,
         "process": "ephemeral",
         "rule_configuration": {
             "list": [{"..."}],
@@ -72,7 +72,7 @@ jobs = [
         },
     },
     {
-        "idpk_jobs": 8,
+        "id": 8,
         "process": "ephemeral",
         "rule_configuration": {
             "list": [{"..."}],
@@ -110,7 +110,7 @@ jobs = [
         },
     },
     {
-        "idpk_jobs": 5,
+        "id": 5,
         "process": "ephemeral",
         "rule_configuration": {
             "list": [{"..."}],
@@ -182,7 +182,7 @@ jobs = [
         },
     },
     {
-        "idpk_jobs": 6,
+        "id": 6,
         "process": "ephemeral",
         "rule_configuration": {
             "list": [{"..."}],

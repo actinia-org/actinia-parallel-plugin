@@ -150,7 +150,7 @@
     "5a91e046-faec-414d-8013-771747196126",
     "ee72667f-248a-4200-8c2c-e6025fa80254"
   ],
-  "idpk_jobs": [
+  "id": [
     "17",
     "18",
     "19",
@@ -159,22 +159,22 @@
   "jobs_status": [
     {
       "resource_id": "resource_id-f5c2ec5d-30f0-4f51-be9a-5b423fa1eb18",
-      "idpk_jobs": 17,
+      "id": 17,
       "status": "PENDING"
     },
     {
       "resource_id": "None",
-      "idpk_jobs": 18,
+      "id": 18,
       "status": "PREPARING"
     },
     {
       "resource_id": "None",
-      "idpk_jobs": 19,
+      "id": 19,
       "status": "PREPARING"
     },
     {
       "resource_id": "None",
-      "idpk_jobs": 20,
+      "id": 20,
       "status": "PREPARING"
     }
   ],

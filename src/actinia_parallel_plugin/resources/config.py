@@ -54,7 +54,7 @@ class JOBTABLE:
     pw = 'gis'
     schema = 'actinia'
     table = 'tab_jobs'
-    id_field = 'idpk_jobs'
+    id_field = 'id'
     batch_id_field = "batch_id"
     resource_id_field = "resource_id"
 

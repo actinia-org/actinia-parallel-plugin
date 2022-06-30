@@ -167,7 +167,7 @@ def createBatchResponseDict(jobs_list):
         return {}
 
     # sort the jobs according to their id
-    jobs = sorted(jobs_list, key=lambda d: d["idpk_jobs"])
+    jobs = sorted(jobs_list, key=lambda d: d["id"])
     process = jobs[0]["process"]
     batch_id = jobs[0]["batch_id"]
     resource_ids = []
@@ -183,14 +183,14 @@ def createBatchResponseDict(jobs_list):
         if resource_id is not None:
             responses[resource_id] = job["actinia_core_response"]
         job_status = {
-            "idpk_jobs": job["idpk_jobs"],
+            "id": job["id"],
             "resource_id": str(resource_id),
             "status": str(job["status"])
             }
         jobs_status.append(job_status)
         # status.append(str(job["status"]))
         uuids.append(job["creation_uuid"])
-        job_ids.append(str(job["idpk_jobs"]))
+        job_ids.append(str(job["id"]))
         blocks.append(job["batch_processing_block"])
 
     # determine an overall batch status
@@ -245,7 +245,7 @@ def createBatchResponseDict(jobs_list):
         "summary": summary_dict,
         "actinia_core_response": responses,
         "creation_uuids": uuids,
-        "idpk_jobs": job_ids,
+        "id": job_ids,
         "batch_description": jobs[0]["batch_description"],
         "process": process,
         "jobs_status": jobs_status,
@@ -300,12 +300,7 @@ def startProcessingBlock(jobs, block, batch_id, location_name, mapset_name,
         process_chain = dict()
         process_chain["list"] = job["rule_configuration"]["list"]
         process_chain["version"] = job["rule_configuration"]["version"]
-        jobid = job["idpk_jobs"]
-        # start_kwargs = {
-        #     "process": job["process"],
-        #     "process_chain": process_chain,
-        #     "jobid": job["idpk_jobs"],
-        # }
+        jobid = job["id"]
         mapset_name_parallel = mapset_name
         if mapset_suffix != "" and mapset_name is not None:
             mapset_name_parallel += f"{mapset_suffix}{num}"

@@ -70,7 +70,6 @@ class AsyncParallelEphermeralResource(Resource):
         self.batch_id = None
 
     @swagger.doc(batch.batchjobs_post_docs)
-    # def get(self):
     def post(self, location_name):
         """Persistent parallel processing."""
 

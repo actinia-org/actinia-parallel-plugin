@@ -70,9 +70,7 @@ class Job(BaseModel):
     creation_uuid = CharField(null=True)
 
     actinia_core_response = BinaryJSONField(null=True)  # resource_response !!!
-    idpk_jobs = AutoField()  # id
-    # DETAIL:  Key (relname, relnamespace)=(tab_jobs_id_job_seq, 16386) '
-    #         'already exists.
+    id = AutoField()
     resource_id = CharField(null=True)
 
     # benötigt?

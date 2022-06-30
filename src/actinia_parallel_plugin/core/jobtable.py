@@ -172,8 +172,6 @@ def getJobById(jobid):
             queryResult = Job.select().where(
                 getattr(Job, JOBTABLE.id_field) == jobid).get()
         record = model_to_dict(queryResult)
-        # log.info("Information read from jobtable for job with id "
-        #          + str(record['idpk_jobs']) + ".")
         err = None
     except Job.DoesNotExist:
         record = None
@@ -220,8 +218,6 @@ def getJobByResource(key, val):
             queryResult = Job.select().where(
                 getattr(Job, key) == val).get()
         record = model_to_dict(queryResult)
-        # log.info("Information read from jobtable for job with id "
-        #          + str(record['idpk_jobs']) + ".")
 
     except Job.DoesNotExist:
         record = None
@@ -273,7 +269,7 @@ def insertNewJob(
 
     record = model_to_dict(queryResult)
 
-    log.info("Created new job with id " + str(record['idpk_jobs']) + ".")
+    log.info("Created new job with id " + str(record['id']) + ".")
 
     jobdb.close()
 
@@ -318,7 +314,7 @@ def updateJobByID(
             if dbStatus == status:
                 return record
             log.debug("Update status to " + status + " for job with id "
-                      + str(record['idpk_jobs']) + ".")
+                      + str(record['id']) + ".")
             updatekwargs = {
                 'status': status,
                 'actinia_core_response': resp,
@@ -337,7 +333,7 @@ def updateJobByID(
 
             else:
                 log.debug("Update status to " + status + " for job with id "
-                          + str(record['idpk_jobs']) + ".")
+                          + str(record['id']) + ".")
                 updatekwargs['status'] = status
                 updatekwargs['actinia_core_response'] = resp
                 updatekwargs['time_started'] = utcnow
@@ -352,7 +348,7 @@ def updateJobByID(
 
         elif status in ['SUCCESS', 'ERROR', 'TERMINATED']:
             log.debug("Update status to " + status + " for job with id "
-                      + str(record['idpk_jobs']) + ".")
+                      + str(record['id']) + ".")
             updatekwargs = {
                 'status': status,
                 'actinia_core_response': resp,
@@ -380,9 +376,6 @@ def updateJobByID(
         log.error('Could not set the status to actinia-core status: ' + status)
         log.error(str(e))
         return None
-
-    # log.debug("Updated status to " + status + " for job with id "
-    #          + str(record['idpk_jobs']) + ".")
 
     jobdb.close()
 
