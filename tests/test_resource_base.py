@@ -26,6 +26,7 @@ import signal
 import time
 
 from flask.json import loads as json_loads
+from urllib.parse import urlsplit
 from werkzeug.datastructures import Headers
 
 from actinia_core.testsuite import ActiniaTestCaseBase, URL_PREFIX
@@ -140,13 +141,11 @@ class ActiniaResourceTestCaseBase(ActiniaTestCaseBase):
     def waitAsyncBatchJob(self, rv, headers, http_status=200,
                           status="SUCCESS", message_check=None):
         resp_data = json_loads(rv.data)
-        batchid = resp_data["batch_id"]
+        url = urlsplit(resp_data["urls"]["status"]).path
 
         while True:
-            rv = self.server.get(
-                URL_PREFIX + "/processing_parallel/batchjobs/%s" % (batchid),
-                headers=headers
-            )
+            rv = self.server.get(url, headers=headers)
+            resp_data = json_loads(rv.data)
             resp_data = json_loads(rv.data)
             if (resp_data["status"] == "SUCCESS"
                     or resp_data["status"] == "ERROR"

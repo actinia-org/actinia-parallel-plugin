@@ -82,15 +82,6 @@ class AsyncParallelEphermeralResource(Resource):
 
         # assign new batchid
         self.batch_id = createBatchId()
-        # create processing blocks and insert jobs into jobtable
-        jobs_in_db = createBatch(json_dict, self.batch_id)
-        if jobs_in_db is None:
-            res = (jsonify(SimpleResponseModel(
-                        status=500,
-                        message=('Error: Batch Processing Chain JSON has no '
-                                 'jobs.')
-                   )))
-            return make_response(res, 500)
 
         # Generate the base of the status URL
         host_url = request.host_url
@@ -103,6 +94,17 @@ class AsyncParallelEphermeralResource(Resource):
         else:
             self.base_status_url = f"{host_url}{URL_PREFIX}/resources/" \
                 f"{g.user.user_id}/"
+
+        # create processing blocks and insert jobs into jobtable
+        status_url = f"{self.base_status_url}batches/{self.batch_id}"
+        jobs_in_db = createBatch(json_dict, self.batch_id, status_url)
+        if jobs_in_db is None:
+            res = (jsonify(SimpleResponseModel(
+                        status=500,
+                        message=('Error: Batch Processing Chain JSON has no '
+                                 'jobs.')
+                   )))
+            return make_response(res, 500)
 
         # start first processing block
         first_jobs = startProcessingBlock(

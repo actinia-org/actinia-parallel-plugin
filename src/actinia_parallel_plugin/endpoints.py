@@ -50,18 +50,21 @@ def create_endpoints(flask_api):
     #     "/locations/<string:location_name>/mapsets/"
     #     "<string:mapset_name>/processing_parallel")
 
+    # GET batch jobs TODO
+    # "/resources/<string:user_id>/batches"
+
     # GET batch jobs by ID
     apidoc.add_resource(
         BatchJobsId,
-        "/processing_parallel/batchjobs/<batchid>")
+        "/resources/<string:user_id>/batches/<int:batchid>")
+
+    # GET all jobs of one batch TODO
+    # "/resources/<string:user_id>/batches/<int:batchid>/jobs"
 
     # GET job by ID
     apidoc.add_resource(
         JobId,
-        "/processing_parallel/jobs/<jobid>")
-
-    # "/processing_parallel/batchjobs"
-    # "/processing_parallel/jobs"
+        "/resources/<string:user_id>/batches/<int:batchid>/jobs/<int:jobid>")
 
     # initilalize jobtable
     initJobDB()

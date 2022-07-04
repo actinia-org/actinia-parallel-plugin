@@ -247,6 +247,8 @@ def insertNewJob(
         job_kwargs["batch_processing_block"] = rule_configuration[
             "batch_processing_block"]
         job_kwargs["batch_id"] = rule_configuration["batch_id"]
+    if "urls" in rule_configuration.keys():
+        job_kwargs["urls"] = rule_configuration["urls"]
     job = Job(**job_kwargs)
 
     with jobdb:

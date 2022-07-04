@@ -100,9 +100,9 @@ act -j unittests -P ubuntu-latest=lucasalt/act_base:latest
 ### Requesting batch job and job endpoints
 ```
 # request batch job
-curl -u actinia-gdi:actinia-gdi -X GET http://localhost:8088/api/v3/processing_parallel/batchjobs/1 | jq
+curl -u actinia-gdi:actinia-gdi -X GET http://localhost:8088/api/v3/resources/actinia-gdi/batches/1 | jq
 # request job
-curl -u actinia-gdi:actinia-gdi -X GET http://localhost:8088/api/v3/processing_parallel/jobs/1 | jq
+curl -u actinia-gdi:actinia-gdi -X GET http://localhost:8088/api/v3/resources/actinia-gdi/batches/1/jobs/1 | jq
 ```
 
 ### Start parallel batch job

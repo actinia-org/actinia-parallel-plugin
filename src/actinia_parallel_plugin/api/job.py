@@ -24,10 +24,10 @@ __author__ = "Carmen Tawalika, Anika Weinmann"
 __copyright__ = "Copyright 2018-2022 mundialis GmbH & Co. KG"
 __maintainer__ = "mundialis GmbH % Co. KG"
 
-from flask_restful import Resource
 from flask_restful_swagger_2 import swagger
 from flask import make_response, jsonify
 
+from actinia_core.rest.resource_management import ResourceManagerBase
 from actinia_core.models.response_models import \
     SimpleResponseModel
 
@@ -38,7 +38,7 @@ from actinia_parallel_plugin.core.jobs import (
 from actinia_parallel_plugin.apidocs import jobs
 
 
-class JobId(Resource):
+class JobId(ResourceManagerBase):
     """ Definition for endpoint standortsicherung
     @app.route('/processing_parallel/jobs/<jobid>')
 
@@ -47,13 +47,22 @@ class JobId(Resource):
     """
 
     @swagger.doc(jobs.jobId_get_docs)
-    def get(self, jobid):
+    def get(self, user_id, batchid, jobid):
         """ Wrapper method to receive HTTP call and pass it to function
 
         This method is called by HTTP GET
-        @app.route('/processing_parallel/jobs/<jobid>')
+        @app.route(
+        '/resources/<string:user_id>/batches/<int:batchid>/jobs/<int:jobid>')
         This method is calling core method readJob
         """
+
+        ret = self.check_permissions(user_id=user_id)
+        if ret:
+            return ret
+
+        if batchid is None:
+            return make_response("No batchid was given", 400)
+
         if jobid is None:
             return make_response("No jobid was given", 400)
 
@@ -70,7 +79,7 @@ class JobId(Resource):
                    )))
             return make_response(res, err["status"])
 
-    def post(self, jobid):
+    def post(self, user_id, batchid, jobid):
         res = jsonify(SimpleResponseModel(
             status=405,
             message="Method Not Allowed"

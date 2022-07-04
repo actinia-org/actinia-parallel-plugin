@@ -123,7 +123,7 @@ def checkProcessingBlockFinished(jobs, block):
     return finished
 
 
-def createBatch(jsonDict, batchid):
+def createBatch(jsonDict, batchid, statusurl):
     """ Function to insert all jobs from a batch into the joblist
     """
     jobs = assignProcessingBlocks(jsonDict)
@@ -133,6 +133,7 @@ def createBatch(jsonDict, batchid):
         jobs_in_db = []
         for job in jobs:
             job["batch_id"] = batchid
+            job["urls"] = {"status": statusurl, "resources": []}
             # assign the model
             job_in_db = insertJob(job)
             jobs_in_db.append(job_in_db)
@@ -230,6 +231,9 @@ def createBatchResponseDict(jobs_list):
         "blocks": batch_processing_blocks
     }
 
+    # create urls
+    urls = jobs[0]["urls"]
+
     # create overall response dict
     responseDict = {
         "batch_id": batch_id,
@@ -238,9 +242,9 @@ def createBatchResponseDict(jobs_list):
         "resource_response": responses,
         "creation_uuids": uuids,
         "id": job_ids,
-        # "process": process,
         "jobs_status": jobs_status,
-        "status": batch_status
+        "status": batch_status,
+        "urls": urls,
     }
     return responseDict
 

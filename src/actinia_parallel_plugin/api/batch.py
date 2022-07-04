@@ -24,12 +24,12 @@ __author__ = "Julia Haas, Guido Riembauer, Anika Weinmann"
 __copyright__ = "Copyright 2021-2022 mundialis GmbH & Co. KG"
 __maintainer__ = "mundialis GmbH % Co. KG"
 
-from flask_restful import Resource
 from flask_restful_swagger_2 import swagger
 from flask import make_response, jsonify
 
 from actinia_core.models.response_models import \
     SimpleResponseModel
+from actinia_core.rest.resource_management import ResourceManagerBase
 
 from actinia_parallel_plugin.resources.logging import log
 from actinia_parallel_plugin.core.batches import (
@@ -39,16 +39,22 @@ from actinia_parallel_plugin.core.batches import (
 from actinia_parallel_plugin.apidocs import batch
 
 
-class BatchJobsId(Resource):
+class BatchJobsId(ResourceManagerBase):
     """ Definition for endpoint
-    @app.route('processing_parallel/batchjobs/<batchid>')
+    @app.route('/resources/<string:user_id>/batches/<int:batchid>')
 
     Contains HTTP GET endpoint
     Contains HTTP POST endpoint
     Contains swagger documentation
     """
     @swagger.doc(batch.batchjobId_get_docs)
-    def get(self, batchid):
+    def get(self, user_id, batchid):
+        """Get the status of a batch."""
+
+        ret = self.check_permissions(user_id=user_id)
+        if ret:
+            return ret
+
         if batchid is None:
             return make_response("No batchid was given", 400)
 
@@ -69,7 +75,7 @@ class BatchJobsId(Resource):
             return make_response(jsonify(resp_dict), 200)
 
     # no docs because 405
-    def post(self, batchid):
+    def post(self, user_id, batchid):
         res = jsonify(SimpleResponseModel(
             status=405,
             message="Method Not Allowed"

@@ -29,6 +29,7 @@ import json
 from flask_restful_swagger_2 import Schema
 
 from actinia_core.models.process_chain import ProcessChainModel
+from actinia_core.models.response_models import UrlModel
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -223,6 +224,7 @@ class BatchJobResponseModel(Schema):
                     }
                 }
         },
-        'summary': BatchJobsSummaryModel
+        'summary': BatchJobsSummaryModel,
+        'urls': UrlModel
     }
     example = batchjob_post_docs_response_example

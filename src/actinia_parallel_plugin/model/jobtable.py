@@ -72,6 +72,7 @@ class Job(BaseModel):
     id = AutoField()
     resource_id = CharField(null=True)
     rule_configuration = BinaryJSONField(null=True)
+    urls = BinaryJSONField(null=True)
 
     # add a potential parent_job
     batch_id = IntegerField(null=True)

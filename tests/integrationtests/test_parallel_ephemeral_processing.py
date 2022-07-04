@@ -26,6 +26,7 @@ __maintainer__ = "mundialis GmbH % Co. KG"
 
 
 import pytest
+from flask.json import loads as json_loads
 
 from ..test_resource_base import ActiniaResourceTestCaseBase, URL_PREFIX
 
@@ -147,3 +148,19 @@ class ActiniaParallelProcessingTest(ActiniaResourceTestCaseBase):
             resp["resource_response"].items() if
             ac_resp["process_results"] != {}]
         assert "stats" in process_results[0]
+        # Test request of one job of the batch
+        batch_id = resp["batch_id"]
+        job_id = resp["id"][0]
+        url = f"{URL_PREFIX}/resources/{self.user_id}/batches/{batch_id}/" \
+            f"jobs/{job_id}"
+        rv2 = self.server.get(url, headers=self.user_auth_header)
+        resp2 = json_loads(rv2.data)
+        assert resp2["batch_id"] == batch_id, "wrong batch ID in job response"
+        assert resp2["id"] == int(job_id), "wrong job ID in job response"
+        assert "resource_response" in resp2, \
+            "resource_response not in job response"
+        assert "urls" in resp2["resource_response"], "urls not in job response"
+        assert "status" in resp2["resource_response"]["urls"], \
+            "status url not in job response"
+        assert "resource_id-" in resp2["resource_response"]["urls"][
+            "status"], "resource_id not in job response"
