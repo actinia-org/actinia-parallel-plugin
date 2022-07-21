@@ -28,9 +28,7 @@ import pickle
 
 from actinia_core.core.common.redis_interface import enqueue_job
 
-from actinia_parallel_plugin.core.jobtable import (
-    getJobById,
-)
+from actinia_parallel_plugin.core.jobtable import getJobById
 from actinia_parallel_plugin.core.jobs import updateJob
 from actinia_parallel_plugin.resources.logging import log
 from actinia_parallel_plugin.core.parallel_resource_base import \
