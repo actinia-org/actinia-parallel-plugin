@@ -1,0 +1,93 @@
+{
+  "jobs": [
+    {
+      "list": [
+        {
+          "module": "g.region",
+          "id": "g_region_nonparallel_block1",
+          "inputs":[
+            {"param": "raster", "value": "elevation@PERMANENT"}
+          ]
+        },
+        {
+          "module": "r.mapcalc",
+          "id": "r_mapcalc_0_nonparallel_block1",
+          "inputs":[
+            {"param": "expression", "value": "baum = elevation@PERMANENT * 2"}
+          ]
+        }
+      ],
+      "parallel": "false",
+      "version": "1"
+    },
+    {
+      "list": [
+        {
+          "module": "g.region",
+          "id": "g_region_1_parallel_block2",
+          "inputs":[
+            {"param": "n", "value": "228500"},
+            {"param": "s", "value": "215000"},
+            {"param": "e", "value": "645000"},
+            {"param": "w", "value": "637500"}
+          ]
+        },
+        {
+          "module": "r.mapcalc",
+          "id": "r_mapcalc_1_parallel_block2",
+          "inputs":[
+            {"param": "expression", "value": "baum2 = baum@test * 2"}
+          ]
+        }
+      ],
+      "parallel": "true",
+      "version": "1"
+    },
+    {
+      "list": [
+        {
+          "module": "g.region",
+          "id": "g_region_2_parallel_block2",
+          "inputs":[
+            {"param": "n", "value": "228500"},
+            {"param": "s", "value": "215000"},
+            {"param": "e", "value": "637500"},
+            {"param": "w", "value": "630000"}
+          ]
+        },
+        {
+          "module": "r.mapcalc",
+          "id": "r_mapcalc_2_parallel_block2",
+          "inputs":[
+            {"param": "expression", "value": "baum2 = baum@test * 2"}
+          ]
+        }
+      ],
+      "parallel": "true",
+      "version": "1"
+    },
+    {
+      "list": [
+        {
+          "module": "g.region",
+          "id": "g_region_nonparallel_block3",
+          "inputs":[
+            {"param": "raster", "value": "elevation@PERMANENT"}
+          ]
+        },
+        {
+          "module": "r.patch",
+          "id": "r_patch_block3",
+          "inputs":[
+            {"param": "input", "value": "baum2@test_parallel_1,baum2@test_parallel_2"}
+          ],
+          "outputs":[
+            {"param": "input", "value": "baum2"}
+          ]
+        }
+      ],
+      "parallel": "false",
+      "version": "1"
+    }
+  ]
+}

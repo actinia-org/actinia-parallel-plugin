@@ -25,6 +25,8 @@ import os
 import signal
 import time
 
+from flask.json import loads as json_loads
+from urllib.parse import urlsplit
 from werkzeug.datastructures import Headers
 
 from actinia_core.testsuite import ActiniaTestCaseBase, URL_PREFIX
@@ -135,3 +137,31 @@ class ActiniaResourceTestCaseBase(ActiniaTestCaseBase):
         cls.users_list.append(user)
 
         return name, group, cls.auth_header[role]
+
+    def waitAsyncBatchJob(self, rv, headers, http_status=200,
+                          status="SUCCESS", message_check=None):
+        resp_data = json_loads(rv.data)
+        url = urlsplit(resp_data["urls"]["status"]).path
+
+        while True:
+            rv = self.server.get(url, headers=headers)
+            resp_data = json_loads(rv.data)
+            resp_data = json_loads(rv.data)
+            if (resp_data["status"] == "SUCCESS"
+                    or resp_data["status"] == "ERROR"
+                    or resp_data["status"] == "TERMINATED"):
+                break
+
+            time.sleep(0.2)
+        self.assertEqual(
+            resp_data["status"], status,
+            msg=f"Process has not status '{status}': {resp_data}")
+        self.assertEqual(rv.status_code, http_status,
+                         "HTML status code is wrong %i" % rv.status_code)
+
+        if message_check is not None:
+            self.assertTrue(message_check in resp_data["message"],
+                            (f"Message is {resp_data['message']}"))
+
+        time.sleep(0.4)
+        return resp_data

@@ -1,26 +1,25 @@
 version: "3"
 services:
 
-  actinia:
+  actinia-test:
     build:
       context: ..
-      dockerfile: docker/Dockerfile
+      dockerfile: docker/actinia-parallel-plugin-test/Dockerfile
     volumes:
       - ..:/src/actinia-parallel-plugin/.
-      # - /home/.../grassdata/:/actinia_core/grassdb/
     ports:
       - "8088:8088"
     environment:
       - JOBTABLE_PW=actinia
     depends_on:
-      - redis
-      - postgis
+      - redis-test
+      - postgis-test
     cap_add:
       - SYS_PTRACE
     networks:
-    -   actinia
+    -   actinia-test
 
-  redis:
+  redis-test:
     image: redis:5.0.4-alpine
     volumes:
       - ./redis_data:/data
@@ -37,9 +36,9 @@ services:
     ports:
         - "6379:6379"
     networks:
-    -   actinia
+    -   actinia-test
 
-  postgis:
+  postgis-test:
     image: postgis/postgis:14-3.2-alpine
     # network_mode: host
     environment:
@@ -47,13 +46,13 @@ services:
       POSTGRES_PASSWORD: actinia
     volumes:
       - ./postgresql_init_data:/docker-entrypoint-initdb.d
-      - ./postgresql_data:/var/lib/postgresql/data:Z
+      # - ./postgresql_data:/var/lib/postgresql/data:Z
     networks:
-    -   actinia
+    -   actinia-test
 
 
 networks:
-  actinia:
+  actinia-test:
     ipam:
       config:
-        - subnet: 172.18.0.0/16
+        - subnet: 172.18.0.0/26

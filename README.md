@@ -1,6 +1,6 @@
 # actinia-parallel-plugin
 
-This is an example plugin for [actinia-core](https://github.com/mundialis/actinia_core) which adds a "Hello World" endpoint to actinia-core.
+This is the actinia-parallel-plugin for [actinia-core](https://github.com/mundialis/actinia_core) which adds parallel processing endpoints to actinia.
 
 You can run actinia-parallel-plugin as an actinia-core plugin.
 
@@ -20,14 +20,6 @@ docker network prune
 docker-compose -f docker/docker-compose.yml up -d
 ```
 
-### Requesting helloworld endpoint
-You can test the plugin and request the `/helloworld` endpoint, e.g. with:
-```
-curl -u actinia-gdi:actinia-gdi -X GET http://localhost:8088/api/v3/processing_parallel | jq
-
-curl -u actinia-gdi:actinia-gdi -H 'accept: application/json' -H 'Content-Type: application/json' -X POST http://localhost:8088/api/v3/processing_parallel -d '{"name": "test"}' | jq
-```
-
 ## DEV setup
 For a DEV setup you can use the docker/docker-compose.yml:
 ```
@@ -38,6 +30,15 @@ docker-compose -f docker/docker-compose.yml run --rm --service-ports --entrypoin
 (cd /src/actinia-parallel-plugin && python3 setup.py install)
 # start actinia-core with your plugin
 gunicorn -b 0.0.0.0:8088 -w 1 --access-logfile=- -k gthread actinia_core.main:flask_app
+
+# or for debugging in one line with reset
+reset && (cd /src/actinia-parallel-plugin && python3 setup.py install) && gunicorn -b 0.0.0.0:8088 -w 3 --access-logfile=- -k gthread actinia_core.main:flask_app
+```
+
+### PostGIS
+Connect to PostGIS DB from actinia-core docker container:
+```
+psql -U actinia -h postgis -d gis
 ```
 
 ### Hints
@@ -60,10 +61,11 @@ rm -rf /usr/lib/python3.8/site-packages/actinia_parallel_plugin.wsgi-*.egg
 You can run the tests in the actinia test docker:
 
 ```
-docker build -f docker/actinia-parallel-plugin-test/Dockerfile -t actinia-parallel-plugin-test .
-docker run -it actinia-parallel-plugin-test -i
+docker-compose -f docker/docker-compose-test.yml build
+docker-compose -f docker/docker-compose-test.yml up -d
 
-cd /src/actinia-parallel-plugin/
+# exec docker and run tests manually
+docker exec -it docker_actinia-test_1 sh
 
 # run all tests
 make test
@@ -73,8 +75,47 @@ make unittest
 # run only integrationtests
 make integrationtest
 
-# run only tests which are marked for development with the decorator '@pytest.mark.dev'
-make devtest
+# or run tests outside of docker container
+docker exec -it docker_actinia-test_1 sh /usr/bin/run_integration_tests.sh
+docker exec -it docker_actinia-test_1 sh /usr/bin/run_unittests.sh
+
+docker-compose -f docker/docker-compose-test.yml down
 ```
 
-##
+You can also run the tests in the GHA workflows locally via [act](https://github.com/nektos/act).
+To run docker-compose inside a workflow [act_base](https://github.com/lucasctrl/act_base) can be used.
+With these you can run the following to run the tests:
+```
+# list all workflows
+act -l
+
+# run workflow
+act -j integration-tests -P ubuntu-latest=lucasalt/act_base:latest
+act -j unittests -P ubuntu-latest=lucasalt/act_base:latest
+```
+
+
+## Examples
+
+### Requesting batch job and job endpoints
+```
+# request batch job
+curl -u actinia-gdi:actinia-gdi -X GET http://localhost:8088/api/v3/resources/actinia-gdi/batches/1 | jq
+# request job
+curl -u actinia-gdi:actinia-gdi -X GET http://localhost:8088/api/v3/resources/actinia-gdi/batches/1/jobs/1 | jq
+```
+
+### Start parallel batch job
+#### Ephemeral processing
+You can start a parallel **ephemeral** batch job via:
+```
+# parallel ephemeral processing
+curl -u actinia-gdi:actinia-gdi -X POST -H 'Content-Type: application/json' -d @test_postbodies/parallel_ephemeral_processing.json http://localhost:8088/api/v3/locations/nc_spm_08_grass7_root/processing_parallel | jq
+```
+Attention:
+* The individual process chains must be "independent" of each other, since
+  createBatch is designed as an ephemeral process.
+
+TODOs:
+* exporter in PC
+* using stdout/export in PC of next block

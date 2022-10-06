@@ -1,0 +1,122 @@
+{
+  "resource_id": "resource_id-71264d56-4183-4d68-8544-5425254f5def",
+  "resource_response": {
+    "accept_datetime": "2022-05-24 18:22:12.481060",
+    "accept_timestamp": 1653416532.4810588,
+    "api_info": {
+      "endpoint": "asyncparallelephermeralresource",
+      "method": "POST",
+      "path": "/api/v3/locations/nc_spm_08_grass7_root/processing_parallel",
+      "post_url": "http://localhost:8088/api/v3/locations/nc_spm_08_grass7_root/processing_parallel",
+      "request_url": "http://localhost:8088/api/v3/locations/nc_spm_08_grass7_root/processing_parallel"
+    },
+    "datetime": "2022-05-24 18:22:12.990696",
+    "http_code": 200,
+    "message": "Processing successfully finished",
+    "process_chain_list": [
+      {
+        "list": [
+          {
+            "flags": "p",
+            "id": "g_region_2_parallel_block2",
+            "inputs": [
+              {
+                "param": "raster",
+                "value": "elev_ned_30m"
+              }
+            ],
+            "module": "g.region",
+            "outputs": []
+          },
+          {
+            "flags": "g",
+            "id": "r_univar_2_parallel_block2",
+            "inputs": [
+              {
+                "param": "map",
+                "value": "elev_ned_30m"
+              }
+            ],
+            "module": "r.univar",
+            "outputs": [],
+            "stdout": {
+              "delimiter": "=",
+              "format": "kv",
+              "id": "stats"
+            }
+          }
+        ],
+        "version": "1"
+      }
+    ],
+    "process_log": [
+      {
+        "executable": "g.region",
+        "id": "g_region_2_parallel_block2",
+        "mapset_size": 407,
+        "parameter": [
+          "raster=elev_ned_30m",
+          "-p"
+        ],
+        "return_code": 0,
+        "run_time": 0.1003119945526123,
+        "stderr": [
+          ""
+        ],
+        "stdout": "projection: 99 (Lambert Conformal Conic)\nzone:       0\ndatum:      nad83\nellipsoid:  a=6378137 es=0.006694380022900787\nnorth:      228500\nsouth:      215000\nwest:       630000\neast:       645000\nnsres:      30\newres:      30\nrows:       450\ncols:       500\ncells:      225000\n"
+      },
+      {
+        "executable": "r.univar",
+        "id": "r_univar_2_parallel_block2",
+        "mapset_size": 407,
+        "parameter": [
+          "map=elev_ned_30m",
+          "-g"
+        ],
+        "return_code": 0,
+        "run_time": 0.10025954246520996,
+        "stderr": [
+          ""
+        ],
+        "stdout": "n=225000\nnull_cells=0\ncells=225000\nmin=55.1736030578613\nmax=156.386520385742\nrange=101.212917327881\nmean=110.307571087138\nmean_of_abs=110.307571087138\nstddev=20.3119976726962\nvariance=412.577249455617\ncoeff_var=18.4139651272447\nsum=24819203.494606\n"
+      }
+    ],
+    "process_results": {
+      "stats": {
+        "cells": "225000",
+        "coeff_var": "18.4139651272447",
+        "max": "156.386520385742",
+        "mean": "110.307571087138",
+        "mean_of_abs": "110.307571087138",
+        "min": "55.1736030578613",
+        "n": "225000",
+        "null_cells": "0",
+        "range": "101.212917327881",
+        "stddev": "20.3119976726962",
+        "sum": "24819203.494606",
+        "variance": "412.577249455617"
+      }
+    },
+    "progress": {
+      "num_of_steps": 2,
+      "step": 2
+    },
+    "resource_id": "resource_id-71264d56-4183-4d68-8544-5425254f5def",
+    "status": "finished",
+    "time_delta": 0.5096566677093506,
+    "timestamp": 1653416532.9906828,
+    "urls": {
+      "resources": [],
+      "status": "http://localhost:8088/api/v3/resources/actinia-gdi/resource_id-71264d56-4183-4d68-8544-5425254f5def"
+    },
+    "user_id": "actinia-gdi"
+  },
+  "batch_id": 3,
+  "creation_uuid": "49cdd55a-332b-4f66-ad40-c0b3e576f824",
+  "id": 11,
+  "status": "SUCCESS",
+  "time_created": "Tue, 24 May 2022 18:22:09 GMT",
+  "time_ended": "Tue, 24 May 2022 18:22:12 GMT",
+  "time_estimated": null,
+  "time_started": null
+}

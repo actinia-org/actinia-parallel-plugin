@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Copyright (c) 2018-present mundialis GmbH & Co. KG
+Copyright (c) 2022 mundialis GmbH & Co. KG
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,8 +25,13 @@ __copyright__ = "Copyright 2022 mundialis GmbH & Co. KG"
 __maintainer__ = "mundialis GmbH % Co. KG"
 
 
-from actinia_parallel_plugin.api.parallel_processing import \
-    ParallelProcessingResource
+from actinia_parallel_plugin.api.batch import BatchJobsId
+from actinia_parallel_plugin.api.job import JobId
+# from actinia_parallel_plugin.api.parallel_processing import \
+#     AsyncParallelPersistentResource
+from actinia_parallel_plugin.api.parallel_ephemeral_processing import \
+    AsyncParallelEphermeralResource
+from actinia_parallel_plugin.core.jobtable import initJobDB, applyMigrations
 
 
 # endpoints loaded if run as actinia-core plugin
@@ -34,4 +39,33 @@ def create_endpoints(flask_api):
 
     apidoc = flask_api
 
-    apidoc.add_resource(ParallelProcessingResource, "/processing_parallel")
+    # POST parallel ephemeral processing
+    apidoc.add_resource(
+        AsyncParallelEphermeralResource,
+        "/locations/<string:location_name>/processing_parallel")
+
+    # # POST parallel persistent processing
+    # apidoc.add_resource(
+    #     AsyncParallelPersistentResource,
+    #     "/locations/<string:location_name>/mapsets/"
+    #     "<string:mapset_name>/processing_parallel")
+
+    # GET batch jobs TODO
+    # "/resources/<string:user_id>/batches"
+
+    # GET batch jobs by ID
+    apidoc.add_resource(
+        BatchJobsId,
+        "/resources/<string:user_id>/batches/<int:batchid>")
+
+    # GET all jobs of one batch TODO
+    # "/resources/<string:user_id>/batches/<int:batchid>/jobs"
+
+    # GET job by ID
+    apidoc.add_resource(
+        JobId,
+        "/resources/<string:user_id>/batches/<int:batchid>/jobs/<int:jobid>")
+
+    # initilalize jobtable
+    initJobDB()
+    applyMigrations()

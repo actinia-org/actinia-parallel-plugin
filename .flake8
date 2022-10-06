@@ -7,4 +7,5 @@ exclude = .git,.pycache,build,.eggs
 
 per-file-ignores =
     ./src/actinia_parallel_plugin/wsgi.py: F401
-    ./tests/test_resource_base.py: F401 
+    ./tests/test_resource_base.py: F401
+    ./src/actinia_parallel_plugin/core/persistent_processing.py: E501

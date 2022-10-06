@@ -1,0 +1,114 @@
+{
+  "resource_id": [
+    "resource_id-f5c2ec5d-30f0-4f51-be9a-5b423fa1eb18",
+    "None",
+    "None",
+    "None"
+  ],
+  "resource_response": {
+    "resource_id-f5c2ec5d-30f0-4f51-be9a-5b423fa1eb18": {
+      "accept_datetime": "2022-05-24 18:22:42.343953",
+      "accept_timestamp": 1653416562.3439503,
+      "api_info": {
+        "endpoint": "asyncparallelephermeralresource",
+        "method": "POST",
+        "path": "/api/v3/locations/nc_spm_08_grass7_root/processing_parallel",
+        "post_url": "http://localhost:8088/api/v3/locations/nc_spm_08_grass7_root/processing_parallel",
+        "request_url": "http://localhost:8088/api/v3/locations/nc_spm_08_grass7_root/processing_parallel"
+      },
+      "datetime": "2022-05-24 18:22:42.346947",
+      "http_code": 200,
+      "message": "Resource accepted",
+      "process_chain_list": [],
+      "process_results": {},
+      "resource_id": "resource_id-f5c2ec5d-30f0-4f51-be9a-5b423fa1eb18",
+      "status": "accepted",
+      "time_delta": 0.0030062198638916016,
+      "timestamp": 1653416562.346946,
+      "urls": {
+        "resources": [],
+        "status": "http://localhost:8088/api/v3/resources/actinia-gdi/resource_id-f5c2ec5d-30f0-4f51-be9a-5b423fa1eb18"
+      },
+      "user_id": "actinia-gdi"
+    }
+  },
+  "batch_id": 5,
+  "creation_uuids": [
+    "768247dd-8dce-4aa2-bf96-51fb698e4fea",
+    "9163ca23-aad9-48c6-8eb4-80cc174d2090",
+    "5a91e046-faec-414d-8013-771747196126",
+    "ee72667f-248a-4200-8c2c-e6025fa80254"
+  ],
+  "id": [
+    "17",
+    "18",
+    "19",
+    "20"
+  ],
+  "jobs_status": [
+    {
+      "resource_id": "resource_id-f5c2ec5d-30f0-4f51-be9a-5b423fa1eb18",
+      "id": 17,
+      "status": "PENDING"
+    },
+    {
+      "resource_id": "None",
+      "id": 18,
+      "status": "PREPARING"
+    },
+    {
+      "resource_id": "None",
+      "id": 19,
+      "status": "PREPARING"
+    },
+    {
+      "resource_id": "None",
+      "id": 20,
+      "status": "PREPARING"
+    }
+  ],
+  "status": "PENDING",
+  "summary": {
+    "blocks": [
+      {
+        "accepted": 1,
+        "block_num": 1,
+        "error": 0,
+        "finished": 0,
+        "parallel": 1,
+        "preparing": 0,
+        "running": 0,
+        "terminated": 0
+      },
+      {
+        "accepted": 0,
+        "block_num": 2,
+        "error": 0,
+        "finished": 0,
+        "parallel": 2,
+        "preparing": 2,
+        "running": 0,
+        "terminated": 0
+      },
+      {
+        "accepted": 0,
+        "block_num": 3,
+        "error": 0,
+        "finished": 0,
+        "parallel": 1,
+        "preparing": 1,
+        "running": 0,
+        "terminated": 0
+      }
+    ],
+    "status": {
+      "accepted": 1,
+      "error": 0,
+      "finished": 0,
+      "preparing": 3,
+      "running": 0,
+      "terminated": 0
+    },
+    "total": 4
+  }
+}
