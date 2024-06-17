@@ -46,7 +46,7 @@ jobs:
         sed -i "s+# RUN make test+RUN make unittest+g" docker/actinia-parallel-plugin-test/Dockerfile
     - name: Unittests of actinia-parallel-plugin
       id: docker_build
-      uses: docker/build-push-action@v5
+      uses: docker/build-push-action@v6
       with:
         push: false
         tags: actinia-parallel-plugin-tests:alpine
