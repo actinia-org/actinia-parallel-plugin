@@ -26,7 +26,7 @@ __maintainer__ = "mundialis GmbH % Co. KG"
 
 import pickle
 
-from actinia_core.core.common.redis_interface import enqueue_job
+from actinia_core.core.common.kvdb_interface import enqueue_job
 
 from actinia_parallel_plugin.core.jobtable import getJobById
 from actinia_parallel_plugin.core.jobs import updateJob

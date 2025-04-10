@@ -41,5 +41,5 @@ dist/*
 sdist/*
 
 # docker
-docker/redis_data/dump.rdb
+docker/valkey_data/dump.rdb
 !docker/actinia-parallel-plugin-test/actinia-parallel-plugin-test.cfg

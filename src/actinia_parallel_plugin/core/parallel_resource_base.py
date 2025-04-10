@@ -65,11 +65,11 @@ class ParallelResourceBase(ResourceBase):
         self.orig_datetime = str(datetime.now())
 
         kwargs = dict()
-        kwargs['host'] = global_config.REDIS_SERVER_URL
-        kwargs['port'] = global_config.REDIS_SERVER_PORT
-        if (global_config.REDIS_SERVER_PW and
-                global_config.REDIS_SERVER_PW is not None):
-            kwargs['password'] = global_config.REDIS_SERVER_PW
+        kwargs['host'] = global_config.KVDB_SERVER_URL
+        kwargs['port'] = global_config.KVDB_SERVER_PORT
+        if (global_config.KVDB_SERVER_PW and
+                global_config.KVDB_SERVER_PW is not None):
+            kwargs['password'] = global_config.KVDB_SERVER_PW
         self.resource_logger = ResourceLogger(**kwargs)
         del kwargs
 
@@ -133,7 +133,7 @@ class ParallelResourceBase(ResourceBase):
             - Check if the module chain description can be loaded
             - Initialize the response and request ids as well as the
               url for status polls
-            - Send an accept entry to the resource redis database
+            - Send an accept entry to the resource kvdb database
 
         Args:
             has_json (bool): Set True if the request has JSON data, False
