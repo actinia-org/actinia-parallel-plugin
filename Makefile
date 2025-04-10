@@ -19,7 +19,7 @@ dist:
 	python3 setup.py dist
 
 test:
-	python3 setup.py test
+	pytest
 
 unittest:
 	pytest -m "unittest"
