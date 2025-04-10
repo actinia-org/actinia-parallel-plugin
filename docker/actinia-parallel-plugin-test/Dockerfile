@@ -10,7 +10,7 @@ ENV DEFAULT_CONFIG_PATH /etc/default/actinia-parallel-plugin-test
 
 # install things only for tests
 RUN apk add valkey
-RUN pip3 install iniconfig colorlog pwgen
+RUN pip3 install iniconfig colorlog pwgen pytest pytest-cov
 
 ENTRYPOINT ["/bin/sh"]
 CMD ["/src/start.sh"]

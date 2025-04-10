@@ -33,22 +33,47 @@ from actinia_parallel_plugin.api.parallel_ephemeral_processing import \
     AsyncParallelEphermeralResource
 from actinia_parallel_plugin.core.jobtable import initJobDB, applyMigrations
 
+from actinia_core.endpoints import get_endpoint_class_name
+
+
+def create_project_endpoints(apidoc, projects_url_part="projects"):
+    """
+    Function to add resources with "projects" inside the endpoint url.
+    Args:
+        apidoc (flask_restful_swagger_2.Api): Flask api
+        projects_url_part (str): The name of the projects inside the endpoint
+                                 URL; to add deprecated location endpoints set
+                                 it to "locations"
+    """
+
+    # POST parallel ephemeral processing
+    apidoc.add_resource(
+        AsyncParallelEphermeralResource,
+        f"/{projects_url_part}/<string:project_name>/processing_parallel",
+        endpoint=get_endpoint_class_name(
+            AsyncParallelEphermeralResource, projects_url_part
+        ),
+    )
+
+    # # POST parallel persistent processing
+    # apidoc.add_resource(
+    #     AsyncParallelPersistentResource,
+    #     f"/{projects_url_part}/<string:project_name>/mapsets/"
+    #     "<string:mapset_name>/processing_parallel",
+    #     endpoint=get_endpoint_class_name(
+    #         AsyncParallelPersistentResource, projects_url_part
+    #     ),
+    # )
+
 
 # endpoints loaded if run as actinia-core plugin
 def create_endpoints(flask_api):
 
     apidoc = flask_api
 
-    # POST parallel ephemeral processing
-    apidoc.add_resource(
-        AsyncParallelEphermeralResource,
-        "/locations/<string:location_name>/processing_parallel")
-
-    # # POST parallel persistent processing
-    # apidoc.add_resource(
-    #     AsyncParallelPersistentResource,
-    #     "/locations/<string:location_name>/mapsets/"
-    #     "<string:mapset_name>/processing_parallel")
+    # add deprecated location and project endpoints
+    create_project_endpoints(apidoc)
+    create_project_endpoints(apidoc, projects_url_part="locations")
 
     # GET batch jobs TODO
     # "/resources/<string:user_id>/batches"

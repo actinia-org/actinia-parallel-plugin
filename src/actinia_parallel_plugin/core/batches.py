@@ -279,7 +279,7 @@ def getJobsByBatchId(batch_id):
     return jobs
 
 
-def startProcessingBlock(jobs, block, batch_id, location_name, mapset_name,
+def startProcessingBlock(jobs, block, batch_id, project_name, mapset_name,
                          user, request_url, post_url, endpoint, method, path,
                          base_status_url, process):
     """ Function to start a specific processing block for an input list of
@@ -307,7 +307,7 @@ def startProcessingBlock(jobs, block, batch_id, location_name, mapset_name,
             method=method,
             path=path,
             process_chain=process_chain,
-            location_name=location_name,
+            project_name=project_name,
             mapset_name=mapset_name_parallel,
             batch_id=batch_id,
             job_id=jobid,

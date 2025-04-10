@@ -126,7 +126,7 @@ class ParallelResourceBase(ResourceBase):
         self.api_info = ApiInfoModel(**kwargs)
 
     def preprocess(self, has_json=True, has_xml=False,
-                   location_name=None, mapset_name=None, map_name=None):
+                   project_name=None, mapset_name=None, map_name=None):
         """Preprocessing steps for asynchronous processing
 
             - Check if the request has a data field
@@ -140,7 +140,7 @@ class ParallelResourceBase(ResourceBase):
                              otherwise
             has_xml (bool): Set True if the request has XML data, False
                             otherwise
-            location_name (str): The name of the location to work in
+            project_name (str): The name of the project to work in
             mapset_name (str): The name of the target mapset in which the
                                computation should be performed
             map_name: The name of the map or other resource (raster, vector,
@@ -208,7 +208,7 @@ class ParallelResourceBase(ResourceBase):
             orig_time=self.orig_time,
             orig_datetime=self.orig_datetime,
             config=global_config,
-            location_name=location_name,
+            project_name=project_name,
             mapset_name=mapset_name,
             map_name=map_name
         )

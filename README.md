@@ -5,26 +5,26 @@ This is the actinia-parallel-plugin for [actinia-core](https://github.com/mundia
 You can run actinia-parallel-plugin as an actinia-core plugin.
 
 ## Installation
-Use docker-compose for installation:
+Use docker compose for installation:
 ```
-docker-compose -f docker/docker-compose.yml build
-docker-compose -f docker/docker-compose.yml up -d
+docker compose -f docker/docker-compose.yml build
+docker compose -f docker/docker-compose.yml up -d
 ```
 
 ### Installation hints
 * If you get an error like: `ERROR: for docker_redis_1  Cannot start service redis: network xxx not found` you can try the following:
 ```
-docker-compose -f docker/docker-compose.yml down
+docker compose -f docker/docker-compose.yml down
 # remove all custom networks not used by a container
 docker network prune
-docker-compose -f docker/docker-compose.yml up -d
+docker compose -f docker/docker-compose.yml up -d
 ```
 
 ## DEV setup
 For a DEV setup you can use the docker/docker-compose.yml:
 ```
-docker-compose -f docker/docker-compose.yml build
-docker-compose -f docker/docker-compose.yml run --rm --service-ports --entrypoint sh actinia
+docker compose -f docker/docker-compose.yml build
+docker compose -f docker/docker-compose.yml run --rm --service-ports --entrypoint sh actinia
 
 # install the plugin
 (cd /src/actinia-parallel-plugin && python3 setup.py install)
@@ -61,8 +61,8 @@ rm -rf /usr/lib/python3.8/site-packages/actinia_parallel_plugin.wsgi-*.egg
 You can run the tests in the actinia test docker:
 
 ```
-docker-compose -f docker/docker-compose-test.yml build
-docker-compose -f docker/docker-compose-test.yml up -d
+docker compose -f docker/docker-compose-test.yml build
+docker compose -f docker/docker-compose-test.yml up -d
 
 # exec docker and run tests manually
 docker exec -it docker_actinia-test_1 sh
@@ -79,11 +79,11 @@ make integrationtest
 docker exec -it docker_actinia-test_1 sh /usr/bin/run_integration_tests.sh
 docker exec -it docker_actinia-test_1 sh /usr/bin/run_unittests.sh
 
-docker-compose -f docker/docker-compose-test.yml down
+docker compose -f docker/docker-compose-test.yml down
 ```
 
 You can also run the tests in the GHA workflows locally via [act](https://github.com/nektos/act).
-To run docker-compose inside a workflow [act_base](https://github.com/lucasctrl/act_base) can be used.
+To run docker compose inside a workflow [act_base](https://github.com/lucasctrl/act_base) can be used.
 With these you can run the following to run the tests:
 ```
 # list all workflows
@@ -110,7 +110,7 @@ curl -u actinia-gdi:actinia-gdi -X GET http://localhost:8088/api/v3/resources/ac
 You can start a parallel **ephemeral** batch job via:
 ```
 # parallel ephemeral processing
-curl -u actinia-gdi:actinia-gdi -X POST -H 'Content-Type: application/json' -d @test_postbodies/parallel_ephemeral_processing.json http://localhost:8088/api/v3/locations/nc_spm_08_grass7_root/processing_parallel | jq
+curl -u actinia-gdi:actinia-gdi -X POST -H 'Content-Type: application/json' -d @test_postbodies/parallel_ephemeral_processing.json http://localhost:8088/api/v3/projects/nc_spm_08_grass7_root/processing_parallel | jq
 ```
 Attention:
 * The individual process chains must be "independent" of each other, since

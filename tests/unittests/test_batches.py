@@ -28,6 +28,15 @@ import pytest
 import datetime
 from actinia_parallel_plugin.core.batches import checkProcessingBlockFinished
 
+from actinia_core.version import init_versions, G_VERSION
+
+project_url_part = "projects"
+# set project_url_part to "locations" if GRASS GIS version < 8.4
+init_versions()
+grass_version_s = G_VERSION["version"]
+grass_version = [int(item) for item in grass_version_s.split(".")[:2]]
+if grass_version < [8, 4]:
+    project_url_part = "locations"
 
 baseurl = "http://localhost:8088/api/v3"
 resource_id1 = "resource_id-a6da5e00-d2a3-4804-b82f-e03f92ab1cd4"
@@ -77,13 +86,13 @@ jobs = [
             "message": "Processing successfully finished",
             "user_id": "actinia-gdi",
             "api_info": {
-                "path": "/api/v3/locations/nc_spm_08_grass7_root/"
+                "path": f"/api/v3/{project_url_part}/nc_spm_08_grass7_root/"
                         "processing_parallel",
                 "method": "POST",
                 "endpoint": "asyncparallelephermeralresource",
-                "post_url": f"{baseurl}/locations/nc_spm_08_grass7_root/"
+                "post_url": f"{baseurl}/{project_url_part}/nc_spm_08_grass7_root/"
                             "processing_parallel",
-                "request_url": f"{baseurl}/locations/nc_spm_08_grass7_root/"
+                "request_url": f"{baseurl}/{project_url_part}/nc_spm_08_grass7_root/"
                                "processing_parallel",
             },
             "datetime": "2022-06-02 07:20:15.942998",
@@ -125,13 +134,13 @@ jobs = [
             "message": "Processing successfully finished",
             "user_id": "actinia-gdi",
             "api_info": {
-                "path": "/api/v3/locations/nc_spm_08_grass7_root/"
+                "path": f"/api/v3/{project_url_part}/nc_spm_08_grass7_root/"
                         "processing_parallel",
                 "method": "POST",
                 "endpoint": "asyncparallelephermeralresource",
-                "post_url": f"{baseurl}/locations/nc_spm_08_grass7_root/"
+                "post_url": f"{baseurl}/{project_url_part}/nc_spm_08_grass7_root/"
                             "processing_parallel",
-                "request_url": f"{baseurl}/locations/nc_spm_08_grass7_root/"
+                "request_url": f"{baseurl}/{project_url_part}/nc_spm_08_grass7_root/"
                                "processing_parallel",
             },
             "datetime": "2022-06-02 07:20:49.262223",
