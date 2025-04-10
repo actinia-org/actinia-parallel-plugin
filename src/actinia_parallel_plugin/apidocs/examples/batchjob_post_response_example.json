@@ -12,9 +12,9 @@
       "api_info": {
         "endpoint": "asyncparallelephermeralresource",
         "method": "POST",
-        "path": "/api/v3/locations/nc_spm_08_grass7_root/processing_parallel",
-        "post_url": "http://localhost:8088/api/v3/locations/nc_spm_08_grass7_root/processing_parallel",
-        "request_url": "http://localhost:8088/api/v3/locations/nc_spm_08_grass7_root/processing_parallel"
+        "path": "/api/v3/projects/nc_spm_08_grass7_root/processing_parallel",
+        "post_url": "http://localhost:8088/api/v3/projects/nc_spm_08_grass7_root/processing_parallel",
+        "request_url": "http://localhost:8088/api/v3/projects/nc_spm_08_grass7_root/processing_parallel"
       },
       "datetime": "2022-05-24 18:22:42.346947",
       "http_code": 200,

@@ -15,22 +15,22 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Start containers
-      run: docker-compose -f "docker/docker-compose-test.yml" up -d --build
+      run: docker compose -f "docker/docker-compose-test.yml" up -d --build
 
     - name: List running docker
       run: docker ps
 
     - name: Docker logs actinia
-      run: docker logs docker_actinia-test_1
+      run: docker logs docker-actinia-test-1
 
     - name: Docker logs postgis
-      run: docker logs docker_postgis-test_1
+      run: docker logs docker-postgis-test-1
 
     - name: Run integration test
-      run: docker exec -t docker_actinia-test_1 sh /usr/bin/run_integration_tests.sh
+      run: docker exec -t docker-actinia-test-1 sh /usr/bin/run_integration_tests.sh
 
     - name: Stop containers
-      run: docker-compose -f "docker/docker-compose-test.yml" down
+      run: docker compose -f "docker/docker-compose-test.yml" down
 
   unittests:
     runs-on: ubuntu-latest

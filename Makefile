@@ -19,13 +19,13 @@ dist:
 	python3 setup.py dist
 
 test:
-	python3 setup.py test
+	pytest
 
 unittest:
-	python3 setup.py test --addopts "-m unittest"
+	pytest -m "unittest"
 
 devtest:
-	python3 setup.py test --addopts "-m 'dev'"
+	pytest -m "devtest"
 
 integrationtest:
-	python3 setup.py test --addopts "-m 'integrationtest'"
+	pytest -m "integrationtest"
