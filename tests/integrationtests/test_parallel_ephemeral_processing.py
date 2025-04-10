@@ -128,7 +128,7 @@ class ActiniaParallelProcessingTest(ActiniaResourceTestCaseBase):
         project_url_part = "locations"
 
     project = "nc_spm_08"
-    base_url = f"{URL_PREFIX}/${project_url_part}/{project}"
+    base_url = f"{URL_PREFIX}/{project_url_part}/{project}"
     content_type = "application/json"
 
     @pytest.mark.integrationtest
