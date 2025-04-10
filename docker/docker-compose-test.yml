@@ -12,25 +12,25 @@ services:
     environment:
       - JOBTABLE_PW=actinia
     depends_on:
-      - redis-test
+      - valkey-test
       - postgis-test
     cap_add:
       - SYS_PTRACE
     networks:
     -   actinia-test
 
-  redis-test:
-    image: redis:5.0.4-alpine
+  valkey-test:
+    image: valkey/valkey:8.0-alpine
     volumes:
-      - ./redis_data:/data
+      - ./valkey_data:/data
     environment:
-      - REDIS_PASS_FILE=/data/config/.redis
+      - VALKEY_PASS_FILE=/data/config/.valkey
     command: [
       "sh", "-c",
       '
       docker-entrypoint.sh
-      "/data/config/redis.conf"
-      --requirepass "$$(cat $$REDIS_PASS_FILE)"
+      "/data/config/valkey.conf"
+      --requirepass "$$(cat $$VALKEY_PASS_FILE)"
       '
     ]
     ports:

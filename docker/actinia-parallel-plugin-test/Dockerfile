@@ -9,7 +9,7 @@ ENV ACTINIA_CUSTOM_TEST_CFG /etc/default/actinia-parallel-plugin-test
 ENV DEFAULT_CONFIG_PATH /etc/default/actinia-parallel-plugin-test
 
 # install things only for tests
-RUN apk add redis
+RUN apk add valkey
 RUN pip3 install iniconfig colorlog pwgen
 
 ENTRYPOINT ["/bin/sh"]
