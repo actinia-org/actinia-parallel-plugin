@@ -110,7 +110,7 @@ curl -u actinia-gdi:actinia-gdi -X GET http://localhost:8088/api/v3/resources/ac
 You can start a parallel **ephemeral** batch job via:
 ```
 # parallel ephemeral processing
-curl -u actinia-gdi:actinia-gdi -X POST -H 'Content-Type: application/json' -d @test_postbodies/parallel_ephemeral_processing.json http://localhost:8088/api/v3/locations/nc_spm_08_grass7_root/processing_parallel | jq
+curl -u actinia-gdi:actinia-gdi -X POST -H 'Content-Type: application/json' -d @test_postbodies/parallel_ephemeral_processing.json http://localhost:8088/api/v3/projects/nc_spm_08_grass7_root/processing_parallel | jq
 ```
 Attention:
 * The individual process chains must be "independent" of each other, since

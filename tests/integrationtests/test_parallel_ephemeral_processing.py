@@ -30,6 +30,8 @@ from flask.json import loads as json_loads
 
 from ..test_resource_base import ActiniaResourceTestCaseBase, URL_PREFIX
 
+from actinia_core.version import init_versions, G_VERSION
+
 PC = """{
   "jobs": [
     {
@@ -117,8 +119,16 @@ PC = """{
 
 class ActiniaParallelProcessingTest(ActiniaResourceTestCaseBase):
 
-    location = "nc_spm_08"
-    base_url = f"{URL_PREFIX}/locations/{location}"
+    project_url_part = "projects"
+    # set project_url_part to "locations" if GRASS GIS version < 8.4
+    init_versions()
+    grass_version_s = G_VERSION["version"]
+    grass_version = [int(item) for item in grass_version_s.split(".")[:2]]
+    if grass_version < [8, 4]:
+        project_url_part = "locations"
+
+    project = "nc_spm_08"
+    base_url = f"{URL_PREFIX}/${project_url_part}/{project}"
     content_type = "application/json"
 
     @pytest.mark.integrationtest
