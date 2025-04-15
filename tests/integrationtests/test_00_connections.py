@@ -26,7 +26,7 @@ __maintainer__ = "mundialis GmbH % Co. KG"
 
 import os
 import pytest
-import redis
+import valkey
 import psycopg2
 
 from actinia_core.core.common.config import global_config as config
@@ -39,27 +39,27 @@ from ..test_resource_base import ActiniaResourceTestCaseBase
 class ConnectionTest(ActiniaResourceTestCaseBase):
 
     @pytest.mark.integrationtest
-    def test_redis_connection(self):
-        """Test redis connection
+    def test_kvdb_connection(self):
+        """Test kvdb connection
         """
         if "ACTINIA_CUSTOM_TEST_CFG" in os.environ:
             config.read(os.environ["ACTINIA_CUSTOM_TEST_CFG"])
         kwargs = dict()
-        kwargs["host"] = config.REDIS_SERVER_URL
-        kwargs["port"] = config.REDIS_SERVER_PORT
-        if config.REDIS_SERVER_PW and config.REDIS_SERVER_PW is not None:
-            kwargs["password"] = config.REDIS_SERVER_PW
-        connection_pool = redis.ConnectionPool(**kwargs)
-        redis_server = redis.StrictRedis(connection_pool=connection_pool)
+        kwargs["host"] = config.KVDB_SERVER_URL
+        kwargs["port"] = config.KVDB_SERVER_PORT
+        if config.KVDB_SERVER_PW and config.KVDB_SERVER_PW is not None:
+            kwargs["password"] = config.KVDB_SERVER_PW
+        connection_pool = valkey.ConnectionPool(**kwargs)
+        kvdb_server = valkey.StrictValkey(connection_pool=connection_pool)
         try:
-            redis_server.ping()
+            kvdb_server.ping()
             assert True
-        except redis.exceptions.ResponseError:
-            assert False, "Could not connect to redis ({kwargs['host']})"
-        except redis.exceptions.AuthenticationError:
-            assert False, "Invalid redis password"
-        except redis.exceptions.ConnectionError as e:
-            assert False, f"Redis connection error: {e}"
+        except valkey.exceptions.ResponseError:
+            assert False, "Could not connect to kvdb ({kwargs['host']})"
+        except valkey.exceptions.AuthenticationError:
+            assert False, "Invalid kvdb password"
+        except valkey.exceptions.ConnectionError as e:
+            assert False, f"Kvdb connection error: {e}"
         connection_pool.disconnect()
 
     @pytest.mark.integrationtest
