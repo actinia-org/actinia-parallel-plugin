@@ -4,9 +4,7 @@ FROM mundialis/actinia-core:latest
 RUN pip3 install pwgen
 
 COPY docker/actinia.cfg /etc/default/actinia
-COPY src /src/actinia-parallel-plugin/src/
-COPY setup.cfg /src/actinia-parallel-plugin/
-COPY setup.py /src/actinia-parallel-plugin/
+COPY . /src/actinia-parallel-plugin/
 
 RUN pip3 uninstall actinia-parallel-plugin.wsgi -y
 # SETUPTOOLS_SCM_PRETEND_VERSION is only needed if in the plugin folder is no
