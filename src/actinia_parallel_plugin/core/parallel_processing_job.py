@@ -26,7 +26,7 @@ __maintainer__ = "mundialis GmbH % Co. KG"
 
 import pickle
 
-from actinia_core.core.common.redis_interface import enqueue_job
+from actinia_core.core.common.kvdb_interface import enqueue_job
 
 from actinia_parallel_plugin.core.jobtable import getJobById
 from actinia_parallel_plugin.core.jobs import updateJob
@@ -39,7 +39,7 @@ class AsyncParallelJobResource(ParallelResourceBase):
     """Job for parallel processing"""
 
     def __init__(self, user, request_url, post_url, endpoint, method, path,
-                 process_chain, location_name, mapset_name,
+                 process_chain, project_name, mapset_name,
                  batch_id, job_id, base_status_url):
         super(AsyncParallelJobResource, self).__init__(
             user=user,
@@ -50,7 +50,7 @@ class AsyncParallelJobResource(ParallelResourceBase):
             post_url=post_url,
             base_status_url=base_status_url
         )
-        self.location_name = location_name
+        self.project_name = project_name
         self.mapset_name = mapset_name
         self.batch_id = batch_id
         self.job_id = job_id
@@ -70,7 +70,7 @@ class AsyncParallelJobResource(ParallelResourceBase):
 
         rdc = self.preprocess(
             has_json=False,
-            location_name=self.location_name,
+            project_name=self.project_name,
             mapset_name=self.mapset_name
         )
         if rdc:

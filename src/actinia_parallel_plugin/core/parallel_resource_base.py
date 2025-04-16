@@ -65,11 +65,11 @@ class ParallelResourceBase(ResourceBase):
         self.orig_datetime = str(datetime.now())
 
         kwargs = dict()
-        kwargs['host'] = global_config.REDIS_SERVER_URL
-        kwargs['port'] = global_config.REDIS_SERVER_PORT
-        if (global_config.REDIS_SERVER_PW and
-                global_config.REDIS_SERVER_PW is not None):
-            kwargs['password'] = global_config.REDIS_SERVER_PW
+        kwargs['host'] = global_config.KVDB_SERVER_URL
+        kwargs['port'] = global_config.KVDB_SERVER_PORT
+        if (global_config.KVDB_SERVER_PW and
+                global_config.KVDB_SERVER_PW is not None):
+            kwargs['password'] = global_config.KVDB_SERVER_PW
         self.resource_logger = ResourceLogger(**kwargs)
         del kwargs
 
@@ -126,21 +126,21 @@ class ParallelResourceBase(ResourceBase):
         self.api_info = ApiInfoModel(**kwargs)
 
     def preprocess(self, has_json=True, has_xml=False,
-                   location_name=None, mapset_name=None, map_name=None):
+                   project_name=None, mapset_name=None, map_name=None):
         """Preprocessing steps for asynchronous processing
 
             - Check if the request has a data field
             - Check if the module chain description can be loaded
             - Initialize the response and request ids as well as the
               url for status polls
-            - Send an accept entry to the resource redis database
+            - Send an accept entry to the resource kvdb database
 
         Args:
             has_json (bool): Set True if the request has JSON data, False
                              otherwise
             has_xml (bool): Set True if the request has XML data, False
                             otherwise
-            location_name (str): The name of the location to work in
+            project_name (str): The name of the project to work in
             mapset_name (str): The name of the target mapset in which the
                                computation should be performed
             map_name: The name of the map or other resource (raster, vector,
@@ -208,7 +208,7 @@ class ParallelResourceBase(ResourceBase):
             orig_time=self.orig_time,
             orig_datetime=self.orig_datetime,
             config=global_config,
-            location_name=location_name,
+            project_name=project_name,
             mapset_name=mapset_name,
             map_name=map_name
         )

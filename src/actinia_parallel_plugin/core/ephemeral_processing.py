@@ -85,7 +85,7 @@ class ParallelEphemeralProcessing(EphemeralProcessing):
                     jobs_from_batch,
                     next_block,
                     self.batch_id,
-                    self.location_name,
+                    self.project_name,
                     None,  # mapset_name
                     self.user,
                     self.request_url,

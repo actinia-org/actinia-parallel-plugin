@@ -66,14 +66,14 @@ class AsyncParallelEphermeralResource(Resource):
 
     def __init__(self):
         super(AsyncParallelEphermeralResource, self).__init__()
-        self.location_name = None
+        self.project_name = None
         self.batch_id = None
 
     @swagger.doc(batch.batchjobs_post_docs)
-    def post(self, location_name):
+    def post(self, project_name):
         """Persistent parallel processing."""
 
-        self.location_name = location_name
+        self.project_name = project_name
         self.post_url = request.base_url
 
         json_dict = request.get_json(force=True)
@@ -111,7 +111,7 @@ class AsyncParallelEphermeralResource(Resource):
             jobs_in_db,
             1,
             self.batch_id,
-            self.location_name,
+            self.project_name,
             None,  # mapset_name
             g.user,
             request.url,
