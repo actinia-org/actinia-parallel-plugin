@@ -48,7 +48,7 @@ psql -U actinia -h postgis -d gis
 ```
 export SETUPTOOLS_SCM_PRETEND_VERSION=0.0
 ```
-Otherwise you will get an error like this
+Otherwise you will get an error like this:
 `LookupError: setuptools-scm was unable to detect version for '/src/actinia-parallel-plugin'.`.
 
 * If you make changes in code and nothing changes you can try to uninstall the plugin:
