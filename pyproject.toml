@@ -1,0 +1,68 @@
+[build-system]
+requires      = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "actinia-parallel-plugin"
+version = "1.1.1"
+description = "An actinia-core plugin which adds parallel processing endpoints to actinia-core"
+readme = "README.md"
+authors = [
+    { name = "Anika Weinmann"},
+]
+classifiers = [
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Programming Language :: Python :: 3",
+]
+requires-python = ">=3.8"
+keywords = [
+    "processing",
+    "earth observation",
+    "cloud-based processing",
+    "rest api",
+    "gis",
+    "grass gis",
+    "osgeo",
+    "parallel",
+]
+
+dependencies = [
+    "colorlog>=4.2.1",
+    "python-json-logger==3.3.0",
+    "peewee",
+    "yoyo-migrations",
+    "psycopg2",
+    "jsonmodels",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pytest-cov",
+]
+
+[project.urls]
+Homepage = "https://github.com/mundialis/actinia-parallel-plugin"
+Tutorial = "https://mundialis.github.io/actinia_core"
+API_Docs = "https://redocly.github.io/redoc/?url=https://actinia.mundialis.de/latest/swagger.json"
+
+[tool.flake8]
+max-line-length = 79
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"*" = ["*.*"]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "--cov actinia_parallel_plugin --cov-report term-missing --verbose --tb=line -x -s"
+testpaths = [
+    "tests",
+]
+markers = [
+    "dev: test current in development",
+    "unittest: completely independent test",
+    "integrationtest: integration test",
+]

@@ -27,12 +27,12 @@ docker compose -f docker/docker-compose.yml build
 docker compose -f docker/docker-compose.yml run --rm --service-ports --entrypoint sh actinia
 
 # install the plugin
-(cd /src/actinia-parallel-plugin && python3 setup.py install)
+(cd /src/actinia-parallel-plugin && pip3 install .)
 # start actinia-core with your plugin
 gunicorn -b 0.0.0.0:8088 -w 1 --access-logfile=- -k gthread actinia_core.main:flask_app
 
 # or for debugging in one line with reset
-reset && (cd /src/actinia-parallel-plugin && python3 setup.py install) && gunicorn -b 0.0.0.0:8088 -w 3 --access-logfile=- -k gthread actinia_core.main:flask_app
+reset && (cd /src/actinia-parallel-plugin && pip3 install .) && gunicorn -b 0.0.0.0:8088 -w 3 --access-logfile=- -k gthread actinia_core.main:flask_app
 ```
 
 ### PostGIS
@@ -48,7 +48,7 @@ psql -U actinia -h postgis -d gis
 ```
 export SETUPTOOLS_SCM_PRETEND_VERSION=0.0
 ```
-Otherwise you will get an error like this
+Otherwise you will get an error like this:
 `LookupError: setuptools-scm was unable to detect version for '/src/actinia-parallel-plugin'.`.
 
 * If you make changes in code and nothing changes you can try to uninstall the plugin:
