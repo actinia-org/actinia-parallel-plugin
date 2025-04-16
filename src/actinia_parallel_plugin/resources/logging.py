@@ -29,7 +29,7 @@ from datetime import datetime
 from logging import FileHandler
 
 from colorlog import ColoredFormatter
-from pythonjsonlogger import jsonlogger
+from pythonjsonlogger import json
 
 from actinia_parallel_plugin.resources.config import LOGCONFIG
 
@@ -69,7 +69,7 @@ def setLogHandler(logger, type, format):
     logger.addHandler(handler)
 
 
-class CustomJsonFormatter(jsonlogger.JsonFormatter):
+class CustomJsonFormatter(json.JsonFormatter):
     def add_fields(self, log_record, record, message_dict):
         super(CustomJsonFormatter, self).add_fields(
             log_record, record, message_dict)
