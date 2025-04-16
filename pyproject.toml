@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "actinia-parallel-plugin"
-version = "1.1.1"
+version = "1.1.2"
 description = "An actinia-core plugin which adds parallel processing endpoints to actinia-core"
 readme = "README.md"
 authors = [
