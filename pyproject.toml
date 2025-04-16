@@ -28,7 +28,11 @@ keywords = [
 
 dependencies = [
     "colorlog>=4.2.1",
+    "python-json-logger==3.3.0",
     "peewee",
+    "yoyo-migrations",
+    "psycopg2",
+    "jsonmodels",
 ]
 
 [project.optional-dependencies]
