@@ -28,7 +28,7 @@ keywords = [
 
 dependencies = [
     "colorlog>=4.2.1",
-    "playhouse",
+    "peewee",
 ]
 
 [project.optional-dependencies]
