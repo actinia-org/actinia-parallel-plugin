@@ -33,7 +33,7 @@ from flask_restful_swagger_2 import Resource
 from actinia_core.core.common.config import global_config
 from actinia_core.core.messages_logger import MessageLogger
 from actinia_core.core.resources_logger import ResourceLogger
-from actinia_core.rest.base.resource_base import ResourceBase
+from actinia_rest_lib.resource_base import ResourceBase
 from actinia_core.models.response_models import (
     create_response_from_model,
     ApiInfoModel,
