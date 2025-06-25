@@ -28,7 +28,7 @@ COPY . /src/actinia-parallel-plugin/
 
 WORKDIR /src/actinia-parallel-plugin/
 
-RUN make install
+RUN pip install .
 
 ENV SETUPTOOLS_SCM_PRETEND_VERSION=0.0
 

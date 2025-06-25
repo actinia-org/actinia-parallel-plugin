@@ -27,9 +27,7 @@ __maintainer__ = "mundialis GmbH % Co. KG"
 
 import pickle
 
-from actinia_core.processing.actinia_processing.ephemeral_processing import \
-    EphemeralProcessing
-
+from actinia_processing_lib.ephemeral_processing import EphemeralProcessing
 from actinia_parallel_plugin.core.batches import (
     checkProcessingBlockFinished,
     getJobsByBatchId,
