@@ -27,12 +27,14 @@ keywords = [
 ]
 
 dependencies = [
+    "actinia-rest-lib",
     "colorlog>=4.2.1",
-    "python-json-logger==3.3.0",
-    "peewee",
-    "yoyo-migrations",
-    "psycopg2",
     "jsonmodels",
+    "peewee",
+    "playhouse",
+    "psycopg2",
+    "python-json-logger",
+    "yoyo-migrations",
 ]
 
 [project.optional-dependencies]
