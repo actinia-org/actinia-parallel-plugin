@@ -26,7 +26,7 @@ __maintainer__ = "mundialis GmbH % Co. KG"
 
 from peewee import Model, CharField, DateTimeField, AutoField, IntegerField
 from playhouse.postgres_ext import BinaryJSONField
-from playhouse.pool import PooledPostgresqlExtDatabase
+from playhouse.postgres_ext import PooledPostgresqlExtDatabase
 
 from actinia_parallel_plugin.resources.config import JOBTABLE
 from actinia_parallel_plugin.resources.logging import log

@@ -1,12 +1,12 @@
-FROM mundialis/actinia-core:latest as actinia_test
+FROM mundialis/actinia-core:latest AS actinia_test
 
 LABEL authors="Carmen Tawalika,Anika Weinmann"
 LABEL maintainer="tawalika@mundialis.de,weinmann@mundialis.de"
 
-ENV ACTINIA_CUSTOM_TEST_CFG /etc/default/actinia-parallel-plugin-test
+ENV ACTINIA_CUSTOM_TEST_CFG=/etc/default/actinia-parallel-plugin-test
 
 # TODO do not set DEFAULT_CONFIG_PATH if this is fixed
-ENV DEFAULT_CONFIG_PATH /etc/default/actinia-parallel-plugin-test
+ENV DEFAULT_CONFIG_PATH=/etc/default/actinia-parallel-plugin-test
 
 # install things only for tests
 RUN apk add valkey valkey-cli
@@ -28,7 +28,7 @@ COPY . /src/actinia-parallel-plugin/
 
 WORKDIR /src/actinia-parallel-plugin/
 
-RUN pip install .
+RUN pip3 install .
 
 ENV SETUPTOOLS_SCM_PRETEND_VERSION=0.0
 
